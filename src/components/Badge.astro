@@ -13,7 +13,7 @@ const { label, variant = 'primary' } = Astro.props;
   .badge {
     display: inline-block;
     padding: 0.35rem 0.75rem;
-    font-size: clamp(12px, 1.3vw, 14px);
+    font-size: clamp(14px, 1.5vw, 16px);
     text-transform: uppercase;
     border: 1px solid var(--text-secondary);
     background: transparent;
@@ -87,7 +87,7 @@ const { label, variant = 'primary' } = Astro.props;
   @media (max-width: 768px) {
     .badge {
       padding: 0.25rem 0.5rem;
-      font-size: 9px;
+      font-size: 11px;
       border-width: 1px;
     }
 
@@ -107,7 +107,7 @@ const { label, variant = 'primary' } = Astro.props;
   @media (max-width: 480px) {
     .badge {
       padding: 0.2rem 0.4rem;
-      font-size: 7px;
+      font-size: 9px;
       word-break: break-word;
     }
 

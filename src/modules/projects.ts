@@ -116,12 +116,12 @@ export const projects: Record<string, Project[]> = {
     {
       url: 'https://github.com/kaisermann/kaisermann',
       name: 'kaisermann.me v2',
-      description: 'this website',
+      description: 'original template source',
     },
     {
       url: 'http://v1.kaisermann.me',
       name: 'kaisermann.me v1',
-      description: 'first version of my personal website',
+      description: 'first version of the template',
     },
     {
       url: 'https://copymoji.kaisermann.me',
