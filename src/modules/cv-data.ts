@@ -7,7 +7,8 @@ export type Education = {
   period: string
   gpa?: string
   thesis?: string
-  details?: string[]
+  technologies?: string[]
+  highlights?: string[]
 }
 
 export type WorkExperience = {
@@ -15,7 +16,15 @@ export type WorkExperience = {
   position: string
   location: string
   period: string
+  technologies?: string[]
   responsibilities: string[]
+  highlights?: string[]
+  positions?: {
+    position: string
+    period: string
+    technologies?: string[]
+    highlights?: string[]
+  }[]
 }
 
 export type ThesisProject = {
@@ -47,10 +56,10 @@ export const education: Education[] = [
     location: 'Munich, Germany',
     period: 'Dec. 2025',
     gpa: '1.2 (German scale: 1.0 best)',
-    thesis:
-      'Physical Adversarial Attacks Using Fan-Based Holographic Projections',
-    details: [
-      'Relevant Coursework: IoT Security, Network Security, Embedded Systems & Security, Smart Card Laboratory, IoT Remote Lab, Software Architecture Design for Distributed Embedded Systems',
+    thesis: 'Physical Adversarial Attacks Using Fan-Based Holographic Projections',
+    technologies: ['IoT Security', 'Network Security', 'Embedded Systems', 'Smart Cards'],
+    highlights: [
+      'Thesis: Black-box security testing of CV pipelines with holographic projections',
     ],
   },
   {
@@ -58,11 +67,10 @@ export const education: Education[] = [
     degree: 'Cybersecurity Trainee',
     location: '',
     period: 'May 2025 – Present',
-    details: [
-      'Completed Hack The Box job-role paths: Penetration Tester and Junior Cybersecurity Analyst, with hands-on labs covering the full assessment workflow from reconnaissance to reporting.',
-      'Focus areas proved by completed paths and modules: web exploitation (auth/session testing, input validation, XSS/SQLi, IDOR), Active Directory enumeration and attack paths, Linux/Windows privilege escalation, password/authentication attacks, network enumeration and traffic analysis.',
-      'Outcomes: produced step-by-step write-ups, PoCs, and reusable playbooks; standardized checklists and report snippets aligned with OWASP WSTG/Top 10 and ATT&CK; practiced detection-aware operations and basic OPSEC in lab environments.',
-      'Tooling practiced: Kali Linux, Burp Suite, OWASP ZAP, Nmap, Metasploit, Wireshark, ffuf, sqlmap, John the Ripper, Hashcat, Nessus, BloodHound, Impacket; automation with Python and Bash.',
+    technologies: ['Burp Suite', 'Metasploit', 'Kali Linux', 'BloodHound', 'Python'],
+    highlights: [
+      'Completed Penetration Tester & Junior Security Analyst paths',
+      'Hands-on labs: Web exploitation, Active Directory, privilege escalation',
     ],
   },
   {
@@ -72,6 +80,10 @@ export const education: Education[] = [
     period: 'Jul. 2023',
     gpa: '3.4/4.0',
     thesis: 'ESP8266 Ad Hoc Mesh for Real-Time Swarm Coordination',
+    technologies: ['ESP8266', 'ESP-NOW', 'C/C++', 'IoT'],
+    highlights: [
+      'Thesis: Decentralized mesh network for real-time swarm coordination',
+    ],
   },
 ]
 
@@ -82,32 +94,38 @@ export const workExperience: WorkExperience[] = [
     position: 'Cybersecurity Research Intern',
     location: 'Munich, Germany',
     period: 'Aug. 2024 – Nov. 2024',
-    responsibilities: [
-      'Conducted an offensive protocol assessment of SpaceWire, enumerated trust boundaries, and identified missing authentication/encryption and protocol weaknesses; outlined paths and mitigations.',
-      'Built an adversary-centric threat model and attack-surface map for on-board networks; profiled attacker capabilities and preconditions to prioritize likely exploitation chains.',
-      'Implemented adversary emulation in OMNeT++ to replay, spoof, inject, and disrupt traffic; captured evidence to demonstrate impact on integrity, availability and command authenticity.',
+    technologies: ['OMNeT++', 'SpaceWire', 'Threat Modeling', 'Protocol Analysis'],
+    responsibilities: [],
+    highlights: [
+      'Offensive protocol assessment of SpaceWire for aerospace networks',
+      'Built adversary emulation in OMNeT++ to demonstrate attack paths',
     ],
   },
   {
     company: 'Saportif Technology Inc.',
-    position: 'IoT Systems Engineer',
+    position: '', // Left empty for multi-position display
     location: 'Istanbul, Turkey',
-    period: 'Sep. 2022 – Sep. 2023',
-    responsibilities: [
-      'Developed an end-to-end IoT system with ESP32 and Raspberry Pi for a smart door-lock in shared offices, integrating sensors, actuators, RFID access control, and cloud-backed web interfaces.',
-      'Secured the integration layer with HTTPS/TLS and authenticated REST APIs; mapped RFID identities to role-based access control and enforced server-side authorization for bookings and device commands.',
-      'Implemented input validation, parameterized requests, rate limiting, and audit logging; documented issues using OWASP Top 10 categories to prioritize remediation.',
-    ],
-  },
-  {
-    company: 'Saportif Technology Inc.',
-    position: 'Full-Stack Developer',
-    location: 'Istanbul, Turkey',
-    period: 'Oct. 2020 – Sep. 2022',
-    responsibilities: [
-      'Built and maintained React and Node services with secure-by-default patterns and peer code reviews.',
-      'Implemented authentication and session controls (RBAC, JWT, secure cookies), CSRF protection, and XSS mitigations including output encoding and CSP.',
-      'Hardened REST APIs with input validation, parameterized queries, security headers, and structured error handling; controls aligned with OWASP Top 10 and WSTG.',
+    period: 'Oct. 2020 – Sep. 2023',
+    responsibilities: [],
+    positions: [
+      {
+        position: 'IoT Systems Engineer',
+        period: 'Sep. 2022 – Sep. 2023',
+        technologies: ['ESP32', 'Raspberry Pi', 'RFID', 'TLS', 'REST APIs'],
+        highlights: [
+          'Developed end-to-end IoT smart door-lock system with RFID access control',
+          'Secured integration with HTTPS/TLS, RBAC, and OWASP Top 10 compliance',
+        ],
+      },
+      {
+        position: 'Full-Stack Developer',
+        period: 'Oct. 2020 – Sep. 2022',
+        technologies: ['React', 'Node.js', 'JWT', 'PostgreSQL'],
+        highlights: [
+          'Built and maintained React/Node services with secure-by-default patterns',
+          'Implemented auth controls (RBAC, JWT), CSRF protection, and XSS mitigations',
+        ],
+      },
     ],
   },
   {
@@ -115,9 +133,11 @@ export const workExperience: WorkExperience[] = [
     position: 'Software Engineer Intern',
     location: 'Istanbul, Turkey',
     period: 'Jul. 2022 – Sep. 2022',
-    responsibilities: [
-      'Built a Python test library that created a software-based virtual testing environment and removed reliance on hardware simulators.',
-      'Achieved approximately 80% faster test execution on refrigerator control boards with reusable, automated test algorithms.',
+    technologies: ['Python', 'Test Automation'],
+    responsibilities: [],
+    highlights: [
+      'Built Python test library for virtual testing environment',
+      'Achieved ~80% faster test execution on refrigerator control boards',
     ],
   },
 ]
@@ -229,5 +249,5 @@ export const contact = {
   phone: '+49 163 193-1312',
   location: 'Munich, Germany',
   github: 'https://github.com/moolut',
-  linkedin: 'https://linkedin.com/in/mevlutyildirim', // Update if different
+  linkedin: 'https://linkedin.com/in/mevlut-yildirim', // Update if different
 }

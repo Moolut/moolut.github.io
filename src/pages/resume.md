@@ -12,7 +12,7 @@ Cybersecurity Professional & IoT Engineer specializing in penetration testing, e
 <br>
 [Email](mailto:yldrmm.mevlut@gmail.com)
 <br>
-[LinkedIn](https://linkedin.com/in/mevlutyildirim)
+[LinkedIn](https://linkedin.com/in/mevlut-yildirim)
 
 ### Education
 

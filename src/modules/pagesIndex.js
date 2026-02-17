@@ -8,8 +8,8 @@ export const PAGES = [
     url: '/',
   },
   {
-    aliases: ['about', 'bio', 'me'],
-    url: '/about/',
+    aliases: ['whoami', 'about', 'bio', 'me'],
+    url: '/whoami/',
   },
   {
     aliases: ['projects', 'work', 'portfolio'],
@@ -41,7 +41,7 @@ export const PAGES = [
   },
   {
     aliases: ['linkedin'],
-    url: 'https://linkedin.com/in/mevlutyildirim',
+    url: 'https://linkedin.com/in/mevlut-yildirim',
     external: true,
   },
 ]

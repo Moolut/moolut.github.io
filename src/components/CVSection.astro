@@ -1,132 +1,392 @@
 ---
 type CVItem = {
-  title?: string;
-  subtitle?: string;
-  period?: string;
-  location?: string;
-  details?: string[];
-};
+  title?: string
+  subtitle?: string
+  period?: string
+  location?: string
+  technologies?: string[]
+  highlights?: string[]
+  gpa?: string
+  thesis?: string
+  positions?: {
+    position: string
+    period: string
+    technologies?: string[]
+    highlights?: string[]
+  }[]
+}
 
 type Props = {
-  title: string;
-  items: CVItem[];
-};
+  title: string
+  items: CVItem[]
+}
 
-const { title, items } = Astro.props;
+const { title, items } = Astro.props
 ---
 
-<section class="cv-section">
-  <h2 class="section-title big-text">{title}</h2>
-  <ul class="cv-list">
+<section class="terminal-section">
+  <h2 class="terminal-header">
+    <span class="prompt">$</span>
+    <span class="command">cat</span>
+    <span class="filename">{title.toLowerCase().replace(' ', '_')}.txt</span>
+  </h2>
+  <div class="terminal-content">
     {
-      items.map((item) => (
-        <li class="cv-item">
-          <div class="cv-item__header">
-            {item.title && <h3 class="cv-item__title">{item.title}</h3>}
-            {item.period && <span class="cv-item__period">{item.period}</span>}
+      items.map((item, itemIndex) => (
+        <div class="terminal-entry">
+          <div class="entry-header">
+            <span class="entry-prompt">></span>
+            <span class="entry-title">{item.title}</span>
+            {item.period && <span class="entry-period">[{item.period}]</span>}
           </div>
-          {item.subtitle && <p class="cv-item__subtitle">{item.subtitle}</p>}
-          {item.location && <p class="cv-item__location">{item.location}</p>}
-          {item.details && item.details.length > 0 && (
-            <ul class="cv-item__details">
-              {item.details.map((detail) => (
-                <li>{detail}</li>
-              ))}
-            </ul>
+
+          {item.location && (
+            <div class="entry-line">
+              <span class="indent">  </span>
+              <span class="entry-meta">📍 {item.location}</span>
+            </div>
           )}
-        </li>
+
+          {item.subtitle && (
+            <div class="entry-line">
+              <span class="indent">└─</span>
+              <span class="entry-subtitle">{item.subtitle}</span>
+            </div>
+          )}
+
+          {item.gpa && (
+            <div class="entry-line">
+              <span class="indent">  </span>
+              <span class="entry-meta">🎓 GPA: {item.gpa}</span>
+            </div>
+          )}
+
+          {/* Multi-position display with L-shaped connector */}
+          {item.positions && item.positions.length > 0 && (
+            <div class="positions-container">
+              {item.positions.map((pos, posIndex) => (
+                <div class="position-entry">
+                  <div class="position-header">
+                    <span class="position-connector">
+                      {posIndex === item.positions.length - 1 ? '└─' : '├─'}
+                    </span>
+                    <span class="position-title">{pos.position}</span>
+                    <span class="position-period">[{pos.period}]</span>
+                  </div>
+
+                  {pos.technologies && pos.technologies.length > 0 && (
+                    <div class="entry-line tech-line position-tech-line">
+                      <span class="position-indent">  </span>
+                      <span class="tech-label">[TECH]</span>
+                      <div class="tech-tags">
+                        {pos.technologies.map((tech) => (
+                          <span class="tech-tag">{tech}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {pos.highlights && pos.highlights.length > 0 && (
+                    <div class="highlights position-highlights">
+                      {pos.highlights.map((highlight) => (
+                        <div class="highlight-line">
+                          <span class="bullet">•</span>
+                          <span>{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Regular display for single position */}
+          {!item.positions && item.technologies && item.technologies.length > 0 && (
+            <div class="entry-line tech-line">
+              <span class="indent">  </span>
+              <span class="tech-label">[TECH]</span>
+              <div class="tech-tags">
+                {item.technologies.map((tech) => (
+                  <span class="tech-tag">{tech}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!item.positions && item.highlights && item.highlights.length > 0 && (
+            <div class="highlights">
+              {item.highlights.map((highlight) => (
+                <div class="highlight-line">
+                  <span class="bullet">•</span>
+                  <span>{highlight}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {itemIndex < items.length - 1 && <div class="entry-divider">{'─'.repeat(60)}</div>}
+        </div>
       ))
     }
-  </ul>
+  </div>
 </section>
 
 <style>
-  .cv-section {
-    margin-bottom: 4rem;
-  }
-
-  .section-title {
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-  }
-
-  .cv-list {
-    list-style: none;
+  .terminal-section {
+    margin-bottom: 3rem;
+    border: 2px solid var(--text-secondary);
+    background: rgba(0, 0, 0, 0.3);
     padding: 0;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+  }
+
+  .terminal-header {
     margin: 0;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 255, 0, 0.15),
+      rgba(0, 255, 0, 0.05)
+    );
+    border-bottom: 2px solid #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(15px, 1.8vw, 20px);
+    color: var(--text-secondary);
+    font-weight: normal;
+    letter-spacing: 0.05em;
   }
 
-  .cv-item {
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  .prompt {
+    color: #0f0;
+    margin-right: 0.75rem;
+    font-weight: bold;
+    font-size: 1.1em;
   }
 
-  .cv-item:last-child {
-    border-bottom: none;
+  .command {
+    color: #ff0;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  .filename {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .terminal-content {
+    padding: 1.5rem;
+  }
+
+  .terminal-entry {
+    margin-bottom: 1.5rem;
+  }
+
+  .terminal-entry:last-child {
     margin-bottom: 0;
-    padding-bottom: 0;
   }
 
-  .cv-item__header {
+  .entry-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 0.5rem;
     flex-wrap: wrap;
   }
 
-  .cv-item__title {
-    font-size: clamp(18px, 2vw, 24px);
-    font-weight: normal;
-    text-transform: uppercase;
-    margin: 0;
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .cv-item__period {
-    font-size: clamp(14px, 1.5vw, 18px);
-    opacity: 0.8;
-    white-space: nowrap;
-  }
-
-  .cv-item__subtitle {
+  .entry-prompt {
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
     font-size: clamp(16px, 1.8vw, 20px);
-    margin: 0.25rem 0;
+  }
+
+  .entry-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(15px, 1.7vw, 19px);
+    color: var(--text-secondary);
+    font-weight: bold;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .entry-period {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(13px, 1.4vw, 16px);
+    color: #0f0;
     opacity: 0.9;
   }
 
-  .cv-item__location {
-    font-size: clamp(14px, 1.5vw, 18px);
-    margin: 0.25rem 0;
-    opacity: 0.7;
-  }
-
-  .cv-item__details {
-    list-style: disc;
-    padding-left: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .cv-item__details li {
-    margin-bottom: 0.75rem;
+  .entry-line {
+    margin-bottom: 0.4rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(13px, 1.5vw, 16px);
     line-height: 1.6;
   }
 
-  .cv-item__details li:last-child {
+  .indent {
+    color: rgba(255, 255, 255, 0.3);
+    margin-right: 0.5rem;
+    font-size: clamp(13px, 1.5vw, 16px);
+  }
+
+  .entry-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+    font-size: clamp(13px, 1.5vw, 16px);
+  }
+
+  .entry-meta {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: clamp(12px, 1.4vw, 15px);
+  }
+
+  /* Multi-position styles */
+  .positions-container {
+    margin-top: 0.75rem;
+  }
+
+  .position-entry {
+    margin-bottom: 1rem;
+  }
+
+  .position-entry:last-child {
     margin-bottom: 0;
   }
 
+  .position-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .position-connector {
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(13px, 1.5vw, 16px);
+    margin-right: 0.25rem;
+  }
+
+  .position-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(13px, 1.5vw, 16px);
+    color: rgba(255, 255, 255, 0.95);
+    font-style: italic;
+  }
+
+  .position-period {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(12px, 1.3vw, 15px);
+    color: #0f0;
+    opacity: 0.8;
+  }
+
+  .position-indent {
+    color: rgba(255, 255, 255, 0.3);
+    margin-right: 0.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(13px, 1.5vw, 16px);
+    display: inline-block;
+    width: 1.5ch;
+  }
+
+  .position-tech-line {
+    margin-left: 0;
+  }
+
+  .position-highlights {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .tech-line {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .tech-label {
+    color: #ff0;
+    font-weight: bold;
+    font-size: clamp(12px, 1.3vw, 14px);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-tag {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #0f0;
+    color: #0f0;
+    padding: 0.2rem 0.6rem;
+    font-size: clamp(11px, 1.2vw, 13px);
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+
+  .tech-tag:hover {
+    background: rgba(0, 255, 0, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .highlights {
+    margin-top: 0.75rem;
+    padding-left: 0;
+  }
+
+  .highlight-line {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(12px, 1.4vw, 15px);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    align-items: flex-start;
+  }
+
+  .bullet {
+    color: #0f0;
+    flex-shrink: 0;
+  }
+
+  .entry-divider {
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.15);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+
   @media (max-width: 580px) {
-    .cv-item__header {
-      flex-direction: column;
-      align-items: flex-start;
+    .terminal-content {
+      padding: 1rem;
     }
 
-    .cv-item__period {
-      white-space: normal;
+    .entry-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .entry-title {
+      width: 100%;
+    }
+
+    .position-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
     }
   }
 </style>

@@ -5,7 +5,7 @@ import TVLayout from '../layouts/TVLayout.astro'
 <TVLayout>
   <article class="welcome">
     <div class="hero-section">
-      <h1 class="big-text glitchy-text hero-title">
+      <h1 class="big-text hero-title">
         <span class="name-hover" tabindex="0">Mevlüt Yıldırım</span>
       </h1>
       <p class="hero-tagline">
@@ -71,7 +71,7 @@ import TVLayout from '../layouts/TVLayout.astro'
 
     <div class="call-to-action-section">
       <p class="call-to-action">
-        <a href="/about/">Learn more about me</a> or check out my
+        <a href="/whoami/">Learn more about me</a> or check out my
         <a href="/projects/">projects</a> and
         <a href="/certifications/">achievements</a>.
       </p>
@@ -80,6 +80,12 @@ import TVLayout from '../layouts/TVLayout.astro'
 </TVLayout>
 
 <style>
+  /* Remove glitchy text effect from body content */
+  .welcome,
+  .welcome * {
+    text-shadow: none !important;
+  }
+
   .welcome {
     max-width: 100%;
   }
@@ -186,7 +192,6 @@ import TVLayout from '../layouts/TVLayout.astro'
 
   .highlight-link:hover {
     color: #fff;
-    text-shadow: 0 0 10px var(--text-secondary);
   }
 
   .highlight-link::before {
@@ -337,9 +342,11 @@ import TVLayout from '../layouts/TVLayout.astro'
   ];
 
   let roleIndex = 0;
-  const roleElement = document.querySelector('.role-text');
+  let intervalId = null;
 
-  function cycleRole() {
+  function cycleRole(roleElement) {
+    if (!roleElement) return;
+
     // Add changing class to trigger rainbow-static
     roleElement.classList.add('changing');
 
@@ -355,6 +362,22 @@ import TVLayout from '../layouts/TVLayout.astro'
     }, 200);
   }
 
-  // Cycle every 3 seconds
-  setInterval(cycleRole, 3000);
+  function initRoleCycling() {
+    const roleElement = document.querySelector('.role-text');
+    if (!roleElement) return;
+
+    // Clear any existing interval
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    // Start cycling every 3 seconds
+    intervalId = setInterval(() => cycleRole(roleElement), 3000);
+  }
+
+  // Initialize on page load
+  initRoleCycling();
+
+  // Reinitialize after client-side navigation
+  document.addEventListener('astro:after-swap', initRoleCycling);
 </script>
