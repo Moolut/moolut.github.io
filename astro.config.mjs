@@ -7,7 +7,8 @@ import svelte from '@astrojs/svelte'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kaisermann.me',
+  site: 'https://moolut.github.io',
+  base: '/portfolio',
 
   integrations: [sitemap(), svelte()],
 
