@@ -209,25 +209,22 @@ export const awards: Award[] = [
 
 // Skills & Technologies
 export const skills = {
-  technologies: [
-    'Python',
-    'C/C++',
-    'Bash',
-    'PowerShell',
-    'Linux',
-    'Kali Linux',
-    'Windows',
-    'Nmap',
-    'Burp Suite',
-    'Wireshark',
-    'OWASP ZAP',
-    'Metasploit',
-    'sqlmap',
-    'Nessus',
-    'BloodHound',
-    'Impacket',
-    'Windows Active Directory',
-  ],
+  technologies: {
+    'Programming Languages': ['Python', 'C/C++', 'Bash', 'PowerShell'],
+    'Operating Systems': ['Linux', 'Kali Linux', 'Windows'],
+    'Security Tools & Platforms': [
+      'Nmap',
+      'Burp Suite',
+      'Wireshark',
+      'OWASP ZAP',
+      'Metasploit',
+      'sqlmap',
+      'Nessus',
+      'BloodHound',
+      'Impacket',
+    ],
+    'Infrastructure & Networking': ['Windows Active Directory'],
+  },
   skills: [
     'Penetration Testing',
     'Vulnerability Assessment',

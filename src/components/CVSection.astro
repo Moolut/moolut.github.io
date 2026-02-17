@@ -134,11 +134,14 @@ const { title, items } = Astro.props
 
 <style>
   .terminal-section {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     border: 2px solid var(--text-secondary);
     background: rgba(0, 0, 0, 0.3);
     padding: 0;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 
   .terminal-header {
@@ -176,11 +179,15 @@ const { title, items } = Astro.props
   }
 
   .terminal-content {
-    padding: 1.5rem;
+    padding: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
   }
 
   .terminal-entry {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .terminal-entry:last-child {
@@ -244,11 +251,11 @@ const { title, items } = Astro.props
 
   /* Multi-position styles */
   .positions-container {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
   }
 
   .position-entry {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .position-entry:last-child {
@@ -306,7 +313,7 @@ const { title, items } = Astro.props
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     flex-wrap: wrap;
   }
 
@@ -339,7 +346,7 @@ const { title, items } = Astro.props
   }
 
   .highlights {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     padding-left: 0;
   }
 
@@ -360,7 +367,7 @@ const { title, items } = Astro.props
   }
 
   .entry-divider {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     color: rgba(255, 255, 255, 0.15);
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
@@ -368,25 +375,272 @@ const { title, items } = Astro.props
     text-overflow: clip;
   }
 
-  @media (max-width: 580px) {
+  @media (max-width: 768px) {
+    .terminal-section {
+      border-width: 1px;
+    }
+
     .terminal-content {
-      padding: 1rem;
+      padding: 0.5rem;
+    }
+
+    .terminal-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .prompt {
+      margin-right: 0.4rem;
+      font-size: 1em;
+    }
+
+    .command {
+      margin-right: 0.3rem;
+    }
+
+    .filename {
+      font-size: 0.95em;
+    }
+
+    .terminal-entry {
+      margin-bottom: 1rem;
     }
 
     .entry-header {
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.25rem;
+      gap: 0.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .entry-prompt {
+      font-size: 15px;
     }
 
     .entry-title {
       width: 100%;
+      font-size: 14px;
+    }
+
+    .entry-period {
+      font-size: 12px;
+      margin-left: 0;
+    }
+
+    .entry-line {
+      font-size: 12px;
+      margin-bottom: 0.25rem;
+    }
+
+    .indent {
+      margin-right: 0.3rem;
+      font-size: 12px;
+    }
+
+    .entry-subtitle {
+      font-size: 12px;
+    }
+
+    .entry-meta {
+      font-size: 11px;
+    }
+
+    .positions-container {
+      margin-top: 0.5rem;
+    }
+
+    .position-entry {
+      margin-bottom: 0.6rem;
     }
 
     .position-header {
       flex-direction: column;
       align-items: flex-start;
+      gap: 0.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .position-connector {
+      font-size: 12px;
+      margin-right: 0.2rem;
+    }
+
+    .position-title {
+      font-size: 12px;
+    }
+
+    .position-period {
+      font-size: 11px;
+      margin-left: 0;
+    }
+
+    .position-indent {
+      margin-right: 0.3rem;
+      font-size: 12px;
+      width: 1.2ch;
+    }
+
+    .tech-line {
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tech-label {
+      font-size: 10px;
+    }
+
+    .tech-tags {
+      gap: 0.3rem;
+      width: 100%;
+    }
+
+    .tech-tag {
+      font-size: 9px;
+      padding: 0.2rem 0.4rem;
+      border-radius: 2px;
+    }
+
+    .highlights {
+      margin-top: 0.4rem;
+    }
+
+    .highlight-line {
+      font-size: 11px;
+      gap: 0.3rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.5;
+    }
+
+    .bullet {
+      font-size: 11px;
+    }
+
+    .entry-divider {
+      margin-top: 0.75rem;
+      font-size: 10px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .terminal-section {
+      margin-bottom: 0.75rem;
+    }
+
+    .terminal-content {
+      padding: 0.35rem;
+    }
+
+    .terminal-header {
+      padding: 0.4rem 0.5rem;
+      font-size: 11px;
+      letter-spacing: 0.01em;
+      word-wrap: break-word;
+    }
+
+    .prompt {
+      margin-right: 0.25rem;
+    }
+
+    .command {
+      margin-right: 0.2rem;
+    }
+
+    .filename {
+      font-size: 0.9em;
+      word-break: break-word;
+    }
+
+    .terminal-entry {
+      margin-bottom: 0.75rem;
+    }
+
+    .entry-prompt {
+      font-size: 13px;
+    }
+
+    .entry-title {
+      font-size: 12px;
+      word-wrap: break-word;
+    }
+
+    .entry-period {
+      font-size: 10px;
+    }
+
+    .entry-line {
+      font-size: 10px;
+    }
+
+    .indent {
+      margin-right: 0.2rem;
+      font-size: 10px;
+    }
+
+    .entry-subtitle {
+      font-size: 10px;
+      word-wrap: break-word;
+    }
+
+    .entry-meta {
+      font-size: 9px;
+      word-wrap: break-word;
+    }
+
+    .position-connector {
+      font-size: 10px;
+    }
+
+    .position-title {
+      font-size: 10px;
+      word-wrap: break-word;
+    }
+
+    .position-period {
+      font-size: 9px;
+    }
+
+    .position-indent {
+      margin-right: 0.2rem;
+      font-size: 10px;
+      width: 1ch;
+    }
+
+    .tech-line {
       gap: 0.25rem;
+      margin-top: 0.35rem;
+    }
+
+    .tech-label {
+      font-size: 8px;
+    }
+
+    .tech-tags {
+      gap: 0.2rem;
+    }
+
+    .tech-tag {
+      font-size: 8px;
+      padding: 0.15rem 0.3rem;
+      word-break: break-word;
+    }
+
+    .highlight-line {
+      font-size: 9px;
+      gap: 0.2rem;
+      margin-bottom: 0.25rem;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .bullet {
+      font-size: 9px;
+    }
+
+    .entry-divider {
+      margin-top: 0.5rem;
+      font-size: 8px;
     }
   }
 </style>
