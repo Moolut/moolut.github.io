@@ -1,0 +1,132 @@
+---
+type CVItem = {
+  title?: string;
+  subtitle?: string;
+  period?: string;
+  location?: string;
+  details?: string[];
+};
+
+type Props = {
+  title: string;
+  items: CVItem[];
+};
+
+const { title, items } = Astro.props;
+---
+
+<section class="cv-section">
+  <h2 class="section-title big-text">{title}</h2>
+  <ul class="cv-list">
+    {
+      items.map((item) => (
+        <li class="cv-item">
+          <div class="cv-item__header">
+            {item.title && <h3 class="cv-item__title">{item.title}</h3>}
+            {item.period && <span class="cv-item__period">{item.period}</span>}
+          </div>
+          {item.subtitle && <p class="cv-item__subtitle">{item.subtitle}</p>}
+          {item.location && <p class="cv-item__location">{item.location}</p>}
+          {item.details && item.details.length > 0 && (
+            <ul class="cv-item__details">
+              {item.details.map((detail) => (
+                <li>{detail}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .cv-section {
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .cv-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cv-item {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cv-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .cv-item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cv-item__title {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .cv-item__period {
+    font-size: clamp(14px, 1.5vw, 18px);
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+
+  .cv-item__subtitle {
+    font-size: clamp(16px, 1.8vw, 20px);
+    margin: 0.25rem 0;
+    opacity: 0.9;
+  }
+
+  .cv-item__location {
+    font-size: clamp(14px, 1.5vw, 18px);
+    margin: 0.25rem 0;
+    opacity: 0.7;
+  }
+
+  .cv-item__details {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .cv-item__details li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .cv-item__details li:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 580px) {
+    .cv-item__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cv-item__period {
+      white-space: normal;
+    }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+type Props = {
+  name: string;
+  tagline: string;
+  photoUrl?: string;
+};
+
+const { name, tagline, photoUrl = '/assets/images/profile.png' } = Astro.props;
+---
+
+<div class="hero">
+  <div class="hero__photo-container">
+    <div class="hero__photo" style={`background-image: url(${photoUrl})`}></div>
+  </div>
+  <div class="hero__content">
+    <h1 class="big-text glitchy-text hero__name">{name}</h1>
+    <p class="hero__tagline">{tagline}</p>
+  </div>
+</div>
+
+<style>
+  .hero {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3.4rem;
+    align-items: center;
+  }
+
+  .hero__photo-container {
+    flex-shrink: 0;
+  }
+
+  .hero__photo {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--text-secondary);
+    position: relative;
+  }
+
+  .hero__photo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .hero__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero__name {
+    margin: 0 0 1rem 0;
+  }
+
+  .hero__tagline {
+    font-size: clamp(16px, 2vw, 22px);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .hero__photo {
+      width: 180px;
+      height: 180px;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .hero__photo {
+      width: 150px;
+      height: 150px;
+    }
+  }
+</style>

@@ -5,6 +5,20 @@ export type Project = {
 }
 
 export const projects: Record<string, Project[]> = {
+  thesis: [
+    {
+      url: '#',
+      name: 'Physical Adversarial Attacks Using Fan-Based Holographic Projections',
+      description:
+        'Master thesis: black-box security testing of traffic sign computer-vision pipelines. Built programmable hardware PoC with holographic POV fan achieving up to 90% misclassification across varying conditions. Demonstrated vulnerabilities in safety-critical systems.',
+    },
+    {
+      url: '#',
+      name: 'ESP8266 Ad Hoc Mesh for Real-Time Swarm Coordination',
+      description:
+        'Bachelor thesis: decentralized ad hoc mesh using ESP8266 & ESP-NOW for peer-to-peer communication. Designed and implemented real-time swarm coordination algorithm for dynamic multi-node operation without ground-station dependency.',
+    },
+  ],
   opensource: [
     {
       url: 'https://github.com/kaisermann/svelte-preprocess',

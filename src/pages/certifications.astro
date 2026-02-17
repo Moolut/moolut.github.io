@@ -1,0 +1,186 @@
+---
+import TVLayout from '../layouts/TVLayout.astro'
+import { certifications, awards } from '../modules/cv-data'
+---
+
+<TVLayout title="certifications">
+  <article class="certifications">
+    <h1 class="page-title big-text glitchy-text">CERTIFICATIONS & HONORS</h1>
+
+    <section class="cert-section">
+      <h2 class="section-title big-text">Certifications</h2>
+      <ul class="cert-list">
+        {
+          certifications.map((cert) => (
+            <li class="cert-item">
+              <div class="cert-item__header">
+                <h3 class="cert-item__name">{cert.name}</h3>
+                <span class="cert-item__date">{cert.date}</span>
+              </div>
+              <p class="cert-item__issuer">{cert.issuer}</p>
+              {cert.description && (
+                <p class="cert-item__description">{cert.description}</p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cert-section">
+      <h2 class="section-title big-text">Honors & Awards</h2>
+      <p class="section-intro">
+        Competitive CTF (Capture The Flag) achievements demonstrating practical
+        cybersecurity skills in offensive security and vulnerability research.
+      </p>
+      <ul class="awards-list">
+        {
+          awards.map((award) => (
+            <li class="award-item">
+              <div class="award-item__header">
+                <h3 class="award-item__name">{award.name}</h3>
+                <span class="award-item__year">{award.year}</span>
+              </div>
+              <div class="award-item__details">
+                <span class="award-item__position">{award.position}</span>
+                <span class="award-item__separator">•</span>
+                <span class="award-item__org">{award.organization}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </article>
+</TVLayout>
+
+<style>
+  .certifications {
+    max-width: 100%;
+  }
+
+  .page-title {
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+  }
+
+  .cert-section {
+    margin-bottom: 4rem;
+  }
+
+  .cert-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .section-intro {
+    font-size: clamp(14px, 1.6vw, 18px);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  .cert-list,
+  .awards-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cert-item,
+  .award-item {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cert-item:last-child,
+  .award-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .cert-item__header,
+  .award-item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cert-item__name,
+  .award-item__name {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+    color: var(--text-secondary);
+  }
+
+  .cert-item__date,
+  .award-item__year {
+    font-size: clamp(14px, 1.5vw, 18px);
+    opacity: 0.8;
+    white-space: nowrap;
+  }
+
+  .cert-item__issuer {
+    font-size: clamp(16px, 1.8vw, 20px);
+    margin: 0.25rem 0;
+    opacity: 0.9;
+  }
+
+  .cert-item__description {
+    font-size: clamp(14px, 1.6vw, 18px);
+    margin-top: 1rem;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  .award-item__details {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: clamp(16px, 1.8vw, 20px);
+  }
+
+  .award-item__position {
+    font-weight: bold;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+
+  .award-item__separator {
+    opacity: 0.5;
+  }
+
+  .award-item__org {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 580px) {
+    .cert-item__header,
+    .award-item__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cert-item__date,
+    .award-item__year {
+      white-space: normal;
+    }
+
+    .award-item__details {
+      flex-wrap: wrap;
+    }
+  }
+</style>

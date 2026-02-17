@@ -1,0 +1,68 @@
+---
+import TVLayout from '../layouts/TVLayout.astro'
+import ProjectList from '../components/ProjectList.astro'
+import { projects } from '../modules/projects'
+---
+
+<TVLayout title="projects">
+  <article class="projects">
+    <h1 class="page-title big-text glitchy-text">PROJECTS</h1>
+
+    <section class="project-section">
+      <h2 class="section-title big-text">Thesis Projects</h2>
+      <p class="section-description">
+        Research projects exploring security vulnerabilities in computer vision
+        systems and decentralized IoT communication protocols.
+      </p>
+      <ProjectList items={projects.thesis} />
+    </section>
+
+    <section class="project-section">
+      <h2 class="section-title big-text">Open Source</h2>
+      <p class="section-description">
+        Libraries, tools, and frameworks contributed to the open-source
+        community.
+      </p>
+      <ProjectList items={projects.opensource} />
+    </section>
+
+    <section class="project-section">
+      <h2 class="section-title big-text">Websites & Apps</h2>
+      <p class="section-description">
+        Personal projects and experimental web applications.
+      </p>
+      <ProjectList items={projects.sites} />
+    </section>
+  </article>
+</TVLayout>
+
+<style>
+  .projects {
+    max-width: 100%;
+  }
+
+  .page-title {
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+  }
+
+  .project-section {
+    margin-bottom: 5rem;
+  }
+
+  .project-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .section-description {
+    font-size: clamp(14px, 1.6vw, 18px);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+</style>

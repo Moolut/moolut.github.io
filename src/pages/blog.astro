@@ -1,0 +1,76 @@
+---
+import TVLayout from '../layouts/TVLayout.astro'
+---
+
+<TVLayout title="blog">
+  <article class="blog-placeholder">
+    <div class="placeholder-content">
+      <h1 class="big-text glitchy-text placeholder-title">COMING SOON</h1>
+      <p class="big-text placeholder-description">
+        Blog posts about cybersecurity, IoT security, penetration testing, and
+        CTF writeups will appear here soon.
+      </p>
+      <div class="static-container">
+        <div class="static-effect" aria-hidden="true"></div>
+      </div>
+    </div>
+  </article>
+</TVLayout>
+
+<style>
+  .blog-placeholder {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .placeholder-title {
+    margin-bottom: 2rem;
+    font-size: clamp(32px, 6vw, 80px);
+    text-transform: uppercase;
+  }
+
+  .placeholder-description {
+    margin-bottom: 3rem;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  .static-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .static-effect {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    background-image: url(/assets/images/effect-static.gif);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  html.webp .static-effect {
+    background-image: url(/assets/images/effect-static.webp);
+  }
+
+  html.avif .static-effect {
+    background-image: url(/assets/images/effect-static.avif);
+  }
+
+  @media (max-width: 580px) {
+    .static-effect {
+      height: 150px;
+    }
+  }
+</style>

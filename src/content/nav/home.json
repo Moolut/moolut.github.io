@@ -1,5 +1,5 @@
 {
   "url": "/",
-  "aliases": ["home", "index"],
+  "aliases": ["home", "index", "welcome"],
   "order": 10
 }

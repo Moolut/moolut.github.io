@@ -4,63 +4,85 @@ textNav:
   external: true
 ---
 
-# Christian Kaisermann
+# Mevlüt Yıldırım
 
-I'm a Web Engineer with over a decade of experience, passionate about open-source, developer tooling, and crafting scalable front-end architectures. Currently, I work at Spoke, enhancing the last-mile delivery experience by improving our front-end infrastructure and developer experience. I have a strong background in TypeScript, Svelte, React, and CSS, and I'm an advocate for clean, maintainable code. Beyond work, I'm a contributor to the Svelte ecosystem and the author of several open-source libraries. I thrive in collaborative environments and love sharing knowledge through mentorship and open-source contributions.
+Cybersecurity Professional & IoT Engineer specializing in penetration testing, embedded systems security, and building secure IoT solutions. Currently completing my M.Sc. in Communications and Electronics Engineering at TUM with a focus on IoT and Network Security. Hands-on experience in offensive security testing, vulnerability assessment, and secure system design backed by practical CTF achievements and professional cybersecurity training.
 
-[GitHub](https://github.com/kaisermann)
+[GitHub](https://github.com/moolut)
 <br>
-[Website](https://kaisermann.me) (give it a look!)
+[Email](mailto:yldrmm.mevlut@gmail.com)
 <br>
-[Email](mailto:christian@kaisermann.me)
-
-### Skills
-
-I'm familiar with most current industry tooling and framework choices such as _TypeScript_, _React_, _Svelte_, module bundlers (_Webpack_, _Rollup_, _Parcel_), _GraphQL_, and the great majority of _HTML_ and _CSS_ pre/post-processors. I'm also an advocate for readable, clean code and show it through my constant efforts of standardizing coding styles and knowledge sharing.
-
-My peers usually think I'm easy-going, communicative, a fast learner, and a reference for CSS and JavaScript knowledge. I'm also familiar with agile methodologies, interviewing, and managing open-source projects and small communities.
-
-### Some Open-source Projects
-
-- **[`svelte-preprocess`](https://github.com/sveltejs/svelte-preprocess)**: quick and painless preprocess support for svelte
-- **[`pos-mamba-sdk`](https://github.com/stone-payments/pos-mamba-sdk)**: SDK for developing apps for the Stone's POS system
-- **[`svelte-i18n`](https://github.com/kaisermann/svelte-i18n)**: internationalization library for Svelte.
-- **[`vtex/typescript`](https://github.com/vtex/typescript)**: VTEX's typescript/javascript styleguide, tooling and recipes
-
-### Working Experience
-
-**[Spoke](https://www.spoke.com/)**: Principal Engineer (2021/01 - now)
-
-**[VTEX](https://vtex.com/)**: Software Engineer (2019/05 - 2020/12)
-
-- Improve the workflow of front-end related tasks via private and open-source contributions; automating code review assignments between teams; and sharing knowledge in weekly meetings.
-- Responsible for creating and maintaining flexible, accessible, and performant React components for the storefront of more than 2000+ clients.
-- Member of the hiring committee, interviewer, and maintainer of front-end challenges repositories.
-- Mentoring of junior developers and newcomers.
-- Community moderator of a B2B community of agencies building stores with the company solutions.
-
-**[10de10](https://10de10.com.br)**: Writer and Podcaster (2015/07 - 2021/07)
-
-- Co-host of the weekly pop culture podcast _Semana dos 10_.
-
-**[Stone](https://www.stone.com.br/)**: Front-end Analyst (2018/03 - 2019/04)
-
-- Research of optimal solutions to deal with web apps for embedded devices.
-- Engage with various open-source projects to move our solution forward.
-- Rewrite the open-source SDK for the company's main POS system, Mamba.
-- Create tools and templates to remove friction for third-party app developers.
-- Create a web simulator of the whole system for quicker app development and iteration.
-- Formalize coding styles and patterns to improve code quality, review, and performance.
-
-**[TUUT](https://tuut.com.br/)**: Full-Stack Developer (2016/09 - 2018/02)
-
-- Develop WordPress websites from scratch using Blade/CSS/JavaScript.
-- Maintain the agency's production, staging, and database VPSs.
-
-**[Zona Internet](https://360dbi.com/)**: Front-end Developer (2013/11 – 2015/02)
-
-- Develop WordPress websites from scratch using PHP/CSS/JavaScript.
+[LinkedIn](https://linkedin.com/in/mevlutyildirim)
 
 ### Education
 
-- Bachelor’s Degree in Information Systems, **PUC-Rio University** _(2011 – 2016)_
+**Technical University of Munich** - M.Sc. in Communications and Electronics Engineering _(Dec. 2025)_
+
+- GPA: 1.2 (German scale: 1.0 best)
+- Relevant Coursework: IoT Security, Network Security, Embedded Systems & Security, Smart Card Laboratory, IoT Remote Lab, Software Architecture Design for Distributed Embedded Systems
+- Thesis: Physical Adversarial Attacks Using Fan-Based Holographic Projections
+
+**Hack The Box Academy** - Cybersecurity Trainee _(May 2025 – Present)_
+
+- Completed Hack The Box job-role paths: Penetration Tester and Junior Cybersecurity Analyst
+- Focus areas: web exploitation (auth/session testing, input validation, XSS/SQLi, IDOR), Active Directory enumeration and attack paths, Linux/Windows privilege escalation, password/authentication attacks, network enumeration and traffic analysis
+- Outcomes: produced step-by-step write-ups, PoCs, and reusable playbooks; standardized checklists and report snippets aligned with OWASP WSTG/Top 10 and ATT&CK
+- Tooling practiced: Kali Linux, Burp Suite, OWASP ZAP, Nmap, Metasploit, Wireshark, ffuf, sqlmap, John the Ripper, Hashcat, Nessus, BloodHound, Impacket; automation with Python and Bash
+
+**Istanbul Technical University** - B.Sc. in Electronics and Communications Engineering _(Jul. 2023)_
+
+- GPA: 3.4/4.0
+- Thesis: ESP8266 Ad Hoc Mesh for Real-Time Swarm Coordination
+
+### Skills & Technologies
+
+**Technologies**: Python, C/C++, Bash, PowerShell, Linux, Kali Linux, Windows, Nmap, Burp Suite, Wireshark, OWASP ZAP, Metasploit, sqlmap, Nessus, BloodHound, Impacket, Windows Active Directory
+
+**Skills**: Penetration Testing, Vulnerability Assessment, Secure Design Principles, Threat Analysis and Risk Assessment (TARA), Applied Cryptography
+
+**Languages**: Turkish (Mother tongue), English (C1 - Advanced), German (B1 - Intermediate)
+
+### Work Experience
+
+**German Aerospace Center (DLR)** - Cybersecurity Research Intern _(Aug. 2024 – Nov. 2024)_
+
+- Conducted an offensive protocol assessment of SpaceWire, enumerated trust boundaries, and identified missing authentication/encryption and protocol weaknesses; outlined paths and mitigations
+- Built an adversary-centric threat model and attack-surface map for on-board networks; profiled attacker capabilities and preconditions to prioritize likely exploitation chains
+- Implemented adversary emulation in OMNeT++ to replay, spoof, inject, and disrupt traffic; captured evidence to demonstrate impact on integrity, availability and command authenticity
+
+**Saportif Technology Inc.** - IoT Systems Engineer _(Sep. 2022 – Sep. 2023)_
+
+- Developed an end-to-end IoT system with ESP32 and Raspberry Pi for a smart door-lock in shared offices, integrating sensors, actuators, RFID access control, and cloud-backed web interfaces
+- Secured the integration layer with HTTPS/TLS and authenticated REST APIs; mapped RFID identities to role-based access control and enforced server-side authorization for bookings and device commands
+- Implemented input validation, parameterized requests, rate limiting, and audit logging; documented issues using OWASP Top 10 categories to prioritize remediation
+
+**Saportif Technology Inc.** - Full-Stack Developer _(Oct. 2020 – Sep. 2022)_
+
+- Built and maintained React and Node services with secure-by-default patterns and peer code reviews
+- Implemented authentication and session controls (RBAC, JWT, secure cookies), CSRF protection, and XSS mitigations including output encoding and CSP
+- Hardened REST APIs with input validation, parameterized queries, security headers, and structured error handling; controls aligned with OWASP Top 10 and WSTG
+
+**Arcelik Inc.** - Software Engineer Intern _(Jul. 2022 – Sep. 2022)_
+
+- Built a Python test library that created a software-based virtual testing environment and removed reliance on hardware simulators
+- Achieved approximately 80% faster test execution on refrigerator control boards with reusable, automated test algorithms
+
+### Projects
+
+**Physical Adversarial Attacks Using Fan-Based Holographic Projections** _(May 2025 – Nov. 2025)_
+
+- Planned and executed black-box security testing of traffic sign computer-vision pipelines; produced a threat model and attack-surface analysis for safety-critical scenarios
+- Built a programmable hardware proof of concept with a holographic POV fan and a repeatable test harness to run real-time experiments and collect evidence for vulnerability assessment
+- Quantified evasion/misclassification across lighting, distance, and angle, achieving up to 90% misclassification; delivered steps to reproduce, PoCs, and prioritized mitigations
+
+**ESP8266 Ad Hoc Mesh for Real-Time Swarm Coordination** _(Oct. 2022 – Jul. 2023)_
+
+- Built a decentralized ad hoc mesh using ESP8266 & ESP-NOW, removing the ground-station dependency via peer-to-peer links
+- Designed and implemented a real-time swarm coordination algorithm for dynamic environments and multi-node operation
+- Evaluated communication reliability and latency under varying node counts and mobility; documented results and limitations
+
+### Honors & Awards
+
+- **IOTSEC CTF I** – 1st place, TUM 2024
+- **IOTSEC CTF II** – 2nd place, TUM 2024
+- **Kaspersky CTF** – 4th place (Europe) 2025
