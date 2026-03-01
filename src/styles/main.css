@@ -30,7 +30,7 @@
   --gui-bottom: 2.94117647059rem;
 
   --cursor-default: url(/assets/images/cursor-default.png) 0 0, auto;
-  --cursor-pointer: url(/assets/images/cursor-pointer.png) 14 8, auto;
+  --cursor-pointer: url(/assets/images/cursor-pointer.png) 10 6, auto;
 }
 
 /* scrollbar */

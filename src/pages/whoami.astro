@@ -39,6 +39,8 @@ const workItems = workExperience.map((work) => ({
       <a href="#skills" class="page-nav__link">Tech Skills</a>
       <a href="#languages" class="page-nav__link">Languages</a>
     </nav>
+    <!-- Placeholder that fills the nav's space when it is pinned/fixed -->
+    <div class="page-nav-spacer" aria-hidden="true"></div>
 
     <div id="education">
       <CVSection title="Education" items={educationItems} />
@@ -133,25 +135,43 @@ const workItems = workExperience.map((work) => ({
     margin-bottom: 1rem;
   }
 
-  /* Sticky page navigation - retro TV theme */
+  /* Page navigation - switches between normal flow and fixed once the h1 scrolls away */
   .page-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 1px solid rgba(0, 255, 0, 0.3);
-    padding: 0.5rem 0;
-    margin-bottom: 1.5rem;
+    /* Normal (in-flow) state */
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
     flex-wrap: wrap;
-    backdrop-filter: blur(10px);
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Pinned state toggled by JS once the page title leaves the viewport */
+  .page-nav.is-pinned {
+    position: fixed;
+    /* top is set dynamically via JS using tv-content's bounding rect */
+    left: var(--page-nav-left);
+    width: var(--page-nav-width);
+    margin-bottom: 0;
+  }
+
+  /* Spacer that holds the nav's original height so the layout doesn't jump */
+  .page-nav-spacer {
+    display: none;
+    height: var(--page-nav-height, 0px);
+    margin-bottom: 1.5rem;
+  }
+
+  .page-nav-spacer.is-visible {
+    display: block;
   }
 
   .page-nav__link {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(12px, 1.3vw, 14px);
     text-transform: uppercase;
     color: rgba(0, 255, 0, 0.7);
@@ -159,6 +179,8 @@ const workItems = workExperience.map((work) => ({
     padding: 0.25rem 0.5rem;
     transition: color 0.2s ease;
     letter-spacing: 0.05em;
+    /* Suppress the global rainbow-background effect from content.css */
+    background-image: none !important;
   }
 
   .page-nav__link:hover {
@@ -202,6 +224,14 @@ const workItems = workExperience.map((work) => ({
     color: transparent;
   }
 
+  /* Offset scroll targets so they aren't hidden behind the pinned nav */
+  #education,
+  #work-experience,
+  #skills,
+  #languages {
+    scroll-margin-top: 48px;
+  }
+
   .terminal-section {
     margin-bottom: 2rem;
     border: 2px solid var(--text-secondary);
@@ -223,7 +253,7 @@ const workItems = workExperience.map((work) => ({
       rgba(0, 255, 0, 0.05)
     );
     border-bottom: 2px solid #0f0;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.8vw, 20px);
     color: var(--text-secondary);
     font-weight: normal;
@@ -277,7 +307,7 @@ const workItems = workExperience.map((work) => ({
   }
 
   .skill-category__title {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.6vw, 17px);
     text-transform: uppercase;
     margin-bottom: 0.4rem;
@@ -311,7 +341,7 @@ const workItems = workExperience.map((work) => ({
     list-style: none;
     padding: 0;
     margin: 0;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
   }
 
   .languages-list li {
@@ -573,41 +603,120 @@ const workItems = workExperience.map((work) => ({
 </style>
 
 <script>
-  // Smooth scroll for navigation links
+  // ─── Page nav: pin to top of tv-content once h1 scrolls away ────────────
+  function initPageNav() {
+    const nav = document.querySelector('.page-nav') as HTMLElement | null;
+    const spacer = document.querySelector('.page-nav-spacer') as HTMLElement | null;
+    const title = document.querySelector('.page-title') as HTMLElement | null;
+    const scrollRoot = document.querySelector('.tv-content') as HTMLElement | null;
+
+    if (!nav || !spacer || !title || !scrollRoot) return;
+
+    function pin() {
+      const rootRect = scrollRoot!.getBoundingClientRect();
+      const navRect = nav!.getBoundingClientRect();
+      spacer!.style.setProperty('--page-nav-height', navRect.height + 'px');
+      nav!.style.setProperty('--page-nav-left', rootRect.left + 'px');
+      nav!.style.setProperty('--page-nav-width', rootRect.width + 'px');
+      nav!.style.top = rootRect.top + 'px';
+      nav!.classList.add('is-pinned');
+      spacer!.classList.add('is-visible');
+    }
+
+    function unpin() {
+      nav!.classList.remove('is-pinned');
+      nav!.style.top = '';
+      spacer!.classList.remove('is-visible');
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          pin();
+        } else {
+          unpin();
+        }
+      },
+      { root: scrollRoot, threshold: 0 }
+    );
+
+    observer.observe(title);
+
+    // Update fixed position on resize (tv-content shifts)
+    const resizeObserver = new ResizeObserver(() => {
+      if (nav!.classList.contains('is-pinned')) pin();
+    });
+    resizeObserver.observe(scrollRoot);
+
+    document.addEventListener('astro:before-swap', () => {
+      observer.disconnect();
+      resizeObserver.disconnect();
+    }, { once: true });
+  }
+
+  // ─── Smooth scroll accounting for nav height ─────────────────────────────
   function initNavLinks() {
+    const scrollRoot = document.querySelector('.tv-content') as HTMLElement | null;
     const navLinks = document.querySelectorAll('.page-nav__link');
+
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
+        // Blur immediately so the rainbow focus style doesn't linger
+        (link as HTMLElement).blur();
+
         const targetId = link.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const targetElement = document.querySelector(targetId as string) as HTMLElement | null;
+        if (!targetElement || !scrollRoot) return;
+
+        // Calculate how far the target is from the current scroll position
+        // inside the actual scroll container (.tv-content), not the window.
+        const rootRect = scrollRoot.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+        // nav height offset so the target isn't hidden behind the pinned bar
+        const nav = document.querySelector('.page-nav') as HTMLElement | null;
+        const navOffset = (nav && nav.classList.contains('is-pinned')) ? nav.offsetHeight : 0;
+
+        const targetScrollTop =
+          scrollRoot.scrollTop + (targetRect.top - rootRect.top) - navOffset;
+
+        scrollRoot.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
       });
     });
   }
 
   // Initialize on page load
+  initPageNav();
   initNavLinks();
 
-  // Reinitialize after client-side navigation
-  document.addEventListener('astro:after-swap', initNavLinks);
+  // Re-initialize after client-side navigation
+  document.addEventListener('astro:after-swap', () => {
+    initPageNav();
+    initNavLinks();
+  });
 
   // Rainbow cycling for whoami title
+  // Use window-scoped state so any re-execution of this script (by Astro view
+  // transitions) can always find and clear the previous interval.
   const titles = ['WHOAMI', 'moolut', 'Mevlüt Yıldırım'];
-  let titleIndex = 0;
-  let intervalId = null;
+
+  function stopTitleCycling() {
+    if (window.__whoamiTitleInterval != null) {
+      clearInterval(window.__whoamiTitleInterval);
+      window.__whoamiTitleInterval = null;
+    }
+  }
 
   function initTitleCycling() {
+    stopTitleCycling();
+
     const titleElement = document.querySelector('.whoami-text');
     if (!titleElement) return;
 
-    if (intervalId) {
-      clearInterval(intervalId);
-    }
+    // Always start from the first title when (re-)initialising
+    let titleIndex = 0;
 
-    function cycleTitle() {
+    window.__whoamiTitleInterval = setInterval(() => {
       titleElement.classList.add('changing');
 
       setTimeout(() => {
@@ -618,11 +727,12 @@ const workItems = workExperience.map((work) => ({
           titleElement.classList.remove('changing');
         }, 400);
       }, 200);
-    }
-
-    intervalId = setInterval(cycleTitle, 3000);
+    }, 3000);
   }
 
   initTitleCycling();
+  // Re-init after a client-side navigation brings this page into view,
+  // and clean up before the page is swapped out so old intervals don't linger.
   document.addEventListener('astro:after-swap', initTitleCycling);
+  document.addEventListener('astro:before-swap', stopTitleCycling);
 </script>

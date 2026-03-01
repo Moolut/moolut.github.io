@@ -153,7 +153,7 @@ const { title, items } = Astro.props
       rgba(0, 255, 0, 0.05)
     );
     border-bottom: 2px solid #0f0;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.8vw, 20px);
     color: var(--text-secondary);
     font-weight: normal;
@@ -204,13 +204,13 @@ const { title, items } = Astro.props
 
   .entry-prompt {
     color: #0f0;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-weight: bold;
     font-size: clamp(18px, 2vw, 22px);
   }
 
   .entry-title {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(17px, 1.9vw, 21px);
     color: var(--text-secondary);
     font-weight: bold;
@@ -219,7 +219,7 @@ const { title, items } = Astro.props
   }
 
   .entry-period {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.6vw, 18px);
     color: #0f0;
     opacity: 0.9;
@@ -227,7 +227,7 @@ const { title, items } = Astro.props
 
   .entry-line {
     margin-bottom: 0.4rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.7vw, 18px);
     line-height: 1.6;
   }
@@ -272,20 +272,20 @@ const { title, items } = Astro.props
 
   .position-connector {
     color: rgba(255, 255, 255, 0.4);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.7vw, 18px);
     margin-right: 0.25rem;
   }
 
   .position-title {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.7vw, 18px);
     color: rgba(255, 255, 255, 0.95);
     font-style: italic;
   }
 
   .position-period {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(14px, 1.5vw, 17px);
     color: #0f0;
     opacity: 0.8;
@@ -294,7 +294,7 @@ const { title, items } = Astro.props
   .position-indent {
     color: rgba(255, 255, 255, 0.3);
     margin-right: 0.5rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(15px, 1.7vw, 18px);
     display: inline-block;
     width: 1.5ch;
@@ -335,7 +335,7 @@ const { title, items } = Astro.props
     color: #0f0;
     padding: 0.2rem 0.6rem;
     font-size: clamp(13px, 1.4vw, 15px);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     border-radius: 3px;
     transition: all 0.2s ease;
   }
@@ -354,7 +354,7 @@ const { title, items } = Astro.props
     display: flex;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: clamp(14px, 1.6vw, 17px);
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.85);
@@ -369,7 +369,7 @@ const { title, items } = Astro.props
   .entry-divider {
     margin-top: 1.25rem;
     color: rgba(255, 255, 255, 0.15);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: 12px;
     overflow: hidden;
     text-overflow: clip;
