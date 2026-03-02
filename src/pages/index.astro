@@ -42,40 +42,108 @@ import TVLayout from '../layouts/TVLayout.astro'
       </p>
     </div>
 
-    <div class="intro">
-      <p class="intro-text">
-        Some people collect tools — I collect
-        <strong class="highlight-link" data-info="The habit of poking at &quot;normal&quot; behavior until the edge cases start talking.">questions</strong>.
-        What happens if this input is just slightly off? If a system trusts the wrong detail, just once?
-        If a harmless
-        <strong class="highlight-link" data-info="The &quot;it&apos;ll be fine&quot; parts of a design that quietly become vulnerabilities.">assumption</strong>
-        turns into an
-        <strong class="highlight-link" data-info="Small, boring steps that chain into something serious.">attack path</strong>?
-        That curiosity is what pulled me into <strong class="highlight">cybersecurity</strong> and what keeps me here.
-      </p>
-      <p class="intro-text">
-        I&apos;m an <strong class="highlight">ethical hacker</strong> who enjoys living in the
-        <strong class="highlight-link" data-info="The space between &quot;passes tests&quot; and &quot;survives an adversary.&quot;">gap</strong>
-        between &ldquo;it works&rdquo; and &ldquo;it&apos;s secure.&rdquo; I enjoy both breaking things
-        ethically through <strong class="highlight">offensive testing</strong> and thinking like an analyst on the
-        <strong class="highlight">defensive side</strong>, connecting signals into a clear incident story.
-        Whether it&apos;s an enterprise environment, a <strong class="highlight">web app</strong>, or a
-        <strong class="highlight">connected device</strong>, I like mapping how
-        trust is built, where it silently expands, and where it can be bent.
-      </p>
-      <p class="intro-text">
-        I keep things practical: explore, test, document, improve. I&apos;m most at home when
-        <strong class="highlight">security becomes concrete</strong>, when the uncomfortable details are
-        turned into <strong class="highlight">clear evidence</strong>, and systems leave
-        the page a little harder to break.
-      </p>
+    <div class="lower-third">
+      <div class="lower-third-panel">
+        <div class="lower-third-body">
+          <div class="lower-third-caption-bar">
+            <div class="caption-left">
+              <span class="caption-tag">// ABOUT</span>
+              <span class="caption-meta" id="lt-caption-meta">CAPTION: ABOUT</span>
+              <button class="caption-decode-btn" id="lt-decode-btn" title="Decode text animation">MODE: DECODE</button>
+            </div>
+            <div class="caption-right">
+              <span class="caption-timecode" id="lt-timecode">00:00</span>
+              <span class="caption-subtitle-flag" id="lt-subtitle-toggle" data-mode="ON" role="button" tabindex="0" title="Shift+click for hidden mode">SUBTITLE: ON &#9654;</span>
+            </div>
+          </div>
+          <div class="lower-third-content">
+            <!-- SUBTITLE modes -->
+            <!-- SUBTITLE: ON — full paragraphs -->
+            <div class="subtitle-mode subtitle-mode-on">
+              <p class="intro-text">
+                Some people collect tools — I collect
+                <strong class="highlight-link" data-info="The habit of poking at &quot;normal&quot; behavior until the edge cases start talking.">questions</strong>.
+                What happens if this input is just slightly off? If a system trusts the wrong detail, just once?
+                If a harmless
+                <strong class="highlight-link" data-info="The &quot;it&apos;ll be fine&quot; parts of a design that quietly become vulnerabilities.">assumption</strong>
+                turns into an
+                <strong class="highlight-link" data-info="Small, boring steps that chain into something serious.">attack path</strong>?
+                That curiosity is what pulled me into <strong class="highlight">cybersecurity</strong> and what keeps me here.
+              </p>
+              <p class="intro-text">
+                I&apos;m an <strong class="highlight">ethical hacker</strong> who enjoys living in the
+                <strong class="highlight-link" data-info="The space between &quot;passes tests&quot; and &quot;survives an adversary.&quot;">gap</strong>
+                between &ldquo;it works&rdquo; and &ldquo;it&apos;s secure.&rdquo; I enjoy both breaking things
+                ethically through <strong class="highlight">offensive testing</strong> and thinking like an analyst on the
+                <strong class="highlight">defensive side</strong>, connecting signals into a clear incident story.
+                Whether it&apos;s an enterprise environment, a <strong class="highlight">web app</strong>, or a
+                <strong class="highlight">connected device</strong>, I like mapping how
+                trust is built, where it silently expands, and where it can be bent.
+              </p>
+              <p class="intro-text">
+                I keep things practical: explore, test, document, improve. I&apos;m most at home when
+                <strong class="highlight">security becomes concrete</strong>, when the uncomfortable details are
+                turned into <strong class="highlight">clear evidence</strong>, and systems leave
+                the page a little harder to break.
+              </p>
+            </div>
+
+            <!-- SUBTITLE: CC1 — line-based format -->
+            <div class="subtitle-mode subtitle-mode-cc1" hidden>
+              <div class="cc-lines">
+                <span class="cc-line">Questions are how I got into cybersecurity.</span>
+                <span class="cc-line">Ethical hacker. Offensive + defensive thinking.</span>
+                <span class="cc-line">I track where trust silently expands, then bends.</span>
+                <span class="cc-line">Explore. Test. Document. Improve.</span>
+                <span class="cc-line">Make security concrete. Leave systems harder to break.</span>
+              </div>
+            </div>
+
+            <!-- SUBTITLE: CC2 — data-card format -->
+            <div class="subtitle-mode subtitle-mode-cc2" hidden>
+              <div class="cc-info-block">
+                <div class="cc-row"><span class="cc-key">ROLE:</span><span class="cc-val">Ethical Hacker / Security Researcher</span></div>
+                <div class="cc-row"><span class="cc-key">FOCUS:</span><span class="cc-val">Offensive Testing + Defensive Analysis</span></div>
+                <div class="cc-row"><span class="cc-key">SCOPE:</span><span class="cc-val">Web / Enterprise / Connected Systems</span></div>
+                <div class="cc-row"><span class="cc-key">METHOD:</span><span class="cc-val">Explore &rarr; Test &rarr; Document &rarr; Improve</span></div>
+                <div class="cc-row"><span class="cc-key">STATUS:</span><span class="cc-val">Still looking for the flag</span></div>
+              </div>
+            </div>
+
+            <!-- SUBTITLE: EGG — easter egg -->
+            <div class="subtitle-mode subtitle-mode-egg" hidden>
+              <div class="cc-egg">
+                <p class="cc-egg-line"><span class="cc-egg-prompt">root@visitor:~#</span> whoami</p>
+                <p class="cc-egg-line cc-egg-out">curious_human</p>
+                <p class="cc-egg-line"><span class="cc-egg-prompt">root@visitor:~#</span> cat /flag.txt</p>
+                <p class="cc-egg-line cc-egg-out">FLAG&#123;y0u_cl1ck3d_4_t1m3s_gg&#125;</p>
+                <p class="cc-egg-line"><span class="cc-egg-prompt">root@visitor:~#</span> cat /etc/motd</p>
+                <p class="cc-egg-line cc-egg-out">No zero-days here. Probably.</p>
+                <p class="cc-egg-line cc-egg-out">Nice persistence though. &mdash; moolut<span class="cc-cursor">_</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lower-third-tracking"></div>
     </div>
 
     <section class="what-drives-me">
       <h2 class="section-title">What Drives Me</h2>
       <div class="drives-grid">
-        <div class="drive-card">
-          <h3 class="drive-title">Curiosity with purpose</h3>
+
+        <div class="drive-card card-crt-glass">
+          <div class="card-header-strip">SYS://PROBE &nbsp;▌</div>
+          <div class="card-channel"><span>CH-01</span></div>
+          <h3 class="drive-title">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="10" height="10" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="10" y1="11" x2="17" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+              </svg>
+            </span>
+            Curiosity with purpose
+          </h3>
           <p class="drive-description">
             I thrive on turning questions into structured testing. I like pressure-checking assumptions,
             uncovering what&apos;s hidden, and making systems
@@ -84,9 +152,25 @@ import TVLayout from '../layouts/TVLayout.astro'
             <strong class="highlight-link" data-info="Curiosity aimed at a clear security outcome, not random exploration.">purpose</strong>
             is what keeps the work from becoming noise.
           </p>
+          <div class="card-footer">
+            <span class="card-status">MODE: ACTIVE</span>
+            <div class="card-confidence"><div class="confidence-fill" style="width:82%"></div></div>
+          </div>
+
         </div>
-        <div class="drive-card">
-          <h3 class="drive-title">Learning that compounds</h3>
+
+        <div class="drive-card card-vhs-label">
+          <div class="card-header-strip">SYS://LEARN &nbsp;▌</div>
+          <div class="card-channel"><span>CH-02</span></div>
+          <h3 class="drive-title">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 15V4C9 4 6 2.5 2 4V15C6 13.5 9 15 9 15Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M9 15V4C9 4 12 2.5 16 4V15C12 13.5 9 15 9 15Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Learning that compounds
+          </h3>
           <p class="drive-description">
             I treat learning as a discipline: labs, deep dives, and hands-on experiments. I stay
             close to modern threats like AI-enabled attacks, prompt manipulation, and cyber-physical
@@ -95,9 +179,26 @@ import TVLayout from '../layouts/TVLayout.astro'
             and skills that
             <strong class="highlight-link" data-info="Skills that stack over time and accelerate future learning.">compound</strong>.
           </p>
+          <div class="card-footer">
+            <span class="card-status">INDEX: GROWING</span>
+            <div class="card-confidence"><div class="confidence-fill" style="width:91%"></div></div>
+          </div>
+
         </div>
-        <div class="drive-card">
-          <h3 class="drive-title">Impact through evidence</h3>
+
+        <div class="drive-card card-terminal">
+          <div class="card-header-strip">SYS://IMPACT &nbsp;▌</div>
+          <div class="card-channel"><span>CH-03</span></div>
+          <h3 class="drive-title">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
+              </svg>
+            </span>
+            Impact through evidence
+          </h3>
           <p class="drive-description">
             I&apos;m driven by outcomes that reduce real risk. I focus on reproducible findings, clear
             reasoning, and practical
@@ -106,9 +207,24 @@ import TVLayout from '../layouts/TVLayout.astro'
             <strong class="highlight-link" data-info="Results that show what breaks, why it breaks, and how to fix it.">evidence</strong>,
             they get fixed.
           </p>
+          <div class="card-footer">
+            <span class="card-status">OUTPUT: VERIFIED</span>
+            <div class="card-confidence"><div class="confidence-fill" style="width:76%"></div></div>
+          </div>
+
         </div>
-        <div class="drive-card">
-          <h3 class="drive-title">Innovation that makes others faster</h3>
+
+        <div class="drive-card card-warning-tape">
+          <div class="card-header-strip">SYS://BUILD &nbsp;▌</div>
+          <div class="card-channel"><span>CH-04</span></div>
+          <h3 class="drive-title">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="11,1 4,10 9,10 7,17 14,8 9,8 11,1" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Innovation that makes others faster
+          </h3>
           <p class="drive-description">
             I enjoy building tools and methodologies that reduce guesswork and increase precision.
             The goal is
@@ -117,7 +233,13 @@ import TVLayout from '../layouts/TVLayout.astro'
             <strong class="highlight-link" data-info="Less time lost to uncertainty, more time spent on what matters.">faster</strong>
             without losing depth.
           </p>
+          <div class="card-footer">
+            <span class="card-status">PIPELINE: OPEN</span>
+            <div class="card-confidence"><div class="confidence-fill" style="width:88%"></div></div>
+          </div>
+
         </div>
+
       </div>
     </section>
 
@@ -314,15 +436,318 @@ import TVLayout from '../layouts/TVLayout.astro'
     visibility: visible;
   }
 
-  .intro {
+  /* ── Lower-Third "Broadcast" About Panel ── */
+  .lower-third {
     margin-top: 1.25rem;
     margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .lower-third-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Caption bar — top strip inside the panel ── */
+  .lower-third-caption-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    z-index: 2;
+  }
+
+  .caption-left {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .caption-tag {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+
+  .caption-meta {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .caption-right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .caption-timecode {
+    color: rgba(255, 255, 255, 0.65);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .caption-subtitle-flag {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2px 8px;
+    line-height: 1.5;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.08s, box-shadow 0.15s;
+  }
+
+  .caption-subtitle-flag:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+  }
+
+  .caption-subtitle-flag:active {
+    transform: translateY(1px);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
+
+  .caption-subtitle-flag[data-mode="OFF"] {
+    color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .caption-subtitle-flag[data-mode="CC1"] {
+    color: #7dd8ff;
+    border-color: #7dd8ff;
+    background: rgba(125, 216, 255, 0.12);
+  }
+
+  .caption-subtitle-flag[data-mode="CC2"] {
+    color: #ff8080;
+    border-color: #ff8080;
+    background: rgba(255, 128, 128, 0.12);
+  }
+
+  .caption-subtitle-flag[data-mode="EGG"] {
+    color: #ffe066;
+    border-color: #ffe066;
+    background: rgba(255, 224, 102, 0.1);
+    animation: eggGlow 1.4s ease-in-out infinite;
+  }
+
+  @keyframes eggGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Decode button in caption bar */
+  .caption-decode-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    cursor: pointer;
+    line-height: 1.5;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  .caption-decode-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .caption-decode-btn.decoding {
+    color: var(--glitchy-blue, #4af);
+    border-color: var(--glitchy-blue, #4af);
+    animation: decodePulse 0.35s ease-in-out infinite;
+  }
+
+  @keyframes decodePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .lower-third-panel {
+    display: flex;
+    gap: 0;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    /* Sharp CRT box — no border-radius */
+    border-radius: 0;
+    /* Gradient bg + noise overlay via pseudo */
+    background:
+      linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.045) 0%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+    box-shadow:
+      inset 0 0 24px rgba(255, 255, 255, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.6);
+    overflow: visible;
+  }
+
+  /* Noise overlay via SVG data-uri */
+  .lower-third-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  /* Scanline overlay */
+  .lower-third-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.08) 3px,
+      rgba(0, 0, 0, 0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .lower-third-content {
+    flex: 1;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    z-index: 3;
+    overflow: visible;
+  }
+
+  /* Bottom tracking line */
+  .lower-third-tracking {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.35) 20%,
+      rgba(255, 255, 255, 0.35) 80%,
+      transparent 100%
+    );
+    margin-top: 2px;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+  }
+
+  /* ── Subtitle mode content variants ── */
+
+  .cc-summary {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(13px, 1.5vw, 16px) !important;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.65;
+  }
+
+  .cc-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.5rem 0;
+  }
+
+  .cc-line {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(13px, 1.5vw, 16px);
+    color: rgba(255, 255, 255, 0.8);
+    border-left: 2px solid var(--glitchy-blue, #4af);
+    padding-left: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .cc-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.5rem 0;
+  }
+
+  .cc-row {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(12px, 1.4vw, 15px);
+    line-height: 1.5;
+  }
+
+  .cc-key {
+    color: rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+    width: 5.5rem;
+  }
+
+  .cc-val {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* Easter egg terminal block */
+  .cc-egg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.4rem 0;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(12px, 1.4vw, 14px);
+  }
+
+  .cc-egg-line {
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+  }
+
+  .cc-egg-prompt {
+    color: var(--glitchy-blue, #4af);
+    margin-right: 0.5em;
+  }
+
+  .cc-egg-out {
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 1.5em;
+  }
+
+  .cc-cursor {
+    animation: blink 1s step-end infinite;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   .intro-text {
     font-size: clamp(15px, 1.8vw, 20px);
     line-height: 1.7;
     margin-bottom: 1rem;
+  }
+
+  /* Larger text specifically inside the lower-third broadcast panel */
+  .lower-third-content .intro-text {
+    font-size: clamp(16px, 2vw, 22px);
   }
 
   .intro-text:last-child {
@@ -355,18 +780,18 @@ import TVLayout from '../layouts/TVLayout.astro'
     bottom: calc(100% + 0.5rem);
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.95);
+    background: #000;
     color: var(--text-secondary);
     padding: 0.5rem 1rem;
-    border-radius: 4px;
+    border-radius: 0;
     border: 1px solid var(--text-secondary);
-    font-size: 16px;
+    font-size: 14px;
     white-space: nowrap;
     visibility: hidden;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: none;
-    z-index: 1000;
+    z-index: 9999;
   }
 
   .highlight-link:hover::before {
@@ -383,14 +808,14 @@ import TVLayout from '../layouts/TVLayout.astro'
     transform: translateX(-50%) rotate(45deg);
     width: 8px;
     height: 8px;
-    background: rgba(0, 0, 0, 0.95);
+    background: #000;
     border-right: 1px solid var(--text-secondary);
     border-bottom: 1px solid var(--text-secondary);
     visibility: hidden;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
     pointer-events: none;
-    z-index: 999;
+    z-index: 9999;
   }
 
   .highlight-link:hover::after {
@@ -445,7 +870,7 @@ import TVLayout from '../layouts/TVLayout.astro'
   .drive-card {
     background: rgba(255, 255, 255, 0.09);
     border: 1px solid rgba(255, 255, 255, 0.32);
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem 1.5rem;
     border-radius: 4px;
     position: relative;
     transition:
@@ -482,6 +907,16 @@ import TVLayout from '../layouts/TVLayout.astro'
     to   { background-position: 0% 200%; }
   }
 
+  /* Lift the hovered card above siblings so the tooltip clears their borders */
+  .drive-card:has(.highlight-link:hover) {
+    z-index: 10;
+  }
+
+  /* Same for the about panel */
+  .lower-third:has(.highlight-link:hover) {
+    z-index: 10;
+  }
+
   /* Chromatic-aberration border glow matching the site's glitch colours */
   .drive-card:hover {
     border-color: rgba(255, 255, 255, 0.6);
@@ -498,6 +933,9 @@ import TVLayout from '../layouts/TVLayout.astro'
   }
 
   .drive-title {
+    display: flex;
+    align-items: center;
+    gap: 0;
     font-size: clamp(17px, 2vw, 22px);
     text-transform: uppercase;
     margin-bottom: 0.75rem;
@@ -567,6 +1005,155 @@ import TVLayout from '../layouts/TVLayout.astro'
       transform: rotate(45deg);
     }
   }
+
+  /* ── Card Channel Label — in-flow row above the title ── */
+  .card-channel {
+    display: flex;
+    justify-content: flex-end;
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    pointer-events: none;
+    margin-bottom: 0.6rem;
+    line-height: 1;
+  }
+
+  /* Wrap the text in a subtle border box via an inner span */
+  .card-channel > span {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2px 5px;
+  }
+
+  /* ── Card Footer (status + confidence bar) ── */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-status {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .card-confidence {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    transition: width 0.4s ease;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  }
+
+  /* ── Pixel Card Icon (title prefix) ── */
+  .card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-right: 0.55rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease, filter 0.2s ease;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .drive-card:hover .card-icon {
+    color: rgba(255, 255, 255, 0.95);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+  }
+
+  .card-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ── Unified SYS:// header strip (all cards) ── */
+  .card-header-strip {
+    font-family: var(--font-mono, monospace);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.4rem 0.75rem;
+    margin: -1.25rem -1.5rem 0.75rem -1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── CRT Glass Card ── */
+  .card-crt-glass {
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        rgba(0, 0, 0, 0.35) 100%
+      ) !important;
+    box-shadow:
+      inset 0 0 30px rgba(255, 255, 255, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 1px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ── VHS Label Card ── */
+  .card-vhs-label {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(0, 0, 0, 0.5) 100%
+      ) !important;
+  }
+
+  .vhs-tape-label,
+  .card-header-strip { /* kept for specificity */ }
+
+  /* ── Terminal Sheet Card ── */
+  .card-terminal {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(0, 0, 0, 0.5) 100%
+      ) !important;
+  }
+
+  .terminal-header-strip {
+    display: none; /* replaced by .card-header-strip */
+  }
+
+  /* ── Warning Tape Card ── */
+  .card-warning-tape {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(0, 0, 0, 0.5) 100%
+      ) !important;
+  }
+
+  /* ── Microtext watermark shared by all cards ── */
+
 </style>
 
 <script>
@@ -616,6 +1203,204 @@ import TVLayout from '../layouts/TVLayout.astro'
   // intervals never outlive the page they belong to.
   document.addEventListener('astro:after-swap', initRoleCycling);
   document.addEventListener('astro:before-swap', stopRoleCycling);
+
+  // ── Live broadcast timecode for the About caption bar ──
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateTimecode() {
+    const el = document.getElementById('lt-timecode');
+    if (!el) return;
+    const n = new Date();
+    el.textContent = `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+  }
+
+  function initTimecode() {
+    if (window.__timecodeInterval) clearInterval(window.__timecodeInterval);
+    updateTimecode();
+    window.__timecodeInterval = setInterval(updateTimecode, 1000);
+  }
+
+  initTimecode();
+  document.addEventListener('astro:after-swap', initTimecode);
+  document.addEventListener('astro:before-swap', () => {
+    if (window.__timecodeInterval) clearInterval(window.__timecodeInterval);
+  });
+
+  // ── SUBTITLE toggle: switch pane then decode-animate the new text ──
+  function initSubtitleToggle() {
+    const el = document.getElementById('lt-subtitle-toggle');
+    if (!el) return;
+
+    const modes = ['ON', 'CC1', 'CC2', 'EGG'];
+    const ARROW = ' \u25B8';
+    const labels = {
+      ON:  'SUBTITLE: ON'   + ARROW,
+      CC1: 'SUBTITLE: CC1'  + ARROW,
+      CC2: 'SUBTITLE: CC2'  + ARROW,
+      EGG: 'SUBTITLE: ????' + ARROW,
+    };
+    const captions = {
+      ON:  'CAPTION: ABOUT',
+      CC1: 'CAPTION: LIVE FEED',
+      CC2: 'CAPTION: SYS DATA',
+      EGG: 'CAPTION: [REDACTED]',
+    };
+    let modeIndex = 0;
+    let transitioning = false;
+
+    const btn = el.cloneNode(true);
+    el.parentNode.replaceChild(btn, el);
+
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&*?@^~';
+    const rc = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+    function showPane(mode) {
+      document.querySelectorAll('.subtitle-mode').forEach(p => { p.style.display = 'none'; });
+      const active = document.querySelector('.subtitle-mode-' + mode.toLowerCase());
+      if (active) { active.removeAttribute('hidden'); active.style.display = ''; }
+      return active;
+    }
+
+    function applyMode(mode) {
+      btn.textContent = labels[mode] || ('SUBTITLE: ' + mode + ARROW);
+      btn.dataset.mode = mode;
+      const capMeta = document.getElementById('lt-caption-meta');
+      if (capMeta) capMeta.textContent = captions[mode] || 'CAPTION: ABOUT';
+    }
+
+    function tune(nextMode) {
+      if (transitioning) return;
+      transitioning = true;
+
+      // Show the new pane immediately
+      showPane(nextMode);
+      applyMode(nextMode);
+
+      // Grab the decode button to mirror its state
+      const decodeBtn = document.getElementById('lt-decode-btn');
+
+      // Collect all visible text nodes inside the new pane
+      const content = document.querySelector('.lower-third-content');
+      if (!content) { transitioning = false; return; }
+      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.textContent.trim().length > 0) textNodes.push(node);
+      }
+      const originals = textNodes.map(n => n.textContent);
+
+      // Scramble all text instantly
+      textNodes.forEach(n => { n.textContent = n.textContent.replace(/\S/g, rc); });
+
+      // Mirror state on the decode button
+      if (decodeBtn) {
+        decodeBtn.classList.add('decoding');
+        decodeBtn.textContent = 'MODE: ACTIVE';
+      }
+
+      // Reveal left-to-right over 700ms
+      let elapsed = 0;
+      const DURATION = 700;
+      const TICK = 25;
+      const id = setInterval(() => {
+        elapsed += TICK;
+        const progress = elapsed / DURATION;
+        textNodes.forEach((n, i) => {
+          const orig = originals[i];
+          const revealCount = Math.floor(orig.length * progress);
+          let result = '';
+          for (let j = 0; j < orig.length; j++) {
+            result += (j < revealCount || orig[j].trim() === '') ? orig[j] : rc();
+          }
+          n.textContent = result;
+        });
+        if (elapsed >= DURATION) {
+          clearInterval(id);
+          textNodes.forEach((n, i) => { n.textContent = originals[i]; });
+          if (decodeBtn) {
+            decodeBtn.classList.remove('decoding');
+            decodeBtn.textContent = 'MODE: DECODE';
+          }
+          transitioning = false;
+        }
+      }, TICK);
+    }
+
+    btn.addEventListener('click', () => {
+      if (transitioning) return;
+      modeIndex = (modeIndex + 1) % modes.length;
+      tune(modes[modeIndex]);
+    });
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+    });
+
+    // Set initial state without animation
+    showPane('ON');
+    applyMode('ON');
+  }
+
+  // ── MODE: DECODE — scramble then reveal text inside About panel ──
+  function initDecodeMode() {
+    const btn = document.getElementById('lt-decode-btn');
+    if (!btn) return;
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&*?@^~';
+    const rc = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('decoding')) return;
+      const content = document.querySelector('.lower-third-content');
+      if (!content) return;
+
+      // Collect visible text leaf nodes
+      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.textContent.trim().length > 0) textNodes.push(node);
+      }
+      const originals = textNodes.map(n => n.textContent);
+
+      btn.classList.add('decoding');
+      btn.textContent = 'MODE: ACTIVE';
+
+      // Phase 1: instantly scramble
+      textNodes.forEach(n => {
+        n.textContent = n.textContent.replace(/\S/g, rc);
+      });
+
+      // Phase 2: reveal left-to-right over 900ms
+      let elapsed = 0;
+      const DURATION = 900;
+      const TICK = 30;
+      const id = setInterval(() => {
+        elapsed += TICK;
+        const progress = elapsed / DURATION;
+        textNodes.forEach((n, i) => {
+          const orig = originals[i];
+          const revealCount = Math.floor(orig.length * progress);
+          let result = '';
+          for (let j = 0; j < orig.length; j++) {
+            if (j < revealCount || orig[j].trim() === '') result += orig[j];
+            else result += rc();
+          }
+          n.textContent = result;
+        });
+        if (elapsed >= DURATION) {
+          clearInterval(id);
+          textNodes.forEach((n, i) => { n.textContent = originals[i]; });
+          btn.classList.remove('decoding');
+          btn.textContent = 'MODE: DECODE';
+        }
+      }, TICK);
+    });
+  }
+
+  initSubtitleToggle();
+  initDecodeMode();
+  document.addEventListener('astro:after-swap', initSubtitleToggle);
+  document.addEventListener('astro:after-swap', initDecodeMode);
 
   // Flip/wrap tooltip only when it would actually overflow the viewport
   function initTooltipFlip() {
