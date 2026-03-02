@@ -5,9 +5,37 @@ import TVLayout from '../layouts/TVLayout.astro'
 <TVLayout>
   <article class="welcome">
     <div class="hero-section">
-      <h1 class="big-text hero-title">
-        <span class="name-hover" tabindex="0">Mevlüt Yıldırım</span>
-      </h1>
+      <div class="hero-name-row">
+        <h1 class="big-text hero-title">
+          <span class="name-hover" tabindex="0">Mevlüt Yıldırım</span>
+        </h1>
+        <div class="social-links">
+          <a href="mailto:yldrmm.mevlut@gmail.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <span>EMAIL</span>
+          </a>
+          <a href="https://linkedin.com/in/mevlut-yildirim" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            <span>LINKEDIN</span>
+          </a>
+          <a href="https://github.com/moolut" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.838 1.236 1.838 1.236 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.52 11.52 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.807 5.625-5.479 5.92.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .315.21.694.825.576C20.565 21.797 24 17.298 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>GITHUB</span>
+          </a>
+          <a href="/resume" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            </svg>
+            <span>RESUME</span>
+          </a>
+        </div>
+      </div>
       <p class="hero-tagline">
         <span class="role-text">Cybersecurity Engineer </span>
         <span class="static-text">based in Munich</span>
@@ -16,16 +44,30 @@ import TVLayout from '../layouts/TVLayout.astro'
 
     <div class="intro">
       <p class="intro-text">
-        I am a
-        <strong class="highlight">Cybersecurity Professional</strong> and
-        <strong class="highlight">IoT Engineer</strong> specializing in
-        <strong class="highlight">penetration testing</strong>,
-        <strong class="highlight">embedded systems security</strong>, and building
-        <strong class="highlight">secure IoT solutions</strong>. Currently
-        completing my <strong class="highlight">M.Sc. in Communications and
-        Electronics Engineering at TUM</strong> with a focus on
-        <strong class="highlight-link" data-info="Advanced security protocols for connected devices">IoT Security</strong> and
-        <strong class="highlight-link" data-info="Firewalls, IDS/IPS, VPN, and network hardening">Network Security</strong>.
+        Some people collect tools — I collect
+        <strong class="highlight-link" data-info="The habit of poking at &quot;normal&quot; behavior until the edge cases start talking.">questions</strong>.
+        What happens if this input is just slightly off? If a system trusts the wrong detail, just once?
+        If a harmless
+        <strong class="highlight-link" data-info="The &quot;it&apos;ll be fine&quot; parts of a design that quietly become vulnerabilities.">assumption</strong>
+        turns into an
+        <strong class="highlight-link" data-info="Small, boring steps that chain into something serious.">attack path</strong>?
+        That curiosity is what pulled me into <strong class="highlight">cybersecurity</strong> and what keeps me here.
+      </p>
+      <p class="intro-text">
+        I&apos;m an <strong class="highlight">ethical hacker</strong> who enjoys living in the
+        <strong class="highlight-link" data-info="The space between &quot;passes tests&quot; and &quot;survives an adversary.&quot;">gap</strong>
+        between &ldquo;it works&rdquo; and &ldquo;it&apos;s secure.&rdquo; I enjoy both breaking things
+        ethically through <strong class="highlight">offensive testing</strong> and thinking like an analyst on the
+        <strong class="highlight">defensive side</strong>, connecting signals into a clear incident story.
+        Whether it&apos;s an enterprise environment, a <strong class="highlight">web app</strong>, or a
+        <strong class="highlight">connected device</strong>, I like mapping how
+        trust is built, where it silently expands, and where it can be bent.
+      </p>
+      <p class="intro-text">
+        I keep things practical: explore, test, document, improve. I&apos;m most at home when
+        <strong class="highlight">security becomes concrete</strong>, when the uncomfortable details are
+        turned into <strong class="highlight">clear evidence</strong>, and systems leave
+        the page a little harder to break.
       </p>
     </div>
 
@@ -33,41 +75,52 @@ import TVLayout from '../layouts/TVLayout.astro'
       <h2 class="section-title">What Drives Me</h2>
       <div class="drives-grid">
         <div class="drive-card">
-          <h3 class="drive-title">Security-First Mindset</h3>
+          <h3 class="drive-title">Curiosity with purpose</h3>
           <p class="drive-description">
-            I thrive on uncovering hidden vulnerabilities and strengthening
-            systems through rigorous <strong class="highlight-link" data-info="OWASP Top 10, API testing, exploit development">penetration testing</strong> and
-            <strong class="highlight">threat analysis</strong>, ensuring robust protection against
-            emerging cyber threats.
+            I thrive on turning questions into structured testing. I like pressure-checking assumptions,
+            uncovering what&apos;s hidden, and making systems
+            <strong class="highlight-link" data-info="When real behavior is proven, not assumed.">honest</strong>
+            through ethical hacking, not guesswork. That
+            <strong class="highlight-link" data-info="Curiosity aimed at a clear security outcome, not random exploration.">purpose</strong>
+            is what keeps the work from becoming noise.
           </p>
         </div>
         <div class="drive-card">
-          <h3 class="drive-title">Innovation in IoT Security</h3>
+          <h3 class="drive-title">Learning that compounds</h3>
           <p class="drive-description">
-            Passionate about developing cutting-edge security solutions for
-            <strong class="highlight-link" data-info="Firmware analysis, hardware hacking, ARM debugging">embedded systems</strong> and <strong class="highlight">IoT devices</strong>,
-            bridging the gap between hardware and software security.
+            I treat learning as a discipline: labs, deep dives, and hands-on experiments. I stay
+            close to modern threats like AI-enabled attacks, prompt manipulation, and cyber-physical
+            security, building mental models that
+            <strong class="highlight-link" data-info="Knowledge that applies across different environments.">transfer</strong>
+            and skills that
+            <strong class="highlight-link" data-info="Skills that stack over time and accelerate future learning.">compound</strong>.
           </p>
         </div>
         <div class="drive-card">
-          <h3 class="drive-title">Continuous Learning</h3>
+          <h3 class="drive-title">Impact through evidence</h3>
           <p class="drive-description">
-            Actively expanding expertise through hands-on labs, <strong class="highlight-link" data-info="IOTSEC CTF, Kaspersky CTF, Hack The Box">CTF
-            competitions</strong>, and research, staying ahead of
-            <strong class="highlight">AI-driven threats</strong> and advanced attack vectors in
-            cybersecurity.
+            I&apos;m driven by outcomes that reduce real risk. I focus on reproducible findings, clear
+            reasoning, and practical
+            <strong class="highlight-link" data-info="Changes that remove the cause, not the symptom.">remediation</strong>
+            so results don&apos;t just get noticed — backed by solid
+            <strong class="highlight-link" data-info="Results that show what breaks, why it breaks, and how to fix it.">evidence</strong>,
+            they get fixed.
           </p>
         </div>
         <div class="drive-card">
-          <h3 class="drive-title">Real-World Impact</h3>
+          <h3 class="drive-title">Innovation that makes others faster</h3>
           <p class="drive-description">
-            Dedicated to applying offensive security techniques and
-            <strong class="highlight-link" data-info="CVE research, security audits, risk assessment">vulnerability assessment</strong> to protect critical
-            systems, from <strong class="highlight">aerospace networks</strong> to <strong class="highlight">smart infrastructure</strong>.
+            I enjoy building tools and methodologies that reduce guesswork and increase precision.
+            The goal is
+            <strong class="highlight-link" data-info="A method others can run and trust, not a one-off win.">repeatable</strong>
+            security work that helps teams move
+            <strong class="highlight-link" data-info="Less time lost to uncertainty, more time spent on what matters.">faster</strong>
+            without losing depth.
           </p>
         </div>
       </div>
     </section>
+
 
     <div class="call-to-action-section">
       <p class="call-to-action">
@@ -92,19 +145,121 @@ import TVLayout from '../layouts/TVLayout.astro'
 
   /* Hero Section */
   .hero-section {
-    margin-bottom: 3rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Name on the left, social links pinned to the right, baseline-aligned */
+  .hero-name-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 
   .hero-title {
-    margin: 0 0 1rem 0;
+    margin: 0;
     text-transform: uppercase;
+    flex-shrink: 1;
+    min-width: 0;
+    line-height: 1;
   }
 
   .hero-tagline {
-    font-size: clamp(16px, 2vw, 22px);
-    line-height: 1.5;
-    margin: 0 0 2rem 0;
-    min-height: 2em;
+    font-size: clamp(20px, 2.6vw, 28px);
+    line-height: 1.4;
+    margin: 0.4rem 0 0 0;
+    min-height: 1.5em;
+  }
+
+  .static-text {
+    margin-left: 0.5ch;
+  }
+
+  /* ── Social links: horizontal row aligned to the right of the name ── */
+  .social-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    padding: 0.5em 1.1em;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: clamp(11px, 1.2vw, 14px);
+    white-space: nowrap;
+    letter-spacing: 0.12em;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    background-image: none !important;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .social-link svg {
+    position: relative;
+    z-index: 1;
+    width: 1.1em;
+    height: 1.1em;
+    flex-shrink: 0;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .social-link span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CRT scan sweep */
+  .social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.07) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .social-link:hover::before {
+    animation: scanH 0.4s ease forwards;
+  }
+
+  @keyframes scanH {
+    to { transform: translateX(100%); }
+  }
+
+  .social-link:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow:
+      2px 0 0 0 var(--glitchy-blue),
+      -2px 0 0 0 var(--glitchy-red),
+      0 0 12px rgba(255, 255, 255, 0.12);
+  }
+
+  .social-link:hover svg {
+    opacity: 1;
   }
 
   /* Role text with rainbow-static effect */
@@ -129,10 +284,6 @@ import TVLayout from '../layouts/TVLayout.astro'
 
   .role-text.changing {
     background-size: 100% 100%;
-  }
-
-  .static-text {
-    margin-left: 0.5ch;
   }
 
   /* Name hover effect to show profile photo */
@@ -164,13 +315,17 @@ import TVLayout from '../layouts/TVLayout.astro'
   }
 
   .intro {
-    margin-top: 2rem;
-    margin-bottom: 3rem;
+    margin-top: 1.25rem;
+    margin-bottom: 2rem;
   }
 
   .intro-text {
-    font-size: clamp(14px, 1.6vw, 18px);
+    font-size: clamp(15px, 1.8vw, 20px);
     line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .intro-text:last-child {
     margin-bottom: 0;
   }
 
@@ -205,7 +360,7 @@ import TVLayout from '../layouts/TVLayout.astro'
     padding: 0.5rem 1rem;
     border-radius: 4px;
     border: 1px solid var(--text-secondary);
-    font-size: 12px;
+    font-size: 16px;
     white-space: nowrap;
     visibility: hidden;
     opacity: 0;
@@ -243,22 +398,42 @@ import TVLayout from '../layouts/TVLayout.astro'
     opacity: 1;
   }
 
+  /* Flip tooltip to the left when keyword is near the right edge */
+  .highlight-link.tooltip-flip::before {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+
+  .highlight-link.tooltip-flip::after {
+    left: auto;
+    right: 4px;
+    transform: rotate(45deg);
+  }
+
+  /* Wrap only as a last resort when tooltip overflows even after flip */
+  .highlight-link.tooltip-wrap::before {
+    white-space: normal;
+    max-width: 220px;
+    width: max-content;
+  }
+
   /* What Drives Me Section */
   .what-drives-me {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .section-title {
     font-size: clamp(20px, 3vw, 32px);
     text-transform: uppercase;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
     color: var(--text-secondary);
   }
 
   .drives-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   @media (min-width: 768px) {
@@ -268,28 +443,85 @@ import TVLayout from '../layouts/TVLayout.astro'
   }
 
   .drive-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.32);
     padding: 1.5rem;
     border-radius: 4px;
-    transition: all 0.3s ease;
+    position: relative;
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      background 0.25s ease;
   }
 
+  /* CRT scan-line sweep — reuses the same vline keyframe from animations.css */
+  .drive-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 100%
+    );
+    background-size: 100% 300%;
+    background-position: 0% 0%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .drive-card:hover::before {
+    opacity: 1;
+    animation: vlineBg 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes vlineBg {
+    from { background-position: 0% 0%; }
+    to   { background-position: 0% 200%; }
+  }
+
+  /* Chromatic-aberration border glow matching the site's glitch colours */
   .drive-card:hover {
-    border-color: var(--text-secondary);
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow:
+      2px 0   0 0 var(--glitchy-blue),
+      -2px 0  0 0 var(--glitchy-red),
+      0 0 16px rgba(255, 255, 255, 0.08);
+  }
+
+  .drive-card > * {
+    position: relative;
+    z-index: 1;
   }
 
   .drive-title {
-    font-size: clamp(16px, 1.8vw, 20px);
+    font-size: clamp(17px, 2vw, 22px);
     text-transform: uppercase;
     margin-bottom: 0.75rem;
     color: var(--text-secondary);
+    transition: text-shadow 0.25s ease;
+  }
+
+  /* Looping glitch animation on the title */
+  @keyframes glitchTitle {
+    0%   { text-shadow: 2px  1px 0 var(--glitchy-blue), -2px -1px 0 var(--glitchy-red); transform: translateX(0);  }
+    15%  { text-shadow: -3px 0   0 var(--glitchy-blue),  3px  0   0 var(--glitchy-red); transform: translateX(1px); }
+    30%  { text-shadow: 3px -1px 0 var(--glitchy-red),  -3px  1px 0 var(--glitchy-blue); transform: translateX(-1px); }
+    50%  { text-shadow: 2px  1px 0 var(--glitchy-blue), -2px -1px 0 var(--glitchy-red); transform: translateX(0);  }
+    65%  { text-shadow: -2px 2px 0 var(--glitchy-red),   2px -2px 0 var(--glitchy-blue); transform: translateX(2px); }
+    80%  { text-shadow: 3px  0   0 var(--glitchy-blue), -3px  0   0 var(--glitchy-red); transform: translateX(-1px); }
+    100% { text-shadow: 2px  1px 0 var(--glitchy-blue), -2px -1px 0 var(--glitchy-red); transform: translateX(0);  }
+  }
+
+  .drive-card:hover .drive-title {
+    animation: glitchTitle 0.5s steps(1, end) infinite;
   }
 
   .drive-description {
-    font-size: clamp(13px, 1.4vw, 16px);
+    font-size: clamp(15px, 1.8vw, 20px);
     line-height: 1.6;
     margin: 0;
   }
@@ -301,13 +533,20 @@ import TVLayout from '../layouts/TVLayout.astro'
 
   /* Call to action */
   .call-to-action-section {
-    margin-top: 2rem;
+    margin-top: 1.25rem;
   }
 
   .call-to-action {
-    font-size: clamp(14px, 1.6vw, 18px);
-    opacity: 0.9;
+    font-size: clamp(15px, 1.8vw, 20px);
     margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero-name-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
   }
 
   @media (max-width: 580px) {
@@ -319,10 +558,8 @@ import TVLayout from '../layouts/TVLayout.astro'
     }
 
     .highlight-link::before {
+      max-width: 180px;
       white-space: normal;
-      max-width: 200px;
-      left: 0;
-      transform: none;
     }
 
     .highlight-link::after {
@@ -341,43 +578,84 @@ import TVLayout from '../layouts/TVLayout.astro'
     'Security Researcher'
   ];
 
-  let roleIndex = 0;
-  let intervalId = null;
-
-  function cycleRole(roleElement) {
-    if (!roleElement) return;
-
-    // Add changing class to trigger rainbow-static
-    roleElement.classList.add('changing');
-
-    setTimeout(() => {
-      // Change role text
-      roleIndex = (roleIndex + 1) % roles.length;
-      roleElement.textContent = roles[roleIndex] + ' ';
-
-      // Remove changing class after transition
-      setTimeout(() => {
-        roleElement.classList.remove('changing');
-      }, 400);
-    }, 200);
+  function stopRoleCycling() {
+    if (window.__roleIntervalId != null) {
+      clearInterval(window.__roleIntervalId);
+      window.__roleIntervalId = null;
+    }
   }
 
   function initRoleCycling() {
+    stopRoleCycling();
+
     const roleElement = document.querySelector('.role-text');
     if (!roleElement) return;
 
-    // Clear any existing interval
-    if (intervalId) {
-      clearInterval(intervalId);
-    }
+    // Always start from index 0 on (re-)init so cycling is predictable
+    let roleIndex = 0;
 
-    // Start cycling every 3 seconds
-    intervalId = setInterval(() => cycleRole(roleElement), 3000);
+    window.__roleIntervalId = setInterval(() => {
+      // Add changing class to trigger rainbow-static
+      roleElement.classList.add('changing');
+
+      setTimeout(() => {
+        roleIndex = (roleIndex + 1) % roles.length;
+        roleElement.textContent = roles[roleIndex] + ' ';
+
+        setTimeout(() => {
+          roleElement.classList.remove('changing');
+        }, 400);
+      }, 200);
+    }, 3000);
   }
 
   // Initialize on page load
   initRoleCycling();
 
-  // Reinitialize after client-side navigation
+  // Re-init after client-side navigation; clean up before swap so stale
+  // intervals never outlive the page they belong to.
   document.addEventListener('astro:after-swap', initRoleCycling);
+  document.addEventListener('astro:before-swap', stopRoleCycling);
+
+  // Flip/wrap tooltip only when it would actually overflow the viewport
+  function initTooltipFlip() {
+    document.querySelectorAll('.highlight-link').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        // Reset classes first
+        el.classList.remove('tooltip-flip', 'tooltip-wrap');
+
+        // Temporarily make visible (hidden) to measure
+        const pseudo = window.getComputedStyle(el, '::before');
+        // Use a temporary element to measure tooltip width
+        const measurer = document.createElement('span');
+        measurer.style.cssText = `position:fixed;visibility:hidden;white-space:nowrap;font-size:16px;padding:0.5rem 1rem;pointer-events:none;z-index:-1`;
+        measurer.textContent = el.dataset.info || '';
+        document.body.appendChild(measurer);
+        const tipW = measurer.offsetWidth;
+        document.body.removeChild(measurer);
+
+        const rect = el.getBoundingClientRect();
+        const anchorX = rect.left + rect.width / 2;
+        const tipLeft = anchorX - tipW / 2;
+        const tipRight = anchorX + tipW / 2;
+        const vw = window.innerWidth;
+
+        if (tipRight > vw - 8) {
+          // Would overflow right — flip to left-anchor
+          el.classList.add('tooltip-flip');
+          // Check if even flipped it overflows left
+          const flippedLeft = rect.right - tipW;
+          if (flippedLeft < 8) {
+            el.classList.add('tooltip-wrap');
+          }
+        } else if (tipLeft < 8) {
+          // Would overflow left — wrap in place
+          el.classList.add('tooltip-wrap');
+        }
+      });
+    });
+  }
+
+  initTooltipFlip();
+  document.addEventListener('astro:after-swap', initTooltipFlip);
 </script>
