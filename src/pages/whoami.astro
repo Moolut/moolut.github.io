@@ -34,13 +34,11 @@ const workItems = workExperience.map((work) => ({
     </h1>
 
     <nav class="page-nav">
-      <a href="#education" class="page-nav__link">Education</a>
-      <a href="#work-experience" class="page-nav__link">Work Experience</a>
-      <a href="#skills" class="page-nav__link">Tech Skills</a>
-      <a href="#languages" class="page-nav__link">Languages</a>
+      <button class="page-nav__link" data-target="#education">Education</button>
+      <button class="page-nav__link" data-target="#work-experience">Work Experience</button>
+      <button class="page-nav__link" data-target="#skills">Tech Skills</button>
+      <button class="page-nav__link" data-target="#languages">Languages</button>
     </nav>
-    <!-- Placeholder that fills the nav's space when it is pinned/fixed -->
-    <div class="page-nav-spacer" aria-hidden="true"></div>
 
     <div id="education">
       <CVSection title="Education" items={educationItems} />
@@ -135,9 +133,8 @@ const workItems = workExperience.map((work) => ({
     margin-bottom: 1rem;
   }
 
-  /* Page navigation - switches between normal flow and fixed once the h1 scrolls away */
+  /* Page navigation — sticky inside the .tv-content scroll container */
   .page-nav {
-    /* Normal (in-flow) state */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,26 +145,8 @@ const workItems = workExperience.map((work) => ({
     border-bottom: 1px solid rgba(0, 255, 0, 0.3);
     padding: 0.5rem 0;
     margin-bottom: 1.5rem;
-  }
-
-  /* Pinned state toggled by JS once the page title leaves the viewport */
-  .page-nav.is-pinned {
-    position: fixed;
-    /* top is set dynamically via JS using tv-content's bounding rect */
-    left: var(--page-nav-left);
-    width: var(--page-nav-width);
-    margin-bottom: 0;
-  }
-
-  /* Spacer that holds the nav's original height so the layout doesn't jump */
-  .page-nav-spacer {
-    display: none;
-    height: var(--page-nav-height, 0px);
-    margin-bottom: 1.5rem;
-  }
-
-  .page-nav-spacer.is-visible {
-    display: block;
+    position: sticky;
+    top: 0;
   }
 
   .page-nav__link {
@@ -181,6 +160,9 @@ const workItems = workExperience.map((work) => ({
     letter-spacing: 0.05em;
     /* Suppress the global rainbow-background effect from content.css */
     background-image: none !important;
+    background-color: transparent;
+    border: none;
+    appearance: none;
   }
 
   .page-nav__link:hover {
@@ -603,97 +585,9 @@ const workItems = workExperience.map((work) => ({
 </style>
 
 <script>
-  // ─── Page nav: pin to top of tv-content once h1 scrolls away ────────────
-  function initPageNav() {
-    const nav = document.querySelector('.page-nav') as HTMLElement | null;
-    const spacer = document.querySelector('.page-nav-spacer') as HTMLElement | null;
-    const title = document.querySelector('.page-title') as HTMLElement | null;
-    const scrollRoot = document.querySelector('.tv-content') as HTMLElement | null;
-
-    if (!nav || !spacer || !title || !scrollRoot) return;
-
-    function pin() {
-      const rootRect = scrollRoot!.getBoundingClientRect();
-      const navRect = nav!.getBoundingClientRect();
-      spacer!.style.setProperty('--page-nav-height', navRect.height + 'px');
-      nav!.style.setProperty('--page-nav-left', rootRect.left + 'px');
-      nav!.style.setProperty('--page-nav-width', rootRect.width + 'px');
-      nav!.style.top = rootRect.top + 'px';
-      nav!.classList.add('is-pinned');
-      spacer!.classList.add('is-visible');
-    }
-
-    function unpin() {
-      nav!.classList.remove('is-pinned');
-      nav!.style.top = '';
-      spacer!.classList.remove('is-visible');
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          pin();
-        } else {
-          unpin();
-        }
-      },
-      { root: scrollRoot, threshold: 0 }
-    );
-
-    observer.observe(title);
-
-    // Update fixed position on resize (tv-content shifts)
-    const resizeObserver = new ResizeObserver(() => {
-      if (nav!.classList.contains('is-pinned')) pin();
-    });
-    resizeObserver.observe(scrollRoot);
-
-    document.addEventListener('astro:before-swap', () => {
-      observer.disconnect();
-      resizeObserver.disconnect();
-    }, { once: true });
-  }
-
-  // ─── Smooth scroll accounting for nav height ─────────────────────────────
-  function initNavLinks() {
-    const scrollRoot = document.querySelector('.tv-content') as HTMLElement | null;
-    const navLinks = document.querySelectorAll('.page-nav__link');
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Blur immediately so the rainbow focus style doesn't linger
-        (link as HTMLElement).blur();
-
-        const targetId = link.getAttribute('href');
-        const targetElement = document.querySelector(targetId as string) as HTMLElement | null;
-        if (!targetElement || !scrollRoot) return;
-
-        // Calculate how far the target is from the current scroll position
-        // inside the actual scroll container (.tv-content), not the window.
-        const rootRect = scrollRoot.getBoundingClientRect();
-        const targetRect = targetElement.getBoundingClientRect();
-        // nav height offset so the target isn't hidden behind the pinned bar
-        const nav = document.querySelector('.page-nav') as HTMLElement | null;
-        const navOffset = (nav && nav.classList.contains('is-pinned')) ? nav.offsetHeight : 0;
-
-        const targetScrollTop =
-          scrollRoot.scrollTop + (targetRect.top - rootRect.top) - navOffset;
-
-        scrollRoot.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
-      });
-    });
-  }
-
-  // Initialize on page load
-  initPageNav();
-  initNavLinks();
-
-  // Re-initialize after client-side navigation
-  document.addEventListener('astro:after-swap', () => {
-    initPageNav();
-    initNavLinks();
-  });
+  // ─── Nav scroll is handled in navigation.js + TVLayout.astro ────────────
+  // (Astro's deselectScripts() prevents this module from re-running during SPA
+  //  navigations, so the listener lives in the shared layout script instead.)
 
   // Rainbow cycling for whoami title
   // Use window-scoped state so any re-execution of this script (by Astro view

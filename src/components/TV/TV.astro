@@ -5,8 +5,10 @@ import Starfield from './Starfield.astro'
 import TVEffects from './TVEffects.astro'
 import Screen from './svelte/Screen.svelte'
 import Remote from './svelte/Remote.svelte'
+import IntroVideo from './IntroVideo.astro'
 ---
 
+<IntroVideo />
 <div class="space">
   <Starfield />
   <div class="spaceship">
@@ -46,6 +48,7 @@ import Remote from './svelte/Remote.svelte'
     z-index: var(--layer-content);
     overflow: hidden auto;
     background-color: rgba(0, 0, 0, 0.4);
+    scroll-behavior: smooth;
   }
 
   .space {

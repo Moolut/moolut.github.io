@@ -21,8 +21,10 @@ const { title, description }: Props = Astro.props
 
 <script>
   import { initHotkeys } from '../modules/keyboard'
-  import { setupClientNavigation } from '../modules/navigation'
+  import { setupClientNavigation, initNavScroll } from '../modules/navigation'
 
   initHotkeys()
   setupClientNavigation()
+  // Also bind on hard-refresh (astro:after-swap doesn't fire on initial load)
+  initNavScroll()
 </script>

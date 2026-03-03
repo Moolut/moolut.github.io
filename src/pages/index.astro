@@ -38,7 +38,7 @@ import TVLayout from '../layouts/TVLayout.astro'
       </div>
       <p class="hero-tagline">
         <span class="role-text">Cybersecurity Engineer </span>
-        <span class="static-text">based in Munich</span>
+        <span class="static-text">based in <span class="munich-hover">Munich</span></span>
       </p>
     </div>
 
@@ -436,6 +436,36 @@ import TVLayout from '../layouts/TVLayout.astro'
     visibility: visible;
   }
 
+  /* Munich hover effect to show munich.png */
+  .munich-hover {
+    position: relative;
+    color: var(--text-secondary);
+    cursor: default;
+  }
+
+  .munich-hover::after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 100;
+    bottom: calc(100% + 0.75em);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14rem;
+    padding-bottom: 14rem;
+    visibility: hidden;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--text-secondary);
+  }
+
+  .munich-hover:hover::after {
+    background-image: url(/assets/images/munich.png);
+    transition: visibility 0s 0.2s;
+    visibility: visible;
+    filter: contrast(1.1) saturate(1.05);
+  }
+
   /* ── Lower-Third "Broadcast" About Panel ── */
   .lower-third {
     margin-top: 1.25rem;
@@ -503,7 +533,7 @@ import TVLayout from '../layouts/TVLayout.astro'
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 2px 8px;
     line-height: 1.5;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     user-select: none;
     transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.08s, box-shadow 0.15s;
   }
@@ -560,7 +590,7 @@ import TVLayout from '../layouts/TVLayout.astro'
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 2px 8px;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     line-height: 1.5;
     transition: color 0.15s, border-color 0.15s, background 0.15s;
   }
@@ -1226,181 +1256,94 @@ import TVLayout from '../layouts/TVLayout.astro'
     if (window.__timecodeInterval) clearInterval(window.__timecodeInterval);
   });
 
-  // ── SUBTITLE toggle: switch pane then decode-animate the new text ──
-  function initSubtitleToggle() {
-    const el = document.getElementById('lt-subtitle-toggle');
-    if (!el) return;
-
-    const modes = ['ON', 'CC1', 'CC2', 'EGG'];
-    const ARROW = ' \u25B8';
-    const labels = {
-      ON:  'SUBTITLE: ON'   + ARROW,
-      CC1: 'SUBTITLE: CC1'  + ARROW,
-      CC2: 'SUBTITLE: CC2'  + ARROW,
-      EGG: 'SUBTITLE: ????' + ARROW,
-    };
-    const captions = {
-      ON:  'CAPTION: ABOUT',
-      CC1: 'CAPTION: LIVE FEED',
-      CC2: 'CAPTION: SYS DATA',
-      EGG: 'CAPTION: [REDACTED]',
-    };
-    let modeIndex = 0;
-    let transitioning = false;
-
-    const btn = el.cloneNode(true);
-    el.parentNode.replaceChild(btn, el);
+  // ── Caption bar: SUBTITLE toggle + MODE: DECODE ──────────────────────────
+  // Single delegated listener on .tv-content (transition:persist), bound once
+  // for the browser session. State lives in window.__captionState so it
+  // survives navigations. No cloneNode, no astro lifecycle dependency.
+  if (!window.__captionBound) {
+    window.__captionBound = true;
 
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&*?@^~';
     const rc = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+    const MODES = ['ON', 'CC1', 'CC2', 'EGG'];
+    const ARROW = ' \u25B8';
+    const LABELS = { ON: 'SUBTITLE: ON' + ARROW, CC1: 'SUBTITLE: CC1' + ARROW, CC2: 'SUBTITLE: CC2' + ARROW, EGG: 'SUBTITLE: ????' + ARROW };
+    const CAPTIONS = { ON: 'CAPTION: ABOUT', CC1: 'CAPTION: LIVE FEED', CC2: 'CAPTION: SYS DATA', EGG: 'CAPTION: [REDACTED]' };
 
-    function showPane(mode) {
-      document.querySelectorAll('.subtitle-mode').forEach(p => { p.style.display = 'none'; });
-      const active = document.querySelector('.subtitle-mode-' + mode.toLowerCase());
-      if (active) { active.removeAttribute('hidden'); active.style.display = ''; }
-      return active;
+    // Persistent mutable state — never reset between navigations
+    const S = { modeIndex: 0, transitioning: false };
+
+    function scrambleReveal(duration, onDone) {
+      const content = document.querySelector('.lower-third-content');
+      const decodeBtn = document.getElementById('lt-decode-btn');
+      if (!content) { if (onDone) onDone(); return; }
+      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
+      const nodes = [], originals = [];
+      let n;
+      while ((n = walker.nextNode())) { if (n.textContent.trim()) { nodes.push(n); originals.push(n.textContent); } }
+      nodes.forEach(n => { n.textContent = n.textContent.replace(/\S/g, rc); });
+      if (decodeBtn) { decodeBtn.classList.add('decoding'); decodeBtn.textContent = 'MODE: ACTIVE'; }
+      let elapsed = 0;
+      const id = setInterval(() => {
+        elapsed += 25;
+        const p = elapsed / duration;
+        nodes.forEach((n, i) => {
+          const orig = originals[i], rev = Math.floor(orig.length * p);
+          n.textContent = Array.from(orig, (c, j) => (j < rev || !c.trim()) ? c : rc()).join('');
+        });
+        if (elapsed >= duration) {
+          clearInterval(id);
+          nodes.forEach((n, i) => { n.textContent = originals[i]; });
+          if (decodeBtn) { decodeBtn.classList.remove('decoding'); decodeBtn.textContent = 'MODE: DECODE'; }
+          if (onDone) onDone();
+        }
+      }, 25);
     }
 
     function applyMode(mode) {
-      btn.textContent = labels[mode] || ('SUBTITLE: ' + mode + ARROW);
-      btn.dataset.mode = mode;
-      const capMeta = document.getElementById('lt-caption-meta');
-      if (capMeta) capMeta.textContent = captions[mode] || 'CAPTION: ABOUT';
+      document.querySelectorAll('.subtitle-mode').forEach(p => { p.style.display = 'none'; });
+      const pane = document.querySelector('.subtitle-mode-' + mode.toLowerCase());
+      if (pane) { pane.removeAttribute('hidden'); pane.style.display = ''; }
+      const btn = document.getElementById('lt-subtitle-toggle');
+      if (btn) { btn.textContent = LABELS[mode]; (btn as HTMLElement).dataset.mode = mode; }
+      const meta = document.getElementById('lt-caption-meta');
+      if (meta) meta.textContent = CAPTIONS[mode];
     }
 
-    function tune(nextMode) {
-      if (transitioning) return;
-      transitioning = true;
-
-      // Show the new pane immediately
-      showPane(nextMode);
-      applyMode(nextMode);
-
-      // Grab the decode button to mirror its state
-      const decodeBtn = document.getElementById('lt-decode-btn');
-
-      // Collect all visible text nodes inside the new pane
-      const content = document.querySelector('.lower-third-content');
-      if (!content) { transitioning = false; return; }
-      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
-      const textNodes = [];
-      let node;
-      while ((node = walker.nextNode())) {
-        if (node.textContent.trim().length > 0) textNodes.push(node);
-      }
-      const originals = textNodes.map(n => n.textContent);
-
-      // Scramble all text instantly
-      textNodes.forEach(n => { n.textContent = n.textContent.replace(/\S/g, rc); });
-
-      // Mirror state on the decode button
-      if (decodeBtn) {
-        decodeBtn.classList.add('decoding');
-        decodeBtn.textContent = 'MODE: ACTIVE';
-      }
-
-      // Reveal left-to-right over 700ms
-      let elapsed = 0;
-      const DURATION = 700;
-      const TICK = 25;
-      const id = setInterval(() => {
-        elapsed += TICK;
-        const progress = elapsed / DURATION;
-        textNodes.forEach((n, i) => {
-          const orig = originals[i];
-          const revealCount = Math.floor(orig.length * progress);
-          let result = '';
-          for (let j = 0; j < orig.length; j++) {
-            result += (j < revealCount || orig[j].trim() === '') ? orig[j] : rc();
-          }
-          n.textContent = result;
-        });
-        if (elapsed >= DURATION) {
-          clearInterval(id);
-          textNodes.forEach((n, i) => { n.textContent = originals[i]; });
-          if (decodeBtn) {
-            decodeBtn.classList.remove('decoding');
-            decodeBtn.textContent = 'MODE: DECODE';
-          }
-          transitioning = false;
-        }
-      }, TICK);
+    // Re-apply current UI state whenever index DOM comes into view
+    function syncCaptionUI() {
+      if (!document.getElementById('lt-subtitle-toggle')) return;
+      applyMode(MODES[S.modeIndex]);
     }
+    document.addEventListener('astro:after-swap', syncCaptionUI);
+    syncCaptionUI();
 
-    btn.addEventListener('click', () => {
-      if (transitioning) return;
-      modeIndex = (modeIndex + 1) % modes.length;
-      tune(modes[modeIndex]);
-    });
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-    });
-
-    // Set initial state without animation
-    showPane('ON');
-    applyMode('ON');
-  }
-
-  // ── MODE: DECODE — scramble then reveal text inside About panel ──
-  function initDecodeMode() {
-    const btn = document.getElementById('lt-decode-btn');
-    if (!btn) return;
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&*?@^~';
-    const rc = () => CHARS[Math.floor(Math.random() * CHARS.length)];
-
-    btn.addEventListener('click', () => {
-      if (btn.classList.contains('decoding')) return;
-      const content = document.querySelector('.lower-third-content');
-      if (!content) return;
-
-      // Collect visible text leaf nodes
-      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
-      const textNodes = [];
-      let node;
-      while ((node = walker.nextNode())) {
-        if (node.textContent.trim().length > 0) textNodes.push(node);
+    // Click: subtitle cycle
+    document.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      // Subtitle toggle
+      if (t.closest('#lt-subtitle-toggle')) {
+        if (S.transitioning) return;
+        S.transitioning = true;
+        S.modeIndex = (S.modeIndex + 1) % MODES.length;
+        applyMode(MODES[S.modeIndex]);
+        scrambleReveal(700, () => { S.transitioning = false; });
+        return;
       }
-      const originals = textNodes.map(n => n.textContent);
-
-      btn.classList.add('decoding');
-      btn.textContent = 'MODE: ACTIVE';
-
-      // Phase 1: instantly scramble
-      textNodes.forEach(n => {
-        n.textContent = n.textContent.replace(/\S/g, rc);
-      });
-
-      // Phase 2: reveal left-to-right over 900ms
-      let elapsed = 0;
-      const DURATION = 900;
-      const TICK = 30;
-      const id = setInterval(() => {
-        elapsed += TICK;
-        const progress = elapsed / DURATION;
-        textNodes.forEach((n, i) => {
-          const orig = originals[i];
-          const revealCount = Math.floor(orig.length * progress);
-          let result = '';
-          for (let j = 0; j < orig.length; j++) {
-            if (j < revealCount || orig[j].trim() === '') result += orig[j];
-            else result += rc();
-          }
-          n.textContent = result;
-        });
-        if (elapsed >= DURATION) {
-          clearInterval(id);
-          textNodes.forEach((n, i) => { n.textContent = originals[i]; });
-          btn.classList.remove('decoding');
-          btn.textContent = 'MODE: DECODE';
-        }
-      }, TICK);
+      // Decode button
+      if (t.closest('#lt-decode-btn')) {
+        const btn = document.getElementById('lt-decode-btn');
+        if (!btn || btn.classList.contains('decoding') || S.transitioning) return;
+        scrambleReveal(900, undefined);
+      }
+    });
+    // Keyboard: Enter/Space on role=button subtitle span
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const t = e.target as HTMLElement;
+      if (t.closest('#lt-subtitle-toggle')) { e.preventDefault(); (t.closest('#lt-subtitle-toggle') as HTMLElement).click(); }
     });
   }
-
-  initSubtitleToggle();
-  initDecodeMode();
-  document.addEventListener('astro:after-swap', initSubtitleToggle);
-  document.addEventListener('astro:after-swap', initDecodeMode);
 
   // Flip/wrap tooltip only when it would actually overflow the viewport
   function initTooltipFlip() {

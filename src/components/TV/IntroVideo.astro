@@ -1,0 +1,164 @@
+<div class="intro-overlay" id="intro-overlay" aria-hidden="true">
+  <video
+    class="intro-video"
+    id="intro-video"
+    muted
+    autoplay
+    playsinline
+    preload="auto"
+  >
+    <source src="/assets/videos/intro.webm" type="video/webm" />
+    <source src="/assets/videos/intro.mp4" type="video/mp4" />
+  </video>
+  <button class="intro-mute-btn" id="intro-mute-btn" aria-label="Unmute" title="Unmute" data-muted="true">
+      <!-- Muted icon -->
+      <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <!-- Unmuted icon -->
+      <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  <button class="intro-skip" id="intro-skip" aria-label="Skip intro">
+    SKIP <span class="intro-skip-arrow">▸</span>
+  </button>
+</div>
+
+<style>
+  .intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s ease;
+  }
+
+  .intro-overlay.is-fading {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .intro-overlay.is-hidden {
+    display: none;
+  }
+
+  .intro-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Speaker — top right */
+  .intro-mute-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0;
+  }
+
+  .intro-mute-btn:hover {
+    color: #fff;
+  }
+
+  .intro-mute-btn svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Show only the relevant icon based on mute state */
+  .intro-mute-btn[data-muted="true"] .icon-unmuted { display: none; }
+  .intro-mute-btn[data-muted="false"] .icon-muted  { display: none; }
+
+  /* Skip — bottom right */
+  .intro-skip {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .intro-skip:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .intro-skip-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .intro-skip:hover .intro-skip-arrow {
+    transform: translateX(3px);
+  }
+</style>
+
+<script>
+  function initIntro() {
+    const overlay  = document.getElementById('intro-overlay') as HTMLElement | null;
+    const video    = document.getElementById('intro-video')   as HTMLVideoElement | null;
+    const muteBtn  = document.getElementById('intro-mute-btn') as HTMLButtonElement | null;
+    const skipBtn  = document.getElementById('intro-skip')    as HTMLButtonElement | null;
+
+    if (!overlay || !video) return;
+
+    // Only show once per browser session
+    if (sessionStorage.getItem('intro-seen')) {
+      overlay.classList.add('is-hidden');
+      return;
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    // Video starts muted + autoplaying
+    video.muted = true;
+    video.play().catch(() => {/* ignore */});
+
+    // Speaker toggle
+    muteBtn?.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteBtn.dataset.muted = String(video.muted);
+      muteBtn.setAttribute('aria-label', video.muted ? 'Unmute' : 'Mute');
+      muteBtn.setAttribute('title', video.muted ? 'Unmute' : 'Mute');
+    });
+
+    function dismiss() {
+      sessionStorage.setItem('intro-seen', '1');
+      video!.pause();
+      overlay!.classList.add('is-fading');
+      document.body.style.overflow = '';
+      overlay!.addEventListener('transitionend', () => {
+        overlay!.classList.add('is-hidden');
+      }, { once: true });
+    }
+
+    video.addEventListener('ended', dismiss, { once: true });
+    skipBtn?.addEventListener('click', dismiss);
+  }
+
+  initIntro();
+</script>

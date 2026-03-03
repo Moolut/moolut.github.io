@@ -59,5 +59,43 @@ export function setupClientNavigation() {
 
   document.addEventListener('astro:after-swap', () => {
     loadingPage.set(LOADING_STATE.Done)
+    document
+      .querySelector('.tv-content')
+      ?.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+
+    // Re-bind whoami nav scroll every swap (nav is fresh DOM after each transition)
+    initNavScroll()
+  })
+}
+
+// ─── Whoami smooth-scroll nav ───────────────────────────────────────────────
+// Lives here (not in whoami.astro) because Astro's deselectScripts() prevents
+// page-level <script> modules from re-executing during SPA navigations. The
+// layout script (and this module) runs once on startup; astro:after-swap then
+// re-binds to the fresh .page-nav DOM element on every navigation.
+export function initNavScroll() {
+  const nav = document.querySelector('.page-nav')
+  if (!nav) return // not on whoami
+
+  nav.addEventListener('click', (e) => {
+    const link = e.target?.closest?.('.page-nav__link')
+    if (!link) return
+
+    const targetId = link.dataset.target
+    if (!targetId) return
+
+    const target = document.querySelector(targetId)
+    if (!target) return
+
+    const scrollRoot = document.querySelector('.tv-content')
+    if (!scrollRoot) return
+
+    const navH = nav.offsetHeight
+    const rootRect = scrollRoot.getBoundingClientRect()
+    const targetRect = target.getBoundingClientRect()
+    const offsetTop =
+      scrollRoot.scrollTop + (targetRect.top - rootRect.top) - navH
+
+    scrollRoot.scrollTo({ top: Math.max(0, offsetTop), behavior: 'smooth' })
   })
 }
