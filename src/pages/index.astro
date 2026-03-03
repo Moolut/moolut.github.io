@@ -119,7 +119,7 @@ import TVLayout from '../layouts/TVLayout.astro'
                 <p class="cc-egg-line cc-egg-out">FLAG&#123;y0u_cl1ck3d_4_t1m3s_gg&#125;</p>
                 <p class="cc-egg-line"><span class="cc-egg-prompt">root@visitor:~#</span> cat /etc/motd</p>
                 <p class="cc-egg-line cc-egg-out">No zero-days here. Probably.</p>
-                <p class="cc-egg-line cc-egg-out">Nice persistence though. &mdash; moolut<span class="cc-cursor">_</span></p>
+                <p class="cc-egg-line cc-egg-out">Nice persistence though. &mdash; m00lut<span class="cc-cursor">_</span></p>
               </div>
             </div>
           </div>
@@ -1005,7 +1005,7 @@ import TVLayout from '../layouts/TVLayout.astro'
   }
 
   .call-to-action {
-    font-size: clamp(15px, 1.8vw, 20px);
+    font-size: clamp(15px, 1.8vw, 22px);
     margin: 0;
   }
 
@@ -1187,52 +1187,8 @@ import TVLayout from '../layouts/TVLayout.astro'
 </style>
 
 <script>
-  // Role cycling with rainbow-static effect
-  const roles = [
-    'Cybersecurity Engineer',
-    'Penetration Tester',
-    'Ethical Hacker',
-    'Security Researcher'
-  ];
-
-  function stopRoleCycling() {
-    if (window.__roleIntervalId != null) {
-      clearInterval(window.__roleIntervalId);
-      window.__roleIntervalId = null;
-    }
-  }
-
-  function initRoleCycling() {
-    stopRoleCycling();
-
-    const roleElement = document.querySelector('.role-text');
-    if (!roleElement) return;
-
-    // Always start from index 0 on (re-)init so cycling is predictable
-    let roleIndex = 0;
-
-    window.__roleIntervalId = setInterval(() => {
-      // Add changing class to trigger rainbow-static
-      roleElement.classList.add('changing');
-
-      setTimeout(() => {
-        roleIndex = (roleIndex + 1) % roles.length;
-        roleElement.textContent = roles[roleIndex] + ' ';
-
-        setTimeout(() => {
-          roleElement.classList.remove('changing');
-        }, 400);
-      }, 200);
-    }, 3000);
-  }
-
-  // Initialize on page load
-  initRoleCycling();
-
-  // Re-init after client-side navigation; clean up before swap so stale
-  // intervals never outlive the page they belong to.
-  document.addEventListener('astro:after-swap', initRoleCycling);
-  document.addEventListener('astro:before-swap', stopRoleCycling);
+  // Role cycling and timecode are handled in src/modules/navigation.js
+  // (deselectScripts prevents this module from re-running during SPA navigations)
 
   // ── Live broadcast timecode for the About caption bar ──
   function pad(n) { return String(n).padStart(2, '0'); }
@@ -1257,93 +1213,8 @@ import TVLayout from '../layouts/TVLayout.astro'
   });
 
   // ── Caption bar: SUBTITLE toggle + MODE: DECODE ──────────────────────────
-  // Single delegated listener on .tv-content (transition:persist), bound once
-  // for the browser session. State lives in window.__captionState so it
-  // survives navigations. No cloneNode, no astro lifecycle dependency.
-  if (!window.__captionBound) {
-    window.__captionBound = true;
-
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&*?@^~';
-    const rc = () => CHARS[Math.floor(Math.random() * CHARS.length)];
-    const MODES = ['ON', 'CC1', 'CC2', 'EGG'];
-    const ARROW = ' \u25B8';
-    const LABELS = { ON: 'SUBTITLE: ON' + ARROW, CC1: 'SUBTITLE: CC1' + ARROW, CC2: 'SUBTITLE: CC2' + ARROW, EGG: 'SUBTITLE: ????' + ARROW };
-    const CAPTIONS = { ON: 'CAPTION: ABOUT', CC1: 'CAPTION: LIVE FEED', CC2: 'CAPTION: SYS DATA', EGG: 'CAPTION: [REDACTED]' };
-
-    // Persistent mutable state — never reset between navigations
-    const S = { modeIndex: 0, transitioning: false };
-
-    function scrambleReveal(duration, onDone) {
-      const content = document.querySelector('.lower-third-content');
-      const decodeBtn = document.getElementById('lt-decode-btn');
-      if (!content) { if (onDone) onDone(); return; }
-      const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
-      const nodes = [], originals = [];
-      let n;
-      while ((n = walker.nextNode())) { if (n.textContent.trim()) { nodes.push(n); originals.push(n.textContent); } }
-      nodes.forEach(n => { n.textContent = n.textContent.replace(/\S/g, rc); });
-      if (decodeBtn) { decodeBtn.classList.add('decoding'); decodeBtn.textContent = 'MODE: ACTIVE'; }
-      let elapsed = 0;
-      const id = setInterval(() => {
-        elapsed += 25;
-        const p = elapsed / duration;
-        nodes.forEach((n, i) => {
-          const orig = originals[i], rev = Math.floor(orig.length * p);
-          n.textContent = Array.from(orig, (c, j) => (j < rev || !c.trim()) ? c : rc()).join('');
-        });
-        if (elapsed >= duration) {
-          clearInterval(id);
-          nodes.forEach((n, i) => { n.textContent = originals[i]; });
-          if (decodeBtn) { decodeBtn.classList.remove('decoding'); decodeBtn.textContent = 'MODE: DECODE'; }
-          if (onDone) onDone();
-        }
-      }, 25);
-    }
-
-    function applyMode(mode) {
-      document.querySelectorAll('.subtitle-mode').forEach(p => { p.style.display = 'none'; });
-      const pane = document.querySelector('.subtitle-mode-' + mode.toLowerCase());
-      if (pane) { pane.removeAttribute('hidden'); pane.style.display = ''; }
-      const btn = document.getElementById('lt-subtitle-toggle');
-      if (btn) { btn.textContent = LABELS[mode]; (btn as HTMLElement).dataset.mode = mode; }
-      const meta = document.getElementById('lt-caption-meta');
-      if (meta) meta.textContent = CAPTIONS[mode];
-    }
-
-    // Re-apply current UI state whenever index DOM comes into view
-    function syncCaptionUI() {
-      if (!document.getElementById('lt-subtitle-toggle')) return;
-      applyMode(MODES[S.modeIndex]);
-    }
-    document.addEventListener('astro:after-swap', syncCaptionUI);
-    syncCaptionUI();
-
-    // Click: subtitle cycle
-    document.addEventListener('click', (e) => {
-      const t = e.target as HTMLElement;
-      // Subtitle toggle
-      if (t.closest('#lt-subtitle-toggle')) {
-        if (S.transitioning) return;
-        S.transitioning = true;
-        S.modeIndex = (S.modeIndex + 1) % MODES.length;
-        applyMode(MODES[S.modeIndex]);
-        scrambleReveal(700, () => { S.transitioning = false; });
-        return;
-      }
-      // Decode button
-      if (t.closest('#lt-decode-btn')) {
-        const btn = document.getElementById('lt-decode-btn');
-        if (!btn || btn.classList.contains('decoding') || S.transitioning) return;
-        scrambleReveal(900, undefined);
-      }
-    });
-    // Keyboard: Enter/Space on role=button subtitle span
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      const t = e.target as HTMLElement;
-      if (t.closest('#lt-subtitle-toggle')) { e.preventDefault(); (t.closest('#lt-subtitle-toggle') as HTMLElement).click(); }
-    });
-  }
+  // Logic lives in src/modules/navigation.js (initCaptionBar) so it runs
+  // on startup regardless of entry page, bypassing deselectScripts().
 
   // Flip/wrap tooltip only when it would actually overflow the viewport
   function initTooltipFlip() {

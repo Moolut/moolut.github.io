@@ -1,9 +1,11 @@
 <script>
   import {
     currentChannelInfo,
+    contentVisible,
     decrementChannel,
     incrementChannel,
     toggleSpace,
+    toggleContent,
   } from '../modules/tv.js'
 </script>
 
@@ -24,7 +26,12 @@
     </button>
   </div>
 
-  <button class="space-mode-button" onclick={toggleSpace}>SPACE MODE</button>
+  <!-- SPACE MODE button — temporarily hidden, may restore later -->
+  <!-- <button class="space-mode-button" onclick={toggleSpace}>SPACE MODE</button> -->
+
+  <button class="show-hide-button" onclick={toggleContent}>
+    {$contentVisible ? 'HIDE TEXT' : 'SHOW TEXT'}
+  </button>
 </div>
 
 <style>
@@ -89,6 +96,28 @@
 
     :global(body.hide-content) & {
       visibility: visible;
+    }
+  }
+
+  .show-hide-button {
+    font-family: var(--font-primary);
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+    font-size: 1rem;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    /* When content is hidden: escape the header flow, pin to top-right corner,
+       styled identically to the other header buttons (no box, just text) */
+    :global(body.hide-content) & {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.75rem;
+      z-index: 9998;
+      visibility: visible;
+      opacity: 1;
     }
   }
 </style>

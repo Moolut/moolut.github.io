@@ -3,12 +3,205 @@ import { navigate, swapFunctions } from 'astro:transitions/client'
 
 const MIN_LOADING_TIME = 300
 
+// ─── Caption bar (index page) ──────────────────────────────────────────────
+// Must live here because deselectScripts() prevents index.astro's <script>
+// from running during SPA navigations. This module runs once at startup
+// regardless of which page was the entry point.
+
+const CHARS =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&*?@^~'
+const rc = () => CHARS[Math.floor(Math.random() * CHARS.length)]
+const MODES = ['ON', 'CC1', 'CC2', 'EGG']
+const ARROW = ' \u25B8'
+const LABELS = {
+  ON: 'SUBTITLE: ON' + ARROW,
+  CC1: 'SUBTITLE: CC1' + ARROW,
+  CC2: 'SUBTITLE: CC2' + ARROW,
+  EGG: 'SUBTITLE: ????' + ARROW,
+}
+const CAPTIONS = {
+  ON: 'CAPTION: ABOUT',
+  CC1: 'CAPTION: LIVE FEED',
+  CC2: 'CAPTION: SYS DATA',
+  EGG: 'CAPTION: [REDACTED]',
+}
+// Persistent state — survives navigations
+const captionState = { modeIndex: 0, transitioning: false }
+
+function applyMode(mode) {
+  document.querySelectorAll('.subtitle-mode').forEach((p) => {
+    p.style.display = 'none'
+  })
+  const pane = document.querySelector('.subtitle-mode-' + mode.toLowerCase())
+  if (pane) {
+    pane.removeAttribute('hidden')
+    pane.style.display = ''
+  }
+  const btn = document.getElementById('lt-subtitle-toggle')
+  if (btn) {
+    btn.textContent = LABELS[mode]
+    btn.dataset.mode = mode
+  }
+  const meta = document.getElementById('lt-caption-meta')
+  if (meta) meta.textContent = CAPTIONS[mode]
+}
+
+function syncCaptionUI() {
+  if (!document.getElementById('lt-subtitle-toggle')) return
+  applyMode(MODES[captionState.modeIndex])
+}
+
+function scrambleReveal(duration, onDone) {
+  const content = document.querySelector('.lower-third-content')
+  const decodeBtn = document.getElementById('lt-decode-btn')
+  if (!content) {
+    if (onDone) onDone()
+    return
+  }
+  const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT)
+  const nodes = []
+  const originals = []
+  let n
+  while ((n = walker.nextNode())) {
+    if (n.textContent.trim()) {
+      nodes.push(n)
+      originals.push(n.textContent)
+    }
+  }
+  nodes.forEach((nd) => {
+    nd.textContent = nd.textContent.replace(/\S/g, rc)
+  })
+  if (decodeBtn) {
+    decodeBtn.classList.add('decoding')
+    decodeBtn.textContent = 'MODE: ACTIVE'
+  }
+  let elapsed = 0
+  const id = setInterval(() => {
+    elapsed += 25
+    const p = elapsed / duration
+    nodes.forEach((nd, i) => {
+      const orig = originals[i]
+      const rev = Math.floor(orig.length * p)
+      nd.textContent = Array.from(orig, (c, j) =>
+        j < rev || !c.trim() ? c : rc()
+      ).join('')
+    })
+    if (elapsed >= duration) {
+      clearInterval(id)
+      nodes.forEach((nd, i) => {
+        nd.textContent = originals[i]
+      })
+      if (decodeBtn) {
+        decodeBtn.classList.remove('decoding')
+        decodeBtn.textContent = 'MODE: DECODE'
+      }
+      if (onDone) onDone()
+    }
+  }, 25)
+}
+
+export function initCaptionBar() {
+  // Sync UI state immediately (handles hard-refresh on index)
+  syncCaptionUI()
+
+  // Bind listeners only once for the whole browser session
+  if (window.__captionBound) return
+  window.__captionBound = true
+
+  document.addEventListener('click', (e) => {
+    if (e.target?.closest('#lt-subtitle-toggle')) {
+      if (captionState.transitioning) return
+      captionState.transitioning = true
+      captionState.modeIndex = (captionState.modeIndex + 1) % MODES.length
+      applyMode(MODES[captionState.modeIndex])
+      scrambleReveal(700, () => {
+        captionState.transitioning = false
+      })
+      return
+    }
+    if (e.target?.closest('#lt-decode-btn')) {
+      const btn = document.getElementById('lt-decode-btn')
+      if (
+        !btn ||
+        btn.classList.contains('decoding') ||
+        captionState.transitioning
+      )
+        return
+      scrambleReveal(900, undefined)
+    }
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    const toggle = e.target?.closest('#lt-subtitle-toggle')
+    if (toggle) {
+      e.preventDefault()
+      toggle.click()
+    }
+  })
+}
+
 export function gotoPage(url) {
   if (!url || url.startsWith('#')) return
   navigate(url)
 }
 
 const htmlClassToPersist = ['webp', 'avif']
+
+// ─── Role cycling (index page) ──────────────────────────────────────────
+const roles = [
+  'Cybersecurity Engineer',
+  'Penetration Tester',
+  'Ethical Hacker',
+  'Security Researcher',
+]
+
+export function stopRoleCycling() {
+  if (window.__roleIntervalId != null) {
+    clearInterval(window.__roleIntervalId)
+    window.__roleIntervalId = null
+  }
+}
+
+export function initRoleCycling() {
+  stopRoleCycling()
+  const roleElement = document.querySelector('.role-text')
+  if (!roleElement) return // not on index
+  let roleIndex = 0
+  window.__roleIntervalId = setInterval(() => {
+    roleElement.classList.add('changing')
+    setTimeout(() => {
+      roleIndex = (roleIndex + 1) % roles.length
+      roleElement.textContent = roles[roleIndex] + ' '
+      setTimeout(() => roleElement.classList.remove('changing'), 400)
+    }, 200)
+  }, 3000)
+}
+
+// ─── Title cycling (whoami page) ───────────────────────────────────────
+const titles = ['WHOAMI', 'm00lut', 'Mevlüt Yıldırım']
+
+export function stopTitleCycling() {
+  if (window.__whoamiTitleInterval != null) {
+    clearInterval(window.__whoamiTitleInterval)
+    window.__whoamiTitleInterval = null
+  }
+}
+
+export function initTitleCycling() {
+  stopTitleCycling()
+  const titleElement = document.querySelector('.whoami-text')
+  if (!titleElement) return // not on whoami
+  let titleIndex = 0
+  window.__whoamiTitleInterval = setInterval(() => {
+    titleElement.classList.add('changing')
+    setTimeout(() => {
+      titleIndex = (titleIndex + 1) % titles.length
+      titleElement.textContent = titles[titleIndex]
+      setTimeout(() => titleElement.classList.remove('changing'), 400)
+    }, 200)
+  }, 3000)
+}
 
 export function setupClientNavigation() {
   document.addEventListener('astro:before-preparation', (event) => {
@@ -30,6 +223,9 @@ export function setupClientNavigation() {
   })
 
   document.addEventListener('astro:before-swap', (event) => {
+    // Stop cycling intervals before DOM is replaced
+    stopRoleCycling()
+    stopTitleCycling()
     const newDoc = event.newDocument
     if (!newDoc) return
 
@@ -65,6 +261,11 @@ export function setupClientNavigation() {
 
     // Re-bind whoami nav scroll every swap (nav is fresh DOM after each transition)
     initNavScroll()
+    // Re-apply caption bar UI state whenever index DOM is swapped in
+    syncCaptionUI()
+    // Restart correct cycling animation for the new page
+    initRoleCycling()
+    initTitleCycling()
   })
 }
 
@@ -81,14 +282,20 @@ export function initNavScroll() {
     const link = e.target?.closest?.('.page-nav__link')
     if (!link) return
 
+    const scrollRoot = document.querySelector('.tv-content')
+    if (!scrollRoot) return
+
+    // Scroll-to-top button
+    if ('scrollTop' in link.dataset) {
+      scrollRoot.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
     const targetId = link.dataset.target
     if (!targetId) return
 
     const target = document.querySelector(targetId)
     if (!target) return
-
-    const scrollRoot = document.querySelector('.tv-content')
-    if (!scrollRoot) return
 
     const navH = nav.offsetHeight
     const rootRect = scrollRoot.getBoundingClientRect()

@@ -38,6 +38,8 @@ const workItems = workExperience.map((work) => ({
       <button class="page-nav__link" data-target="#work-experience">Work Experience</button>
       <button class="page-nav__link" data-target="#skills">Tech Skills</button>
       <button class="page-nav__link" data-target="#languages">Languages</button>
+      <span class="page-nav__divider" aria-hidden="true"></span>
+      <button class="page-nav__link page-nav__top" data-scroll-top aria-label="Scroll to top">&#9650; TOP</button>
     </nav>
 
     <div id="education">
@@ -172,6 +174,24 @@ const workItems = workExperience.map((work) => ({
 
   .page-nav__link:focus {
     outline: none;
+    color: #0f0;
+  }
+
+  .page-nav__divider {
+    display: block;
+    width: 1px;
+    height: 0.9em;
+    background: rgba(0, 255, 0, 0.25);
+    flex-shrink: 0;
+  }
+
+  .page-nav__top {
+    color: rgba(0, 255, 0, 0.45);
+    font-size: clamp(10px, 1.1vw, 12px);
+    letter-spacing: 0.1em;
+  }
+
+  .page-nav__top:hover {
     color: #0f0;
   }
 
@@ -589,44 +609,6 @@ const workItems = workExperience.map((work) => ({
   // (Astro's deselectScripts() prevents this module from re-running during SPA
   //  navigations, so the listener lives in the shared layout script instead.)
 
-  // Rainbow cycling for whoami title
-  // Use window-scoped state so any re-execution of this script (by Astro view
-  // transitions) can always find and clear the previous interval.
-  const titles = ['WHOAMI', 'moolut', 'Mevlüt Yıldırım'];
-
-  function stopTitleCycling() {
-    if (window.__whoamiTitleInterval != null) {
-      clearInterval(window.__whoamiTitleInterval);
-      window.__whoamiTitleInterval = null;
-    }
-  }
-
-  function initTitleCycling() {
-    stopTitleCycling();
-
-    const titleElement = document.querySelector('.whoami-text');
-    if (!titleElement) return;
-
-    // Always start from the first title when (re-)initialising
-    let titleIndex = 0;
-
-    window.__whoamiTitleInterval = setInterval(() => {
-      titleElement.classList.add('changing');
-
-      setTimeout(() => {
-        titleIndex = (titleIndex + 1) % titles.length;
-        titleElement.textContent = titles[titleIndex];
-
-        setTimeout(() => {
-          titleElement.classList.remove('changing');
-        }, 400);
-      }, 200);
-    }, 3000);
-  }
-
-  initTitleCycling();
-  // Re-init after a client-side navigation brings this page into view,
-  // and clean up before the page is swapped out so old intervals don't linger.
-  document.addEventListener('astro:after-swap', initTitleCycling);
-  document.addEventListener('astro:before-swap', stopTitleCycling);
+  // Rainbow cycling and nav scroll are handled in src/modules/navigation.js
+  // (deselectScripts prevents this module from re-running during SPA navigations)
 </script>
