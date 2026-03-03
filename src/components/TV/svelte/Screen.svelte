@@ -2,6 +2,7 @@
   import Volume from './Volume.svelte'
   import Webcam from './Webcam.svelte'
   import Video from './Video.svelte'
+  import OSD from './OSD.svelte'
   import { startNoise, stopNoise } from '../../../modules/noise.js'
   import { raf } from '../../../modules/utils.js'
   import {
@@ -96,6 +97,7 @@
 </div>
 
 <Volume />
+<OSD />
 
 <style>
   .tv-videos {

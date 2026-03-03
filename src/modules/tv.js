@@ -19,10 +19,30 @@ export const loadingPage = writable(LOADING_STATE.None)
 
 export const channelMap = {
   0: {},
-  1: { type: 'video', duration: null, startTimestamp: null },
-  2: { type: 'video', duration: null, startTimestamp: null },
-  3: { type: 'video', duration: null, startTimestamp: null },
-  4: { type: 'video', duration: null, startTimestamp: null },
+  1: {
+    type: 'video',
+    duration: null,
+    startTimestamp: null,
+    osdTitle: '[ PLAYING: eps2.3_logic-b0mb.hc ]',
+  },
+  2: {
+    type: 'video',
+    duration: null,
+    startTimestamp: null,
+    osdTitle: "[ SIGNAL HIJACK: MAX HEADROOM '87 ]",
+  },
+  3: {
+    type: 'video',
+    duration: null,
+    startTimestamp: null,
+    osdTitle: '[ ARCHIVE: 1988 MORRIS WORM ]',
+  },
+  4: {
+    type: 'video',
+    duration: null,
+    startTimestamp: null,
+    osdTitle: '[ MALWARE: ILOVEYOU.VBS ]',
+  },
   5: { type: 'video', duration: null, startTimestamp: null },
   6: { type: 'video', duration: null, startTimestamp: null },
   7: { type: 'video', duration: null, startTimestamp: null },
