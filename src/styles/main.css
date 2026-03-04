@@ -94,6 +94,11 @@ body,
   }
 }
 
+/* Reset glitchy-text shadow for page body; header + footer keep it */
+.page-content {
+  text-shadow: none;
+}
+
 .glitchy-text {
   --shadow-x-distance: 2px;
   --shadow-y-distance: 1px;
