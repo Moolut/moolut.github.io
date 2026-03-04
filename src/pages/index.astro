@@ -1202,12 +1202,16 @@ import TVLayout from '../layouts/TVLayout.astro'
 
   function initTimecode() {
     if (window.__timecodeInterval) clearInterval(window.__timecodeInterval);
-    updateTimecode();
-    window.__timecodeInterval = setInterval(updateTimecode, 1000);
+    // Ensure element is in DOM before first write, then keep ticking
+    requestAnimationFrame(() => {
+      updateTimecode();
+      window.__timecodeInterval = setInterval(updateTimecode, 1000);
+    });
   }
 
   initTimecode();
-  document.addEventListener('astro:after-swap', initTimecode);
+  // astro:page-load fires after the full page transition — more reliable than after-swap
+  document.addEventListener('astro:page-load', initTimecode);
   document.addEventListener('astro:before-swap', () => {
     if (window.__timecodeInterval) clearInterval(window.__timecodeInterval);
   });
