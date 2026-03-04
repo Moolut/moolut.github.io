@@ -1,0 +1,596 @@
+---
+import TVLayout from '../../layouts/TVLayout.astro'
+import { caseFiles } from '../../modules/projects'
+import type { CaseFile, CaseFileStatus } from '../../modules/projects'
+
+export function getStaticPaths() {
+  return caseFiles.map((f) => ({
+    params: { slug: f.slug },
+    props:  { file: f },
+  }))
+}
+
+interface Props { file: CaseFile }
+
+const { file: f } = Astro.props
+
+const STATUS_META: Record<CaseFileStatus, { color: string }> = {
+  'COMPLETE':    { color: '#4dff91' },
+  'IN PROGRESS': { color: '#f0d030' },
+  'ARCHIVED':    { color: '#ff5050' },
+}
+const sm = STATUS_META[f.status]
+
+const artifacts = [
+  f.links.github && { label: 'GITHUB',  href: f.links.github },
+  f.links.report && { label: 'REPORT',  href: f.links.report },
+  f.links.video  && { label: 'VIDEO',   href: f.links.video  },
+].filter(Boolean) as { label: string; href: string }[]
+---
+
+<TVLayout title={`${f.fileId} · ${f.title}`}>
+  <article class="cd-page">
+
+    <!-- ── Back breadcrumb ── -->
+    <nav class="cd-breadcrumb" aria-label="Back to projects">
+      <a class="cd-back" href="/projects/"
+        >← CASE FILES <span class="cd-back__sep" aria-hidden="true">/</span> {f.fileId}</a
+      >
+    </nav>
+
+    <!-- ── Two-column layout: dossier + ghost panel ── -->
+    <div class="cd-layout">
+
+    <!-- Left: dossier card -->
+    <div class="cd-main">
+    <div class="cd-card">
+      <!-- Paper stack layers -->
+      <div class="cd-layer cd-layer--1" aria-hidden="true"></div>
+      <div class="cd-layer cd-layer--2" aria-hidden="true"></div>
+
+      <!-- Folder tab -->
+      <div class="cd-tab" aria-hidden="true">
+        <span class="cd-tab__id">{f.fileId}</span>
+        <span class="cd-tab__type">{f.type}</span>
+      </div>
+
+      <!-- Body -->
+      <div class="cd-body">
+        <!-- Scanline overlay (decorative) -->
+
+        <!-- Top bar -->
+        <div class="cd-topbar" aria-hidden="true">
+          <span class="cd-seq">FILE · {f.fileId}</span>
+          <span
+            class="cd-stamp"
+            style={`color:${sm.color};border-color:${sm.color}`}
+            aria-label={`Status: ${f.status}`}
+          >{f.status}</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="cd-title">{f.title}</h1>
+
+        <!-- Meta row -->
+        <p class="cd-meta">
+          <span>{f.context}</span>
+          <span class="cd-meta__sep" aria-hidden="true"> · </span>
+          <span>{f.year}</span>
+        </p>
+
+        <!-- Divider -->
+        <hr class="cd-rule" aria-hidden="true" />
+
+        <!-- Intelligence fields -->
+        <dl class="cd-fields">
+          <div class="cd-field">
+            <dt>PROBLEM</dt>
+            <dd>{f.problem}</dd>
+          </div>
+          <div class="cd-field">
+            <dt>APPROACH</dt>
+            <dd>{f.approach}</dd>
+          </div>
+          <div class="cd-field">
+            <dt>RESULT</dt>
+            <dd>{f.result}</dd>
+          </div>
+        </dl>
+
+        <!-- Divider -->
+        <hr class="cd-rule" aria-hidden="true" />
+
+        <!-- Pipeline -->
+        <div class="cd-pipeline">
+          <span class="cd-pipeline__key">PIPELINE</span>
+          <span class="cd-pipeline__val">{f.pipeline}</span>
+        </div>
+
+        <!-- Tools -->
+        <div class="cd-tools">
+          <span class="cd-tools__key">TOOLS</span>
+          <div class="cd-tools__chips">
+            {f.tools.map((t) => <span class="cd-chip">{t}</span>)}
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="cd-tags">
+          <span class="cd-tags__key">TAGS</span>
+          <div class="cd-tags__chips">
+            {f.tags.map((t) => <span class="cd-chip cd-chip--tag">{t}</span>)}
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="cd-rule" aria-hidden="true" />
+
+        <!-- Artifacts dock -->
+        <section class="cd-artifacts" aria-label="External artifacts and links">
+          <h2 class="cd-artifacts__heading">ARTIFACTS DOCK</h2>
+          {artifacts.length > 0
+            ? (
+              <div class="cd-artifact-links">
+                {artifacts.map(({ label, href }) => (
+                  <a class="cd-artifact-btn" href={href} target="_blank" rel="noopener noreferrer">
+                    {label} ↗
+                  </a>
+                ))}
+              </div>
+            )
+            : <p class="cd-artifacts__empty">[ NO EXTERNAL ARTIFACTS ON FILE ]</p>
+          }
+        </section>
+
+      </div>
+    </div>
+    </div><!-- /cd-main -->
+
+    <!-- Right: ghost decorative panel -->
+    <aside class="cd-ghost" aria-hidden="true">
+      <div class="cd-ghost__grid"></div>
+      <div class="cd-ghost__label">INTEL · {f.fileId}</div>
+    </aside>
+
+    </div><!-- /cd-layout -->
+
+  </article>
+</TVLayout>
+
+<style>
+  /* ════════════════════════════════════════════
+     Design tokens
+  ════════════════════════════════════════════ */
+  .cd-page {
+    --cd-accent:   #00d4b8;
+    --cd-accent-d: rgba(0, 212, 184, 0.10);
+    --cd-accent-b: rgba(0, 212, 184, 0.25);
+    --cd-ok:       #4dff91;
+    --cd-warn:     #f0d030;
+    --cd-danger:   #ff5050;
+    --cd-panel:    rgba(10, 16, 14, 0.97);
+    --cd-text:     rgba(215, 232, 224, 0.92);
+    --cd-muted:    rgba(215, 232, 224, 0.45);
+    --cd-bdr:      rgba(0, 212, 184, 0.14);
+    font-family: var(--font-primary);
+    color: var(--cd-text);
+    max-width: 100%;
+  }
+
+  /* ════════════════════════════════════════════
+     Breadcrumb
+  ════════════════════════════════════════════ */
+  .cd-breadcrumb {
+    margin-bottom: 1.8rem;
+  }
+
+  .cd-back {
+    font-size: 0.48rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    text-decoration: none;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.15s, text-shadow 0.15s, text-decoration-color 0.15s;
+    background-image: none !important;
+  }
+
+  .cd-back:hover,
+  .cd-back:focus-visible {
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 212, 184, 0.5);
+    text-underline-offset: 3px;
+    text-shadow: 0 0 10px rgba(0, 212, 184, 0.45);
+    outline: none;
+  }
+
+  .cd-back__sep { opacity: 0.4; margin: 0 0.3em; }
+
+  /* ════════════════════════════════════════════
+     Two-column layout
+  ════════════════════════════════════════════ */
+  .cd-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .cd-layout {
+      grid-template-columns: minmax(0, 640px) 1fr;
+    }
+  }
+
+  .cd-main { min-width: 0; }
+
+  /* ── Ghost decorative panel ── */
+  .cd-ghost {
+    display: none;
+    position: relative;
+    min-height: 12rem;
+    border: 1px dashed rgba(0, 212, 184, 0.08);
+    overflow: hidden;
+  }
+
+  @media (min-width: 900px) {
+    .cd-ghost { display: block; }
+  }
+
+  /* Dot-grid overlay */
+  .cd-ghost__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(0, 212, 184, 0.12) 1px, transparent 1px);
+    background-size: 18px 18px;
+    background-position: 9px 9px;
+  }
+
+  /* Watermark label */
+  .cd-ghost__label {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.2rem;
+    font-size: 0.38rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    opacity: 0.14;
+    white-space: nowrap;
+  }
+
+  /* ════════════════════════════════════════════
+     Paper-stack card wrapper
+  ════════════════════════════════════════════ */
+  .cd-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Paper stack layers */
+  .cd-layer {
+    position: absolute;
+    top: calc(1.6rem + 1px);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid var(--cd-bdr);
+    background: rgba(0, 212, 184, 0.03);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cd-layer--1 { transform: translate(4px, 5px);  opacity: 0.55; }
+  .cd-layer--2 { transform: translate(8px, 10px); opacity: 0.28; }
+
+  /* ════════════════════════════════════════════
+     Folder tab
+  ════════════════════════════════════════════ */
+  .cd-tab {
+    position: relative;
+    align-self: flex-start;
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    padding: 0.26rem 1.1rem 0.28rem 0.7rem;
+    background: rgba(0, 212, 184, 0.055);
+    border: 1px solid var(--cd-bdr);
+    border-bottom: none;
+    z-index: 2;
+    clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+  }
+
+  .cd-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 100%;
+    width: 100vw;
+    height: 1px;
+    background: var(--cd-bdr);
+    pointer-events: none;
+  }
+
+  .cd-tab__id {
+    font-size: 0.57rem;
+    letter-spacing: 0.18em;
+    color: var(--cd-accent);
+    font-weight: bold;
+  }
+
+  .cd-tab__type {
+    font-size: 0.41rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    opacity: 0.4;
+  }
+
+  /* ════════════════════════════════════════════
+     Card body
+  ════════════════════════════════════════════ */
+  .cd-body {
+    position: relative;
+    z-index: 1;
+    background: var(--cd-panel);
+    border: 1px solid var(--cd-bdr);
+    border-top: none;
+    padding: 1.5rem 1.6rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Scanline wash */
+  .cd-body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.05) 3px,
+      rgba(0, 0, 0, 0.05) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cd-body > * { position: relative; z-index: 1; }
+
+  /* ════════════════════════════════════════════
+     Top bar
+  ════════════════════════════════════════════ */
+  .cd-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cd-seq {
+    font-size: 0.42rem;
+    letter-spacing: 0.2em;
+    color: var(--cd-accent);
+    opacity: 0.3;
+  }
+
+  .cd-stamp {
+    display: inline-block;
+    font-size: 0.44rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px dashed;
+    padding: 0.14em 0.55em;
+    transform: rotate(-2deg);
+    filter: drop-shadow(0 0 3px currentColor);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+    opacity: 0.88;
+  }
+
+  /* ════════════════════════════════════════════
+     Title + meta
+  ════════════════════════════════════════════ */
+  .cd-title {
+    font-size: clamp(16px, 2.4vw, 26px);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cd-text);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .cd-meta {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cd-muted);
+    margin: 0;
+  }
+
+  .cd-meta__sep { opacity: 0.4; }
+
+  .cd-rule {
+    border: none;
+    border-top: 1px solid var(--cd-bdr);
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     Intelligence fields
+  ════════════════════════════════════════════ */
+  .cd-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0;
+  }
+
+  .cd-field {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.6rem;
+    align-items: start;
+    font-size: 0.54rem;
+    letter-spacing: 0.04em;
+    line-height: 1.65;
+  }
+
+  .cd-field dt {
+    font-size: 0.41rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    opacity: 0.55;
+    white-space: nowrap;
+    padding-top: 0.1em;
+  }
+
+  .cd-field dd {
+    color: var(--cd-text);
+    margin: 0;
+    min-width: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     Pipeline row
+  ════════════════════════════════════════════ */
+  .cd-pipeline {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.6rem;
+    align-items: baseline;
+    font-size: 0.5rem;
+    letter-spacing: 0.07em;
+    line-height: 1.55;
+  }
+
+  .cd-pipeline__key {
+    font-size: 0.41rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    opacity: 0.48;
+    white-space: nowrap;
+  }
+
+  .cd-pipeline__val { color: var(--cd-muted); }
+
+  /* ════════════════════════════════════════════
+     Tools + Tags rows
+  ════════════════════════════════════════════ */
+  .cd-tools,
+  .cd-tags {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.6rem;
+    align-items: start;
+  }
+
+  .cd-tools__key,
+  .cd-tags__key {
+    font-size: 0.41rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    opacity: 0.48;
+    white-space: nowrap;
+    padding-top: 0.2em;
+  }
+
+  .cd-tools__chips,
+  .cd-tags__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.22rem;
+  }
+
+  .cd-chip {
+    font-size: 0.44rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 0.2em 0.55em;
+    border: 1px solid rgba(0, 212, 184, 0.22);
+    color: rgba(0, 212, 184, 0.6);
+    white-space: nowrap;
+  }
+
+  .cd-chip--tag {
+    border-color: rgba(215, 232, 224, 0.15);
+    color: rgba(215, 232, 224, 0.45);
+  }
+
+  /* ════════════════════════════════════════════
+     Artifacts section
+  ════════════════════════════════════════════ */
+  .cd-artifacts { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .cd-artifacts__heading {
+    font-size: 0.44rem;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--cd-accent);
+    opacity: 0.5;
+    margin: 0;
+    font-weight: normal;
+  }
+
+  .cd-artifact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .cd-artifact-btn {
+    display: inline-block;
+    font-family: var(--font-primary);
+    font-size: 0.46rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.35em 0.85em;
+    border: 1px solid rgba(0, 212, 184, 0.35);
+    color: var(--cd-accent);
+    background: transparent;
+    background-image: none !important;
+    transition:
+      border-color 0.15s,
+      background   0.15s,
+      box-shadow   0.15s,
+      transform    0.1s;
+  }
+
+  .cd-artifact-btn:hover,
+  .cd-artifact-btn:focus-visible {
+    border-color: var(--cd-accent);
+    background: var(--cd-accent-d);
+    box-shadow: 0 0 12px rgba(0, 212, 184, 0.2);
+    outline: none;
+  }
+
+  .cd-artifact-btn:active { transform: translateY(1px); }
+
+  .cd-artifacts__empty {
+    font-size: 0.46rem;
+    letter-spacing: 0.09em;
+    color: var(--cd-muted);
+    opacity: 0.5;
+    margin: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     Responsive
+  ════════════════════════════════════════════ */
+  @media (max-width: 480px) {
+    .cd-body { padding: 1.1rem 1rem 1.4rem; }
+    .cd-field { grid-template-columns: 4.5rem 1fr; }
+    .cd-pipeline,
+    .cd-tools,
+    .cd-tags { grid-template-columns: 4.5rem 1fr; }
+  }
+</style>

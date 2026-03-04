@@ -1,3 +1,76 @@
+// ─── Case File schema ─────────────────────────────────────────────────────────
+
+export type CaseFileStatus = 'COMPLETE' | 'IN PROGRESS' | 'ARCHIVED'
+export type CaseFileType = 'THESIS' | 'TOOL' | 'PROJECT' | 'RESEARCH'
+
+export type CaseFile = {
+  fileId: string
+  slug: string
+  type: CaseFileType
+  status: CaseFileStatus
+  title: string
+  year: string
+  context: string // "Thesis" | "Open Source" | "Personal" | "Internship"
+  problem: string
+  approach: string
+  result: string
+  tags: string[]
+  pipeline: string
+  tools: string[]
+  links: {
+    case?: string | null
+    github?: string | null
+    report?: string | null
+    video?: string | null
+  }
+}
+
+// ─── Projects data ─────────────────────────────────────────────────────────────
+// Add new projects here. fileId format: <2-letter prefix>-<3-digit number>
+
+export const caseFiles: CaseFile[] = [
+  {
+    fileId: 'PA-001',
+    slug: 'physical-adversarial-attacks',
+    type: 'THESIS',
+    status: 'COMPLETE',
+    title: 'Physical Adversarial Attacks on Traffic Sign CV Pipelines',
+    year: '2025',
+    context: 'Thesis',
+    problem:
+      'CV models misread real road signs under subtle physical perturbations.',
+    approach:
+      'Holographic overlays projected via POV fan hardware onto signs during live capture.',
+    result:
+      '90% misclassification rate validated across varying outdoor conditions.',
+    tags: ['CV', 'Adversarial', 'Embedded', 'Python', 'Security'],
+    pipeline: 'Capture → Perturb → Project → Evaluate → Report',
+    tools: ['Python', 'OpenCV', 'PyTorch', 'POV Fan HW'],
+    links: { case: '#', github: null, report: null, video: null },
+  },
+  {
+    fileId: 'NW-002',
+    slug: 'esp8266-mesh',
+    type: 'THESIS',
+    status: 'COMPLETE',
+    title: 'ESP8266 Ad Hoc Mesh for Real-Time Swarm Coordination',
+    year: '2024',
+    context: 'Thesis',
+    problem:
+      'Drone swarms need a coordination layer without ground-station dependency.',
+    approach:
+      'ESP-NOW broadcast mesh with dynamic leader election across arbitrary node counts.',
+    result:
+      'Real-time multi-node coordination demonstrated; zero infrastructure dependency.',
+    tags: ['Embedded', 'Wireless', 'Mesh', 'C++', 'ESP8266'],
+    pipeline: 'Design → Flash → Coordinate → Stress-test → Validate',
+    tools: ['ESP8266', 'ESP-NOW', 'C++', 'Arduino'],
+    links: { case: '#', github: null, report: null, video: null },
+  },
+]
+
+// ─── Legacy flat list (kept for reference / other uses) ───────────────────────
+
 export type Project = {
   url: string
   name: string
