@@ -16,8 +16,8 @@ export const PAGES = [
     url: '/projects/',
   },
   {
-    aliases: ['certifications', 'honors', 'awards', 'achievements', 'ctf'],
-    url: '/certifications/',
+    aliases: ['achievements', 'certifications', 'honors', 'awards', 'ctf'],
+    url: '/achievements/',
   },
   {
     aliases: ['blog', 'posts', 'articles'],

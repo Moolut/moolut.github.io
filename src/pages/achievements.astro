@@ -1,0 +1,608 @@
+---
+import TVLayout from '../layouts/TVLayout.astro'
+
+const ctfEntries = [
+  { year: '2024', place: '1st', medal: '🥇', name: 'IOTSEC CTF I',   org: 'TUM',       tag: 'TUM',       desc: 'Onsite · Team' },
+  { year: '2024', place: '2nd', medal: '🥈', name: 'IOTSEC CTF II',  org: 'TUM',       tag: 'TUM',       desc: 'Onsite · Team' },
+  { year: '2025', place: '4th', medal: '🏅', name: 'Kaspersky CTF', org: 'Kaspersky · Europe', tag: 'EU', desc: 'Regional · Team' },
+]
+
+const today = new Date().toISOString().slice(0, 10)
+---
+
+<TVLayout title="achievements">
+  <article class="achievements">
+    <h1 class="page-title">ACHIEVEMENTS & HONORS</h1>
+
+    <!-- ── HUD STRIP ── -->
+    <div class="hud-strip" aria-label="Achievement summary">
+      <span>CERTS: <strong>1</strong></span>
+      <span class="hud-sep">|</span>
+      <span>CTF PODIUMS: <strong>3</strong></span>
+      <span class="hud-sep">|</span>
+      <span>HTB TRACKS: <strong>2</strong></span>
+      <span class="hud-sep">|</span>
+      <span>STATUS: <strong class="hud-active">ACTIVE</strong></span>
+      <span class="hud-sep">|</span>
+      <span>UPDATED: <strong>{today}</strong></span>
+    </div>
+
+    <!-- ── BLOCK A: CERT HERO ── -->
+    <section class="block">
+      <div class="block-header">
+        <span class="block-sys">SYS//CERT</span>
+        <span class="block-ch">CH-01</span>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card__stamp">VERIFIED</div>
+        <div class="hero-card__body">
+          <div class="hero-card__top">
+            <div>
+              <span class="hero-card__tag">[CJCA]</span>
+              <h2 class="hero-card__title">Certified Junior Cybersecurity Analyst</h2>
+              <p class="hero-card__meta">
+                <span class="hero-card__issuer">Hack The Box Academy</span>
+                <span class="hero-card__sep">·</span>
+                <span class="hero-card__year">2025</span>
+              </p>
+              <p class="hero-card__focus">
+                Focus: Analyst workflow · Web exploitation · Active Directory · Reporting
+              </p>
+            </div>
+            <div class="hero-card__actions">
+              <a
+                class="btn-retro"
+                href="https://academy.hackthebox.com/achievement/badge/cjca"
+                target="_blank"
+                rel="noopener"
+              >VIEW CERT</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block-status">■ CERT // OUTPUT: VERIFIED</div>
+    </section>
+
+    <!-- ── BLOCK B: CTF TIMELINE ── -->
+    <section class="block">
+      <div class="block-header">
+        <span class="block-sys">SYS//CTF</span>
+        <span class="block-ch">CH-02</span>
+      </div>
+
+      <h2 class="block-title">CTF TIMELINE</h2>
+      <p class="block-intro">
+        Competitive Capture The Flag achievements demonstrating practical
+        offensive security and vulnerability research skills.
+      </p>
+
+      <ol class="timeline">
+        {ctfEntries.map((e) => (
+          <li class="timeline-item">
+            <div class="timeline-medal">{e.medal}</div>
+            <div class="timeline-body">
+              <p class="timeline-main">
+                <span class="timeline-place">{e.place}</span>
+                <span class="timeline-name">{e.name}</span>
+                <span class="timeline-tag">{e.tag}</span>
+              </p>
+              <p class="timeline-desc">{e.desc} · {e.org}</p>
+            </div>
+            <span class="timeline-year">{e.year}</span>
+          </li>
+        ))}
+      </ol>
+
+      <div class="block-status">■ CTF // RANK: LOGGED</div>
+    </section>
+
+    <!-- ── BLOCK C: HTB PROGRESS ── -->
+    <section class="block">
+      <div class="block-header">
+        <span class="block-sys">SYS//HTB</span>
+        <span class="block-ch">CH-03</span>
+      </div>
+
+      <div class="htb-header">
+        <h2 class="block-title">HTB ACADEMY // PROGRESS</h2>
+        <span class="htb-status">STATUS: <strong>ACTIVE</strong></span>
+      </div>
+
+      <div class="htb-grid">
+        <div class="htb-row">
+          <span class="htb-key">Tracks completed</span>
+          <span class="htb-val"><strong>2</strong></span>
+        </div>
+        <div class="htb-row --tracks">
+          <span class="htb-key">Paths</span>
+          <ul class="htb-tracks">
+            <li>Penetration Tester Path</li>
+            <li>Junior Cybersecurity Analyst Path</li>
+          </ul>
+        </div>
+        <div class="htb-row">
+          <span class="htb-key">Certification</span>
+          <span class="htb-val">CJCA</span>
+        </div>
+        <div class="htb-row">
+          <span class="htb-key">Focus areas</span>
+          <span class="htb-val htb-tags">
+            <span>Web</span><span>AD</span><span>PrivEsc</span><span>Network</span><span>Reporting</span>
+          </span>
+        </div>
+        <div class="htb-row --progress">
+          <span class="htb-key">Progress</span>
+          <span class="htb-bar" aria-label="7 out of 9">
+            <span class="htb-bar__label">IN PROGRESS&nbsp;&nbsp;███████░░</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="block-status">■ HTB // INDEX: GROWING</div>
+    </section>
+  </article>
+</TVLayout>
+
+<style>
+  /* ── Base ── */
+  .achievements {
+    max-width: 100%;
+    text-shadow: none;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: clamp(28px, 4vw, 48px);
+  }
+
+  /* ── HUD Strip ── */
+  .hud-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.9rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(0.6rem, 1.1vw, 0.72rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.06);
+    border: 1px solid rgba(255, 204, 0, 0.2);
+    padding: 0.45em 0.9em;
+    margin-bottom: 3rem;
+  }
+
+  .hud-sep {
+    opacity: 0.3;
+  }
+
+  .hud-active {
+    color: #00ff88;
+    text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+  }
+
+  /* ── Shared Block ── */
+  .block {
+    margin-bottom: 4rem;
+  }
+
+  .block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .block-title {
+    font-size: clamp(18px, 2.2vw, 26px);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    color: #fff;
+  }
+
+  .block-intro {
+    font-size: clamp(15px, 1.7vw, 19px);
+    opacity: 0.83;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .block-status {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    margin-top: 1.5rem;
+  }
+
+  /* ── Hero Card ── */
+  .hero-card {
+    position: relative;
+    border: 1px solid rgba(255, 204, 0, 0.25);
+    background: rgba(255, 204, 0, 0.03);
+    padding: 1.6rem;
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s,
+      background 0.25s;
+
+    &:hover {
+      border-color: rgba(255, 204, 0, 0.55);
+      background: rgba(255, 204, 0, 0.06);
+      box-shadow:
+        0 0 20px rgba(255, 204, 0, 0.1),
+        inset 0 0 30px rgba(255, 204, 0, 0.03);
+    }
+  }
+
+  .hero-card__stamp {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.6rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    padding: 0.15em 0.5em;
+    opacity: 0.7;
+    transform: rotate(2deg);
+    pointer-events: none;
+  }
+
+  .hero-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-card__tag {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
+    color: #ffcc00;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-card__title {
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 0.6rem;
+    color: #fff;
+  }
+
+  .hero-card__meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: clamp(14px, 1.6vw, 17px);
+    opacity: 0.75;
+    margin: 0 0 0.7rem;
+  }
+
+  .hero-card__sep {
+    opacity: 0.4;
+  }
+
+  .hero-card__focus {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(0.72rem, 1.3vw, 0.86rem);
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  .hero-card__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .btn-retro {
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.45em 1em;
+    border: 1px solid rgba(255, 204, 0, 0.6);
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.07);
+    background-image: none !important;
+    transition:
+      background 0.15s,
+      box-shadow 0.15s;
+    text-align: center;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      transition:
+        opacity 0.2s,
+        max-width 0.2s;
+      vertical-align: middle;
+    }
+
+    &:hover {
+      background: rgba(255, 204, 0, 0.18) !important;
+      background-image: none !important;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.35);
+
+      &::after {
+        content: ' →';
+        opacity: 1;
+        max-width: 2em;
+      }
+    }
+  }
+
+  /* ── CTF Timeline ── */
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 1.1rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.15) 0px,
+        rgba(255, 255, 255, 0.15) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr auto;
+    align-items: center;
+    gap: 0.1rem 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    transition:
+      background 0.2s,
+      box-shadow 0.2s;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: inset 3px 0 0 rgba(255, 204, 0, 0.5);
+    }
+
+    /* dot on the scanline */
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(1.1rem - 3px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 204, 0, 0.55);
+      box-shadow: 0 0 5px rgba(255, 204, 0, 0.4);
+      z-index: 2;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    &:hover::before {
+      background: #ffcc00;
+      box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+    }
+  }
+
+  .timeline-medal {
+    font-size: 1.3rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-body {
+    min-width: 0;
+  }
+
+  .timeline-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.7rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .timeline-place {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #ffcc00;
+    opacity: 0.85;
+    text-transform: uppercase;
+  }
+
+  .timeline-name {
+    font-size: clamp(15px, 1.9vw, 20px);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .timeline-tag {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 204, 0, 0.35);
+    color: #ffcc00;
+    padding: 0.1em 0.4em;
+    opacity: 0.7;
+    align-self: center;
+  }
+
+  .timeline-desc {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    opacity: 0.55;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .timeline-year {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    opacity: 0.5;
+    white-space: nowrap;
+  }
+
+  /* ── HTB Progress ── */
+  .htb-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .htb-status {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    & strong {
+      color: #00ff88;
+      text-shadow: 0 0 6px rgba(0, 255, 136, 0.4);
+    }
+  }
+
+  .htb-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    padding-left: 1.2rem;
+  }
+
+  .htb-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: clamp(15px, 1.7vw, 18px);
+
+    &.--tracks {
+      align-items: flex-start;
+    }
+  }
+
+  .htb-key {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.45;
+    min-width: 10rem;
+  }
+
+  .htb-val {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .htb-tracks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    & li::before {
+      content: '▸ ';
+      opacity: 0.4;
+    }
+  }
+
+  .htb-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+
+    & span {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.1em 0.45em;
+      opacity: 0.75;
+    }
+  }
+
+  .htb-bar {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: #ffcc00;
+    opacity: 0.7;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 580px) {
+    .hud-strip {
+      font-size: 0.55rem;
+    }
+
+    .hero-card__top {
+      flex-direction: column;
+    }
+
+    .hero-card__actions {
+      flex-direction: row;
+    }
+
+    .htb-key {
+      min-width: 7rem;
+    }
+  }
+</style>
