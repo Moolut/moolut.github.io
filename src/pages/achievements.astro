@@ -2,9 +2,42 @@
 import TVLayout from '../layouts/TVLayout.astro'
 
 const ctfEntries = [
-  { year: '2024', place: '1st', medal: '🥇', name: 'IOTSEC CTF I',   org: 'TUM',       tag: 'TUM',       desc: 'Onsite · Team' },
-  { year: '2024', place: '2nd', medal: '🥈', name: 'IOTSEC CTF II',  org: 'TUM',       tag: 'TUM',       desc: 'Onsite · Team' },
-  { year: '2025', place: '4th', medal: '🏅', name: 'Kaspersky CTF', org: 'Kaspersky · Europe', tag: 'EU', desc: 'Regional · Team' },
+  { year: '2024', place: '1st', medal: '🥇', name: 'IOTSEC CTF I',   org: 'TUM',       tag: 'CRYPTO',    desc: 'Block Ciphers · Public Key · Steganography · Side-Channel',           keywords: ['Block Ciphers', 'Public Key', 'Steganography', 'Side-Channel'] },
+  { year: '2024', place: '2nd', medal: '🥈', name: 'IOTSEC CTF II',  org: 'TUM',       tag: 'CRYPTO',    desc: 'Web Exploitation · Network Pivoting · IoT Protocols · Key Exchange',  keywords: ['Web Exploitation', 'Network Pivoting', 'IoT Protocols', 'Key Exchange'] },
+  { year: '2025', place: '4th', medal: '🏅', name: 'Kaspersky CTF', org: 'Kaspersky · Europe', tag: 'EU', desc: 'Regional · Team',                                                     keywords: ['Mixed Categories', 'OSINT', 'Reverse Engineering'] },
+]
+
+const htbPaths = [
+  {
+    name: 'Penetration Tester Path',
+    status: 'COMPLETE',
+    bar: '██████████',
+    pct: '100%',
+    fill: 100,
+    pipeline: 'Recon → Enumerate → Exploit → PrivEsc → Pivot → Report',
+    practiced: 'Web Testing · Common Services · Active Directory Attack Paths · Nmap · Proxies · Payloads · Metasploit · Fuzzing · Vuln Assessment',
+    output: 'Reproducible Findings · Risk Context · Remediation Notes',
+  },
+  {
+    name: 'Junior Cybersecurity Analyst Path',
+    status: 'COMPLETE',
+    bar: '██████████',
+    pct: '100%',
+    fill: 100,
+    pipeline: 'Foundations → Recon → Basic Exploit → Triage → Hunt → Report',
+    practiced: 'OS + Networking Fundamentals · Web Basics · Intro Pentesting · Intro Security Monitoring · Nmap · Metasploit · Windows/Linux CLI · Event Logs · Elastic · SIEM',
+    output: 'Well-Rounded Baseline Across Offensive + Defensive Workflows',
+  },
+  {
+    name: 'SOC Analyst Path',
+    status: 'IN PROGRESS',
+    bar: '████████░░',
+    pct: '81.4%',
+    fill: 81.4,
+    pipeline: 'Monitor → Triage → Investigate → Correlate → Escalate → Report',
+    practiced: 'SIEM Monitoring · Alert Validation · Windows Event Logs · IDS/IPS Telemetry · Elastic · Splunk · Sigma/YARA · Traffic Analysis · Malware Triage',
+    output: 'Evidence-Backed Incident Notes · Detection Context · Clear Reporting',
+  },
 ]
 
 const today = new Date().toISOString().slice(0, 10)
@@ -16,47 +49,64 @@ const today = new Date().toISOString().slice(0, 10)
 
     <!-- ── HUD STRIP ── -->
     <div class="hud-strip" aria-label="Achievement summary">
-      <span>CERTS: <strong>1</strong></span>
-      <span class="hud-sep">|</span>
-      <span>CTF PODIUMS: <strong>3</strong></span>
-      <span class="hud-sep">|</span>
-      <span>HTB TRACKS: <strong>2</strong></span>
-      <span class="hud-sep">|</span>
-      <span>STATUS: <strong class="hud-active">ACTIVE</strong></span>
-      <span class="hud-sep">|</span>
-      <span>UPDATED: <strong>{today}</strong></span>
+      <div class="hud-nav">
+        <a class="hud-link" href="#ch-01">CERTS: <strong>1</strong></a>
+        <span class="hud-sep">|</span>
+        <a class="hud-link" href="#ch-02">CTF PODIUMS: <strong>3</strong></a>
+        <span class="hud-sep">|</span>
+        <a class="hud-link" href="#ch-03">HTB TRACKS: <strong>3</strong></a>
+      </div>
+      <span class="hud-updated">UPDATED: <strong>{today}</strong></span>
     </div>
 
     <!-- ── BLOCK A: CERT HERO ── -->
-    <section class="block">
+    <section class="block" id="ch-01">
       <div class="block-header">
         <span class="block-sys">SYS//CERT</span>
         <span class="block-ch">CH-01</span>
       </div>
 
       <div class="hero-card">
-        <div class="hero-card__stamp">VERIFIED</div>
-        <div class="hero-card__body">
-          <div class="hero-card__top">
-            <div>
-              <span class="hero-card__tag">[CJCA]</span>
-              <h2 class="hero-card__title">Certified Junior Cybersecurity Analyst</h2>
-              <p class="hero-card__meta">
-                <span class="hero-card__issuer">Hack The Box Academy</span>
-                <span class="hero-card__sep">·</span>
-                <span class="hero-card__year">2025</span>
-              </p>
-              <p class="hero-card__focus">
-                Focus: Analyst workflow · Web exploitation · Active Directory · Reporting
-              </p>
+        <div class="hero-card__corner">
+          <a
+            class="btn-retro"
+            href="https://academy.hackthebox.com/achievement/badge/cjca"
+            target="_blank"
+            rel="noopener"
+          >VIEW CERT →</a>
+        </div>
+        <div class="hero-card__left">
+          <span class="hero-card__tag">[CJCA]</span>
+          <h2 class="hero-card__title">Certified Junior Cybersecurity Analyst</h2>
+          <p class="hero-card__meta">
+            <span class="hero-card__issuer">Hack The Box Academy</span>
+            <span class="hero-card__sep">·</span>
+            <span class="hero-card__year">2025</span>
+          </p>
+          <div class="hero-card__chips">
+            <div class="chip-row">
+              <span class="chip">Enterprise Pentest</span>
+              <span class="chip">Recon</span>
+              <span class="chip">Web App Testing</span>
+              <span class="chip">Windows/Linux</span>
             </div>
-            <div class="hero-card__actions">
-              <a
-                class="btn-retro"
-                href="https://academy.hackthebox.com/achievement/badge/cjca"
-                target="_blank"
-                rel="noopener"
-              >VIEW CERT</a>
+            <div class="chip-row">
+              <span class="chip">PrivEsc</span>
+              <span class="chip">Lateral Movement</span>
+              <span class="chip">SIEM Validation</span>
+              <span class="chip">Reporting</span>
+              <span class="chip-more" tabindex="0">
+                +7 more
+                <span class="chip-more__popover">
+                  <span>Vulnerability Chaining</span>
+                  <span>Post-Exploitation</span>
+                  <span>Vuln Scanning</span>
+                  <span>SOC Processes</span>
+                  <span>Security Monitoring</span>
+                  <span>Elastic SIEM</span>
+                  <span>Telemetry Review</span>
+                </span>
+              </span>
             </div>
           </div>
         </div>
@@ -66,7 +116,7 @@ const today = new Date().toISOString().slice(0, 10)
     </section>
 
     <!-- ── BLOCK B: CTF TIMELINE ── -->
-    <section class="block">
+    <section class="block" id="ch-02">
       <div class="block-header">
         <span class="block-sys">SYS//CTF</span>
         <span class="block-ch">CH-02</span>
@@ -74,21 +124,23 @@ const today = new Date().toISOString().slice(0, 10)
 
       <h2 class="block-title">CTF TIMELINE</h2>
       <p class="block-intro">
-        Competitive Capture The Flag achievements demonstrating practical
-        offensive security and vulnerability research skills.
+        Live-fire labs disguised as games. Real skills, real pressure, real takeaways.
       </p>
 
       <ol class="timeline">
         {ctfEntries.map((e) => (
           <li class="timeline-item">
-            <div class="timeline-medal">{e.medal}</div>
             <div class="timeline-body">
               <p class="timeline-main">
                 <span class="timeline-place">{e.place}</span>
                 <span class="timeline-name">{e.name}</span>
-                <span class="timeline-tag">{e.tag}</span>
               </p>
-              <p class="timeline-desc">{e.desc} · {e.org}</p>
+              <p class="timeline-desc">{e.org}</p>
+              <div class="timeline-keywords">
+                {e.keywords.map((k) => (
+                  <span class="chip">{k}</span>
+                ))}
+              </div>
             </div>
             <span class="timeline-year">{e.year}</span>
           </li>
@@ -99,46 +151,51 @@ const today = new Date().toISOString().slice(0, 10)
     </section>
 
     <!-- ── BLOCK C: HTB PROGRESS ── -->
-    <section class="block">
+    <section class="block" id="ch-03">
       <div class="block-header">
         <span class="block-sys">SYS//HTB</span>
         <span class="block-ch">CH-03</span>
       </div>
 
       <div class="htb-header">
-        <h2 class="block-title">HTB ACADEMY // PROGRESS</h2>
+        <h2 class="block-title">HTB ACADEMY // PATHS</h2>
         <span class="htb-status">STATUS: <strong>ACTIVE</strong></span>
       </div>
+      <p class="path-hint">// HOVER PATH FOR DETAILS</p>
 
-      <div class="htb-grid">
-        <div class="htb-row">
-          <span class="htb-key">Tracks completed</span>
-          <span class="htb-val"><strong>2</strong></span>
-        </div>
-        <div class="htb-row --tracks">
-          <span class="htb-key">Paths</span>
-          <ul class="htb-tracks">
-            <li>Penetration Tester Path</li>
-            <li>Junior Cybersecurity Analyst Path</li>
-          </ul>
-        </div>
-        <div class="htb-row">
-          <span class="htb-key">Certification</span>
-          <span class="htb-val">CJCA</span>
-        </div>
-        <div class="htb-row">
-          <span class="htb-key">Focus areas</span>
-          <span class="htb-val htb-tags">
-            <span>Web</span><span>AD</span><span>PrivEsc</span><span>Network</span><span>Reporting</span>
-          </span>
-        </div>
-        <div class="htb-row --progress">
-          <span class="htb-key">Progress</span>
-          <span class="htb-bar" aria-label="7 out of 9">
-            <span class="htb-bar__label">IN PROGRESS&nbsp;&nbsp;███████░░</span>
-          </span>
-        </div>
-      </div>
+      <ul class="path-list">
+        {htbPaths.map((p) => (
+          <li class="path-row">
+            <div class="path-default">
+              <span class="path-arrow" aria-hidden="true">
+                <span class="path-arrow__off">▸</span>
+                <span class="path-arrow__on">▶</span>
+              </span>
+              <span class="path-name">{p.name}</span>
+              <span class={`path-status ${p.status === 'COMPLETE' ? '--complete' : '--progress'}`}>
+                {p.status}{p.pct ? ` ${p.pct}` : ''}
+              </span>
+              <div class="path-bar-track" style={`--fill: ${p.fill}%`}>
+                <div class="path-bar-fill"></div>
+              </div>
+            </div>
+            <div class="path-panel">
+              <div class="path-panel__line">
+                <span class="pp-key">PIPELINE</span>
+                <span class="pp-val">{p.pipeline}</span>
+              </div>
+              <div class="path-panel__line">
+                <span class="pp-key">PRACTICED</span>
+                <span class="pp-val">{p.practiced}</span>
+              </div>
+              <div class="path-panel__line">
+                <span class="pp-key">OUTPUT</span>
+                <span class="pp-val">{p.output}</span>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
 
       <div class="block-status">■ HTB // INDEX: GROWING</div>
     </section>
@@ -162,12 +219,9 @@ const today = new Date().toISOString().slice(0, 10)
   /* ── HUD Strip ── */
   .hud-strip {
     display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem 0.9rem;
-    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    font-family: var(--font-primary);
     font-size: clamp(0.6rem, 1.1vw, 0.72rem);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -178,33 +232,84 @@ const today = new Date().toISOString().slice(0, 10)
     margin-bottom: 3rem;
   }
 
+  .hud-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .hud-sep {
     opacity: 0.3;
   }
 
-  .hud-active {
-    color: #00ff88;
-    text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+  .hud-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-decoration-color: rgba(255, 204, 0, 0.3);
+    text-underline-offset: 3px;
+    cursor: var(--cursor-pointer);
+    transition: opacity 0.15s, text-decoration-color 0.15s, text-shadow 0.15s;
+    opacity: 0.85;
+
+    &:hover {
+      opacity: 1;
+      text-decoration-style: solid;
+      text-decoration-color: rgba(255, 204, 0, 0.9);
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.55);
+      background-image: none !important;
+    }
+  }
+
+  .hud-updated {
+    margin-left: auto;
+    text-align: right;
+    opacity: 0.3;
+    font-size: 0.55rem;
+    letter-spacing: 0.07em;
   }
 
   /* ── Shared Block ── */
   .block {
-    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 
   .block-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.7rem;
-    font-weight: bold;
-    letter-spacing: 0.12em;
+    font-family: var(--font-primary);
     text-transform: uppercase;
-    opacity: 0.6;
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .block-sys {
+    font-size: 0.6rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: #ffcc00;
+    opacity: 0.7;
+    border: 1px solid rgba(255, 204, 0, 0.28);
+    padding: 0.2em 0.6em;
+
+    &::before { content: '[ '; }
+    &::after  { content: ' ]'; }
+  }
+
+  .block-ch {
+    font-size: 0.52rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.28);
   }
 
   .block-title {
@@ -217,17 +322,18 @@ const today = new Date().toISOString().slice(0, 10)
 
   .block-intro {
     font-size: clamp(15px, 1.7vw, 19px);
-    opacity: 0.83;
+    opacity: 1;
     margin-bottom: 2rem;
     line-height: 1.6;
   }
 
   .block-status {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: 0.62rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    opacity: 0.35;
+    color: rgba(255, 204, 0, 0.55);
+    opacity: 1;
     margin-top: 1.5rem;
   }
 
@@ -236,7 +342,7 @@ const today = new Date().toISOString().slice(0, 10)
     position: relative;
     border: 1px solid rgba(255, 204, 0, 0.25);
     background: rgba(255, 204, 0, 0.03);
-    padding: 1.6rem;
+    padding: 1.1rem 1.2rem;
     transition:
       border-color 0.25s,
       box-shadow 0.25s,
@@ -251,44 +357,44 @@ const today = new Date().toISOString().slice(0, 10)
     }
   }
 
-  .hero-card__stamp {
+  .hero-card__corner {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.6rem;
-    font-weight: bold;
-    letter-spacing: 0.15em;
-    color: #00ff88;
-    border: 1px solid rgba(0, 255, 136, 0.4);
-    padding: 0.15em 0.5em;
-    opacity: 0.7;
-    transform: rotate(2deg);
-    pointer-events: none;
+  }
+
+  .hero-card__left {
+    flex: 1;
+    min-width: 0;
+    padding-right: 8rem;
+  }
+
+  .hero-card__right {
+    display: none;
   }
 
   .hero-card__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    display: block;
+  }
+
+  .hero-card__footer {
+    display: none;
   }
 
   .hero-card__tag {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.75rem;
+    font-family: var(--font-primary);
+    font-size: 0.7rem;
     color: #ffcc00;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     display: block;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
   }
 
   .hero-card__title {
     font-size: clamp(20px, 2.4vw, 28px);
     font-weight: bold;
     text-transform: uppercase;
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.35rem;
     color: #fff;
   }
 
@@ -296,7 +402,7 @@ const today = new Date().toISOString().slice(0, 10)
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    font-size: clamp(14px, 1.6vw, 17px);
+    font-size: clamp(14px, 1.5vw, 16px);
     opacity: 0.75;
     margin: 0 0 0.7rem;
   }
@@ -305,24 +411,86 @@ const today = new Date().toISOString().slice(0, 10)
     opacity: 0.4;
   }
 
-  .hero-card__focus {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: clamp(0.72rem, 1.3vw, 0.86rem);
-    letter-spacing: 0.06em;
-    opacity: 0.75;
-    margin: 0;
-  }
-
-  .hero-card__actions {
+  .hero-card__chips {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    flex-shrink: 0;
+    gap: 0.28rem;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+    align-items: center;
+  }
+
+  .chip {
+    font-family: var(--font-primary);
+    font-size: 0.55rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.15em 0.5em;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .chip-more {
+    position: relative;
+    font-family: var(--font-primary);
+    font-size: 0.55rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.15em 0.5em;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.35);
+    cursor: default;
+    user-select: none;
+    transition: color 0.15s, border-color 0.15s;
+
+    &:hover,
+    &:focus {
+      color: rgba(255, 204, 0, 0.8);
+      border-color: rgba(255, 204, 0, 0.35);
+    }
+
+    &:hover .chip-more__popover,
+    &:focus .chip-more__popover,
+    &:focus-within .chip-more__popover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  }
+
+  .chip-more__popover {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: #0e0e0e;
+    border: 1px solid rgba(255, 204, 0, 0.25);
+    padding: 0.4em 0.6em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+    z-index: 20;
+
+    & span {
+      font-family: var(--font-primary);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
   }
 
   .btn-retro {
     display: inline-block;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -332,33 +500,21 @@ const today = new Date().toISOString().slice(0, 10)
     color: #ffcc00;
     background: rgba(255, 204, 0, 0.07);
     background-image: none !important;
+    box-shadow:
+      0 0 6px rgba(255, 204, 0, 0.2),
+      inset 0 0 8px rgba(255, 204, 0, 0.08);
     transition:
       background 0.15s,
       box-shadow 0.15s;
     text-align: center;
 
-    &::after {
-      content: '';
-      display: inline-block;
-      opacity: 0;
-      max-width: 0;
-      overflow: hidden;
-      transition:
-        opacity 0.2s,
-        max-width 0.2s;
-      vertical-align: middle;
-    }
-
     &:hover {
       background: rgba(255, 204, 0, 0.18) !important;
       background-image: none !important;
-      box-shadow: 0 0 10px rgba(255, 204, 0, 0.35);
-
-      &::after {
-        content: ' →';
-        opacity: 1;
-        max-width: 2em;
-      }
+      box-shadow:
+        0 0 14px rgba(255, 204, 0, 0.55),
+        0 0 4px rgba(255, 204, 0, 0.3),
+        inset 0 0 12px rgba(255, 204, 0, 0.15);
     }
   }
 
@@ -372,68 +528,60 @@ const today = new Date().toISOString().slice(0, 10)
     &::before {
       content: '';
       position: absolute;
-      left: 1.1rem;
+      left: 0;
       top: 0;
       bottom: 0;
-      width: 1px;
+      width: 2px;
       background: repeating-linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0.15) 0px,
-        rgba(255, 255, 255, 0.15) 4px,
-        transparent 4px,
-        transparent 8px
+        rgba(255, 255, 255, 0.22) 0px,
+        rgba(255, 255, 255, 0.22) 5px,
+        transparent 5px,
+        transparent 10px
       );
     }
   }
 
   .timeline-item {
     display: grid;
-    grid-template-columns: 2.4rem 1fr auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
     gap: 0.1rem 1rem;
-    padding: 1rem 0;
+    padding: 1rem 1rem 1rem 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     position: relative;
-    transition:
-      background 0.2s,
-      box-shadow 0.2s;
+
+    /* dot — centered on the 2px line at left:0 */
+    &::before {
+      content: '';
+      position: absolute;
+      left: -3px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 204, 0, 0.65);
+      box-shadow: 0 0 6px rgba(255, 204, 0, 0.45);
+      z-index: 2;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
 
     &:last-child {
       border-bottom: none;
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.04);
-      box-shadow: inset 3px 0 0 rgba(255, 204, 0, 0.5);
-    }
-
-    /* dot on the scanline */
-    &::before {
-      content: '';
-      position: absolute;
-      left: calc(1.1rem - 3px);
-      top: 50%;
-      transform: translateY(-50%);
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(255, 204, 0, 0.55);
-      box-shadow: 0 0 5px rgba(255, 204, 0, 0.4);
-      z-index: 2;
-      transition: background 0.2s, box-shadow 0.2s;
+      background: rgba(255, 204, 0, 0.05);
+      box-shadow: inset -4px 0 0 rgba(255, 204, 0, 0.7),
+        0 0 20px rgba(255, 204, 0, 0.06);
     }
 
     &:hover::before {
       background: #ffcc00;
-      box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+      box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.25), 0 0 12px rgba(255, 204, 0, 0.9);
+      transform: translateY(-50%) scale(1.35);
     }
-  }
-
-  .timeline-medal {
-    font-size: 1.3rem;
-    text-align: center;
-    position: relative;
-    z-index: 1;
   }
 
   .timeline-body {
@@ -442,55 +590,67 @@ const today = new Date().toISOString().slice(0, 10)
 
   .timeline-main {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: baseline;
     gap: 0.3rem 0.7rem;
     margin: 0 0 0.25rem;
+    overflow: hidden;
   }
 
   .timeline-place {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     color: #ffcc00;
-    opacity: 0.85;
+    opacity: 0.9;
     text-transform: uppercase;
   }
 
   .timeline-name {
-    font-size: clamp(15px, 1.9vw, 20px);
+    font-size: clamp(18px, 2.4vw, 26px);
     font-weight: bold;
     text-transform: uppercase;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .timeline-tag {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
+    font-family: var(--font-primary);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    border: 1px solid rgba(255, 204, 0, 0.35);
-    color: #ffcc00;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.45);
     padding: 0.1em 0.4em;
-    opacity: 0.7;
     align-self: center;
   }
 
   .timeline-desc {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.05em;
-    opacity: 0.55;
-    margin: 0;
+    font-family: var(--font-primary);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    opacity: 0.5;
+    margin: 0 0 0.5rem;
     text-transform: uppercase;
   }
 
+  .timeline-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+    margin-top: 0.4rem;
+  }
+
+
   .timeline-year {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    opacity: 0.5;
+    font-family: var(--font-primary);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
     white-space: nowrap;
+    text-align: right;
   }
 
   /* ── HTB Progress ── */
@@ -500,11 +660,11 @@ const today = new Date().toISOString().slice(0, 10)
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.3rem;
   }
 
   .htb-status {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-primary);
     font-size: 0.65rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -515,76 +675,201 @@ const today = new Date().toISOString().slice(0, 10)
     }
   }
 
-  .htb-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    border-left: 2px solid rgba(255, 255, 255, 0.1);
-    padding-left: 1.2rem;
-  }
-
-  .htb-row {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    font-size: clamp(15px, 1.7vw, 18px);
-
-    &.--tracks {
-      align-items: flex-start;
-    }
-  }
-
-  .htb-key {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+  .path-hint {
+    font-family: var(--font-primary);
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    opacity: 0.45;
-    min-width: 10rem;
+    color: rgba(255, 255, 255, 0.2);
+    margin: 0 0 0.25rem;
   }
 
-  .htb-val {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .htb-tracks {
+  /* ── Path Rows ── */
+  .path-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0;
+  }
 
-    & li::before {
-      content: '▸ ';
-      opacity: 0.4;
+  .path-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: default;
+    transition: background 0.15s;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: rgba(255, 204, 0, 0.04);
     }
   }
 
-  .htb-tags {
+  .path-default {
     display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 0.9rem 0;
     flex-wrap: wrap;
-    gap: 0.4rem;
+  }
 
-    & span {
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 0.1em 0.45em;
-      opacity: 0.75;
+  .path-arrow {
+    position: relative;
+    width: 0.85rem;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  .path-arrow__off {
+    color: rgba(255, 255, 255, 0.28);
+    transition: opacity 0.15s;
+    opacity: 1;
+    display: block;
+  }
+
+  .path-arrow__on {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ffcc00;
+    text-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .path-row:hover .path-arrow__off {
+    opacity: 0;
+  }
+
+  .path-row:hover .path-arrow__on {
+    opacity: 1;
+  }
+
+  .path-name {
+    font-size: clamp(14px, 1.6vw, 17px);
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .path-status {
+    font-family: var(--font-primary);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &.--complete {
+      color: #00ff88;
+      text-shadow: 0 0 5px rgba(0, 255, 136, 0.35);
+    }
+
+    &.--progress {
+      color: #ffcc00;
+      opacity: 0.9;
     }
   }
 
-  .htb-bar {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    color: #ffcc00;
-    opacity: 0.7;
+  .path-bar-track {
+    width: 8rem;
+    height: 10px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+    /* segmented overlay */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent calc(10% - 1px),
+        rgba(0, 0, 0, 0.55) calc(10% - 1px),
+        rgba(0, 0, 0, 0.55) 10%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+  }
+
+  .path-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--fill);
+    background: #ffcc00;
+    opacity: 0.85;
+    z-index: 1;
+  }
+
+  @keyframes bar-load {
+    from { width: 0%; }
+    to   { width: var(--fill); }
+  }
+
+  .path-row:hover .path-bar-fill {
+    animation: bar-load 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  /* OSD details panel */
+  .path-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.2s ease, opacity 0.15s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    border-left: 2px solid rgba(255, 204, 0, 0.25);
+    padding: 0 0 0 0.75rem;
+  }
+
+  .path-row:hover .path-panel {
+    max-height: 8rem;
+    opacity: 1;
+    padding: 0.6rem 0 0.75rem 0.75rem;
+  }
+
+  .path-panel__line {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .pp-key {
+    font-family: var(--font-primary);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 204, 0, 0.6);
+    min-width: 5.5rem;
+    flex-shrink: 0;
+  }
+
+  .pp-val {
+    font-family: var(--font-primary);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
   }
 
   /* ── Mobile ── */
@@ -593,16 +878,16 @@ const today = new Date().toISOString().slice(0, 10)
       font-size: 0.55rem;
     }
 
-    .hero-card__top {
-      flex-direction: column;
+    .hero-card__left {
+      padding-right: 0;
     }
 
-    .hero-card__actions {
-      flex-direction: row;
-    }
-
-    .htb-key {
-      min-width: 7rem;
+    .hero-card__corner {
+      position: static;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
     }
   }
 </style>
