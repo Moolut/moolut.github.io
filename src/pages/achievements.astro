@@ -254,6 +254,8 @@ const today = new Date().toISOString().slice(0, 10)
     cursor: var(--cursor-pointer);
     transition: opacity 0.15s, text-decoration-color 0.15s, text-shadow 0.15s;
     opacity: 0.85;
+    background-image: none !important;
+    background-size: 0 0 !important;
 
     &:hover {
       opacity: 1;
@@ -891,3 +893,37 @@ const today = new Date().toISOString().slice(0, 10)
     }
   }
 </style>
+
+<script>
+  function initHudScroll() {
+    const strip = document.querySelector('.hud-strip')
+    if (!strip) return
+
+    strip.addEventListener('click', (e) => {
+      const link = e.target?.closest?.('.hud-link')
+      if (!link) return
+
+      e.preventDefault()
+
+      const scrollRoot = document.querySelector('.tv-content')
+      if (!scrollRoot) return
+
+      const targetId = link.getAttribute('href')
+      if (!targetId) return
+
+      const target = document.querySelector(targetId)
+      if (!target) return
+
+      const hudH = strip.offsetHeight
+      const rootRect = scrollRoot.getBoundingClientRect()
+      const targetRect = target.getBoundingClientRect()
+      const offsetTop =
+        scrollRoot.scrollTop + (targetRect.top - rootRect.top) - hudH - 16
+
+      scrollRoot.scrollTo({ top: Math.max(0, offsetTop), behavior: 'smooth' })
+    })
+  }
+
+  initHudScroll()
+  document.addEventListener('astro:page-load', initHudScroll)
+</script>
