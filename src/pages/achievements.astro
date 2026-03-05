@@ -1,44 +1,28 @@
 ---
 import TVLayout from '../layouts/TVLayout.astro'
+import achievementsData from '../data/achievements.json'
 
-const ctfEntries = [
-  { year: '2024', place: '1st', medal: '🥇', name: 'IOTSEC CTF I',   org: 'TUM',       tag: 'CRYPTO',    desc: 'Block Ciphers · Public Key · Steganography · Side-Channel',           keywords: ['Block Ciphers', 'Public Key', 'Steganography', 'Side-Channel'] },
-  { year: '2024', place: '2nd', medal: '🥈', name: 'IOTSEC CTF II',  org: 'TUM',       tag: 'CRYPTO',    desc: 'Web Exploitation · Network Pivoting · IoT Protocols · Key Exchange',  keywords: ['Web Exploitation', 'Network Pivoting', 'IoT Protocols', 'Key Exchange'] },
-  { year: '2025', place: '4th', medal: '🏅', name: 'Kaspersky CTF', org: 'Kaspersky · Europe', tag: 'EU', desc: 'Regional · Team',                                                     keywords: ['Mixed Categories', 'OSINT', 'Reverse Engineering'] },
-]
+// ── Types ────────────────────────────────────────────────────────────────────
+interface CertItem {
+  tag: string; title: string; issuer: string; year: string
+  url: string; urlLabel: string
+  chips: string[]; chipsMore: string[]
+}
+interface CtfItem {
+  year: string; place: string; name: string; org: string; keywords: string[]
+}
+interface HtbItem {
+  name: string; status: string; fill: number; pct: string
+  pipeline: string; practiced: string; output: string
+}
+interface Channel {
+  id: string; sys: string; type: string
+  hudLabel: string; statusLine: string
+  title?: string; intro?: string; htbStatus?: string
+  items: (CertItem | CtfItem | HtbItem)[]
+}
 
-const htbPaths = [
-  {
-    name: 'Penetration Tester Path',
-    status: 'COMPLETE',
-    bar: '██████████',
-    pct: '100%',
-    fill: 100,
-    pipeline: 'Recon → Enumerate → Exploit → PrivEsc → Pivot → Report',
-    practiced: 'Web Testing · Common Services · Active Directory Attack Paths · Nmap · Proxies · Payloads · Metasploit · Fuzzing · Vuln Assessment',
-    output: 'Reproducible Findings · Risk Context · Remediation Notes',
-  },
-  {
-    name: 'Junior Cybersecurity Analyst Path',
-    status: 'COMPLETE',
-    bar: '██████████',
-    pct: '100%',
-    fill: 100,
-    pipeline: 'Foundations → Recon → Basic Exploit → Triage → Hunt → Report',
-    practiced: 'OS + Networking Fundamentals · Web Basics · Intro Pentesting · Intro Security Monitoring · Nmap · Metasploit · Windows/Linux CLI · Event Logs · Elastic · SIEM',
-    output: 'Well-Rounded Baseline Across Offensive + Defensive Workflows',
-  },
-  {
-    name: 'SOC Analyst Path',
-    status: 'IN PROGRESS',
-    bar: '████████░░',
-    pct: '81.4%',
-    fill: 81.4,
-    pipeline: 'Monitor → Triage → Investigate → Correlate → Escalate → Report',
-    practiced: 'SIEM Monitoring · Alert Validation · Windows Event Logs · IDS/IPS Telemetry · Elastic · Splunk · Sigma/YARA · Traffic Analysis · Malware Triage',
-    output: 'Evidence-Backed Incident Notes · Detection Context · Clear Reporting',
-  },
-]
+const channels = achievementsData.channels as Channel[]
 
 const _d = new Date()
 const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1).padStart(2,'0')}/${_d.getFullYear()}`
@@ -48,158 +32,145 @@ const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1)
   <article class="achievements">
     <h1 class="page-title">ACHIEVEMENTS & HONORS</h1>
 
-    <!-- ── HUD STRIP ── -->
+    <!-- ── HUD STRIP (generated from channel list) ── -->
     <div class="hud-strip" aria-label="Achievement summary">
       <div class="hud-nav">
-        <button class="hud-link" data-target="#ch-01">CERTS: <strong>1</strong></button>
-        <span class="hud-sep">|</span>
-        <button class="hud-link" data-target="#ch-02">CTF PODIUMS: <strong>3</strong></button>
-        <span class="hud-sep">|</span>
-        <button class="hud-link" data-target="#ch-03">HTB TRACKS: <strong>3</strong></button>
+        {channels.map((ch, i) => (
+          <>
+            {i > 0 && <span class="hud-sep">|</span>}
+            <button class="hud-link" data-target={`#${ch.id}`}>
+              {ch.hudLabel}: <strong>{ch.items.length}</strong>
+            </button>
+          </>
+        ))}
       </div>
       <span class="hud-updated">UPDATED: <strong>{today}</strong></span>
     </div>
 
-    <!-- ── BLOCK A: CERT HERO ── -->
-    <section class="block" id="ch-01">
-      <div class="block-header">
-        <span class="block-sys">SYS//CERT</span>
-        <span class="block-ch">CH-01</span>
-      </div>
-
-      <div class="hero-card">
-        <div class="hero-card__corner">
-          <a
-            class="btn-retro"
-            href="https://academy.hackthebox.com/achievement/badge/cjca"
-            target="_blank"
-            rel="noopener"
-          >VIEW CERT →</a>
+    <!-- ── CHANNELS (rendered dynamically by type) ── -->
+    {channels.map((ch) => (
+      <section class="block" id={ch.id}>
+        <div class="block-header">
+          <span class="block-sys">{ch.sys}</span>
+          <span class="block-ch">{ch.id.toUpperCase()}</span>
         </div>
-        <div class="hero-card__left">
-          <span class="hero-card__tag">[CJCA]</span>
-          <h2 class="hero-card__title">Certified Junior Cybersecurity Analyst</h2>
-          <p class="hero-card__meta">
-            <span class="hero-card__issuer">Hack The Box Academy</span>
-            <span class="hero-card__sep">·</span>
-            <span class="hero-card__year">2025</span>
-          </p>
-          <div class="hero-card__chips">
-            <div class="chip-row">
-              <span class="chip">Enterprise Pentest</span>
-              <span class="chip">Recon</span>
-              <span class="chip">Web App Testing</span>
-              <span class="chip">Windows/Linux</span>
-            </div>
-            <div class="chip-row">
-              <span class="chip">PrivEsc</span>
-              <span class="chip">Lateral Movement</span>
-              <span class="chip">SIEM Validation</span>
-              <span class="chip">Reporting</span>
-              <span class="chip-more" tabindex="0">
-                +7 more
-                <span class="chip-more__popover">
-                  <span>Vulnerability Chaining</span>
-                  <span>Post-Exploitation</span>
-                  <span>Vuln Scanning</span>
-                  <span>SOC Processes</span>
-                  <span>Security Monitoring</span>
-                  <span>Elastic SIEM</span>
-                  <span>Telemetry Review</span>
-                </span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="block-status">■ CERT // OUTPUT: VERIFIED</div>
-    </section>
-
-    <!-- ── BLOCK B: CTF TIMELINE ── -->
-    <section class="block" id="ch-02">
-      <div class="block-header">
-        <span class="block-sys">SYS//CTF</span>
-        <span class="block-ch">CH-02</span>
-      </div>
-
-      <h2 class="block-title">CTF TIMELINE</h2>
-      <p class="block-intro">
-        Live-fire labs disguised as games. Real skills, real pressure, real takeaways.
-      </p>
-
-      <ol class="timeline">
-        {ctfEntries.map((e) => (
-          <li class="timeline-item">
-            <div class="timeline-body">
-              <p class="timeline-main">
-                <span class="timeline-place">{e.place}</span>
-                <span class="timeline-name">{e.name}</span>
-              </p>
-              <p class="timeline-desc">{e.org}</p>
-              <div class="timeline-keywords">
-                {e.keywords.map((k) => (
-                  <span class="chip">{k}</span>
-                ))}
+        {/* ── type: certifications ── */}
+        {ch.type === 'certifications' && (
+          <>
+            {(ch.items as CertItem[]).map((cert) => (
+              <div class="hero-card">
+                <div class="hero-card__corner">
+                  <a class="btn-retro" href={cert.url} target="_blank" rel="noopener">
+                    {cert.urlLabel}
+                  </a>
+                </div>
+                <div class="hero-card__left">
+                  <span class="hero-card__tag">[{cert.tag}]</span>
+                  <h2 class="hero-card__title">{cert.title}</h2>
+                  <p class="hero-card__meta">
+                    <span class="hero-card__issuer">{cert.issuer}</span>
+                    <span class="hero-card__sep">·</span>
+                    <span class="hero-card__year">{cert.year}</span>
+                  </p>
+                  <div class="hero-card__chips">
+                    <div class="chip-row">
+                      {cert.chips.slice(0, 4).map((c) => <span class="chip">{c}</span>)}
+                    </div>
+                    {(cert.chips.length > 4 || cert.chipsMore.length > 0) && (
+                      <div class="chip-row">
+                        {cert.chips.slice(4).map((c) => <span class="chip">{c}</span>)}
+                        {cert.chipsMore.length > 0 && (
+                          <span class="chip-more" tabindex="0">
+                            +{cert.chipsMore.length} more
+                            <span class="chip-more__popover">
+                              {cert.chipsMore.map((c) => <span>{c}</span>)}
+                            </span>
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
+            ))}
+          </>
+        )}
+
+        {/* ── type: ctf ── */}
+        {ch.type === 'ctf' && (
+          <>
+            <h2 class="block-title">{ch.title}</h2>
+            <p class="block-intro">{ch.intro}</p>
+            <ol class="timeline">
+              {(ch.items as CtfItem[]).map((e) => (
+                <li class="timeline-item">
+                  <div class="timeline-body">
+                    <p class="timeline-main">
+                      <span class="timeline-place">{e.place}</span>
+                      <span class="timeline-name">{e.name}</span>
+                    </p>
+                    <p class="timeline-desc">{e.org}</p>
+                    <div class="timeline-keywords">
+                      {e.keywords.map((k) => <span class="chip">{k}</span>)}
+                    </div>
+                  </div>
+                  <span class="timeline-year">{e.year}</span>
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
+
+        {/* ── type: htb ── */}
+        {ch.type === 'htb' && (
+          <>
+            <div class="htb-header">
+              <h2 class="block-title">{ch.title}</h2>
+              {ch.htbStatus && (
+                <span class="htb-status">STATUS: <strong>{ch.htbStatus}</strong></span>
+              )}
             </div>
-            <span class="timeline-year">{e.year}</span>
-          </li>
-        ))}
-      </ol>
+            <p class="path-hint">// HOVER PATH FOR DETAILS</p>
+            <ul class="path-list">
+              {(ch.items as HtbItem[]).map((p) => (
+                <li class="path-row">
+                  <div class="path-default">
+                    <span class="path-arrow" aria-hidden="true">
+                      <span class="path-arrow__off">▸</span>
+                      <span class="path-arrow__on">▶</span>
+                    </span>
+                    <span class="path-name">{p.name}</span>
+                    <span class={`path-status ${p.status === 'COMPLETE' ? '--complete' : '--progress'}`}>
+                      {p.status}{p.pct ? ` ${p.pct}` : ''}
+                    </span>
+                    <div class="path-bar-track" style={`--fill: ${p.fill}%`}>
+                      <div class="path-bar-fill"></div>
+                    </div>
+                  </div>
+                  <div class="path-panel">
+                    <div class="path-panel__line">
+                      <span class="pp-key">PIPELINE</span>
+                      <span class="pp-val">{p.pipeline}</span>
+                    </div>
+                    <div class="path-panel__line">
+                      <span class="pp-key">PRACTICED</span>
+                      <span class="pp-val">{p.practiced}</span>
+                    </div>
+                    <div class="path-panel__line">
+                      <span class="pp-key">OUTPUT</span>
+                      <span class="pp-val">{p.output}</span>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
-      <div class="block-status">■ CTF // RANK: LOGGED</div>
-    </section>
-
-    <!-- ── BLOCK C: HTB PROGRESS ── -->
-    <section class="block" id="ch-03">
-      <div class="block-header">
-        <span class="block-sys">SYS//HTB</span>
-        <span class="block-ch">CH-03</span>
-      </div>
-
-      <div class="htb-header">
-        <h2 class="block-title">HTB ACADEMY // PATHS</h2>
-        <span class="htb-status">STATUS: <strong>ACTIVE</strong></span>
-      </div>
-      <p class="path-hint">// HOVER PATH FOR DETAILS</p>
-
-      <ul class="path-list">
-        {htbPaths.map((p) => (
-          <li class="path-row">
-            <div class="path-default">
-              <span class="path-arrow" aria-hidden="true">
-                <span class="path-arrow__off">▸</span>
-                <span class="path-arrow__on">▶</span>
-              </span>
-              <span class="path-name">{p.name}</span>
-              <span class={`path-status ${p.status === 'COMPLETE' ? '--complete' : '--progress'}`}>
-                {p.status}{p.pct ? ` ${p.pct}` : ''}
-              </span>
-              <div class="path-bar-track" style={`--fill: ${p.fill}%`}>
-                <div class="path-bar-fill"></div>
-              </div>
-            </div>
-            <div class="path-panel">
-              <div class="path-panel__line">
-                <span class="pp-key">PIPELINE</span>
-                <span class="pp-val">{p.pipeline}</span>
-              </div>
-              <div class="path-panel__line">
-                <span class="pp-key">PRACTICED</span>
-                <span class="pp-val">{p.practiced}</span>
-              </div>
-              <div class="path-panel__line">
-                <span class="pp-key">OUTPUT</span>
-                <span class="pp-val">{p.output}</span>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <div class="block-status">■ HTB // INDEX: GROWING</div>
-    </section>
+        <div class="block-status">{ch.statusLine}</div>
+      </section>
+    ))}
   </article>
 </TVLayout>
 
@@ -281,9 +252,8 @@ const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1)
   }
 
   /* Offset scroll targets so they aren't hidden behind the sticky HUD strip */
-  #ch-01,
-  #ch-02,
-  #ch-03 {
+  /* Matches any section id starting with "ch-" so new channels work automatically */
+  [id^="ch-"] {
     scroll-margin-top: 48px;
   }
 

@@ -1,0 +1,120 @@
+{
+  "channels": [
+    {
+      "id": "ch-01",
+      "sys": "SYS//CERT",
+      "type": "certifications",
+      "hudLabel": "CERTS",
+      "statusLine": "■ CERT // OUTPUT: VERIFIED",
+      "items": [
+        {
+          "tag": "CJCA",
+          "title": "Certified Junior Cybersecurity Analyst",
+          "issuer": "Hack The Box Academy",
+          "year": "2025",
+          "url": "https://academy.hackthebox.com/achievement/badge/cjca",
+          "urlLabel": "VIEW CERT →",
+          "chips": [
+            "Enterprise Pentest",
+            "Recon",
+            "Web App Testing",
+            "Windows/Linux",
+            "PrivEsc",
+            "Lateral Movement",
+            "SIEM Validation",
+            "Reporting"
+          ],
+          "chipsMore": [
+            "Vulnerability Chaining",
+            "Post-Exploitation",
+            "Vuln Scanning",
+            "SOC Processes",
+            "Security Monitoring",
+            "Elastic SIEM",
+            "Telemetry Review"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch-02",
+      "sys": "SYS//CTF",
+      "type": "ctf",
+      "hudLabel": "CTF PODIUMS",
+      "statusLine": "■ CTF // RANK: LOGGED",
+      "title": "CTF TIMELINE",
+      "intro": "Live-fire labs disguised as games. Real skills, real pressure, real takeaways.",
+      "items": [
+        {
+          "year": "2024",
+          "place": "1st",
+          "name": "IOTSEC CTF I",
+          "org": "TUM",
+          "keywords": [
+            "Block Ciphers",
+            "Public Key",
+            "Steganography",
+            "Side-Channel"
+          ]
+        },
+        {
+          "year": "2024",
+          "place": "2nd",
+          "name": "IOTSEC CTF II",
+          "org": "TUM",
+          "keywords": [
+            "Web Exploitation",
+            "Network Pivoting",
+            "IoT Protocols",
+            "Key Exchange"
+          ]
+        },
+        {
+          "year": "2025",
+          "place": "4th",
+          "name": "Kaspersky CTF",
+          "org": "Kaspersky · Europe",
+          "keywords": ["Mixed Categories", "OSINT", "Reverse Engineering"]
+        }
+      ]
+    },
+    {
+      "id": "ch-03",
+      "sys": "SYS//HTB",
+      "type": "htb",
+      "hudLabel": "HTB TRACKS",
+      "statusLine": "■ HTB // INDEX: GROWING",
+      "title": "HTB ACADEMY // PATHS",
+      "htbStatus": "ACTIVE",
+      "items": [
+        {
+          "name": "Penetration Tester Path",
+          "status": "COMPLETE",
+          "fill": 100,
+          "pct": "100%",
+          "pipeline": "Recon → Enumerate → Exploit → PrivEsc → Pivot → Report",
+          "practiced": "Web Testing · Common Services · Active Directory Attack Paths · Nmap · Proxies · Payloads · Metasploit · Fuzzing · Vuln Assessment",
+          "output": "Reproducible Findings · Risk Context · Remediation Notes"
+        },
+        {
+          "name": "Junior Cybersecurity Analyst Path",
+          "status": "COMPLETE",
+          "fill": 100,
+          "pct": "100%",
+          "pipeline": "Foundations → Recon → Basic Exploit → Triage → Hunt → Report",
+          "practiced": "OS + Networking Fundamentals · Web Basics · Intro Pentesting · Intro Security Monitoring · Nmap · Metasploit · Windows/Linux CLI · Event Logs · Elastic · SIEM",
+          "output": "Well-Rounded Baseline Across Offensive + Defensive Workflows"
+        },
+        {
+          "name": "SOC Analyst Path",
+          "status": "IN PROGRESS",
+          "fill": 81.4,
+          "pct": "81.4%",
+          "pipeline": "Monitor → Triage → Investigate → Correlate → Escalate → Report",
+          "practiced": "SIEM Monitoring · Alert Validation · Windows Event Logs · IDS/IPS Telemetry · Elastic · Splunk · Sigma/YARA · Traffic Analysis · Malware Triage",
+          "output": "Evidence-Backed Incident Notes · Detection Context · Clear Reporting"
+        }
+      ]
+    }
+  ]
+}
