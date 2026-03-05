@@ -26,8 +26,7 @@
     </button>
   </div>
 
-  <!-- SPACE MODE button — temporarily hidden, may restore later -->
-  <!-- <button class="space-mode-button" onclick={toggleSpace}>SPACE MODE</button> -->
+  <!-- SPACE MODE button moved to footer -->
 
   <button class="show-hide-button" onclick={toggleContent}>
     {$contentVisible ? 'HIDE TEXT' : 'SHOW TEXT'}

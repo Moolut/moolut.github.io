@@ -1,39 +1,45 @@
 ---
+import SpaceTrigger from './SpaceTrigger.svelte'
 ---
 
 <footer class="footer" id="footer">
-  <ul class="link-list">
-    <li>
-      <a href="/resume" rel="noopener noreferrer" target="_blank">RESUME</a>
-    </li>
-    <li>
-      <a
-        href="mailto:yldrmm.mevlut@gmail.com"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        EMAIL
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://linkedin.com/in/mevlut-yildirim"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        LINKEDIN
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://github.com/moolut"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        GITHUB
-      </a>
-    </li>
-  </ul>
+  <div class="footer__bottom">
+    <ul class="link-list">
+      <li>
+        <a href="/resume" rel="noopener noreferrer" target="_blank">RESUME</a>
+      </li>
+      <li>
+        <a
+          href="mailto:yldrmm.mevlut@gmail.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          EMAIL
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://linkedin.com/in/mevlut-yildirim"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          LINKEDIN
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/moolut"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          GITHUB
+        </a>
+      </li>
+    </ul>
+    <div class="footer__space">
+      <SpaceTrigger client:load />
+    </div>
+  </div>
 </footer>
 
 <style>
@@ -61,6 +67,13 @@
     );
   }
 
+  .footer__bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+
   .link-list {
     display: flex;
     flex-direction: row;
@@ -70,5 +83,11 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    flex: 1;
+  }
+
+  .footer__space {
+    position: absolute;
+    right: 0;
   }
 </style>

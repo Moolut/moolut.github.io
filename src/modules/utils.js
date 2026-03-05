@@ -1,1 +1,1 @@
-export const raf = window.requestAnimationFrame
+export const raf = (cb) => requestAnimationFrame(cb)

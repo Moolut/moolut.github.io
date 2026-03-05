@@ -217,17 +217,19 @@ function lookForChannelButtons() {
   })
 }
 
-window.addEventListener(
-  'visibilitychange',
-  () => {
-    if (document.visibilityState === 'hidden') {
-      saveChannelTimestamps()
-    }
-  },
-  false
-)
+if (typeof window !== 'undefined') {
+  window.addEventListener(
+    'visibilitychange',
+    () => {
+      if (document.visibilityState === 'hidden') {
+        saveChannelTimestamps()
+      }
+    },
+    false
+  )
 
-loadChannelTimestamps()
-document.addEventListener('astro:page-load', () => {
-  lookForChannelButtons()
-})
+  loadChannelTimestamps()
+  document.addEventListener('astro:page-load', () => {
+    lookForChannelButtons()
+  })
+}
