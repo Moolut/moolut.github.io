@@ -2,29 +2,31 @@
 import TVLayout from '../layouts/TVLayout.astro'
 import CVSection from '../components/CVSection.astro'
 import Badge from '../components/Badge.astro'
-import { education, workExperience, skills } from '../modules/cv-data'
+import whoamiData from '../data/whoami.json'
 
-// Transform education data for terminal CVSection component
-const educationItems = education.map((edu) => ({
-  title: edu.institution,
-  subtitle: edu.degree,
-  period: edu.period,
-  location: edu.location,
-  gpa: edu.gpa,
-  technologies: edu.technologies,
-  highlights: edu.highlights,
-}))
+// ── Types ────────────────────────────────────────────────────────────────────
+interface CVItem {
+  title?: string
+  subtitle?: string
+  period?: string
+  location?: string
+  gpa?: string
+  technologies?: string[]
+  highlights?: string[]
+  positions?: {
+    position: string
+    period: string
+    technologies?: string[]
+    highlights?: string[]
+  }[]
+}
+interface LangItem { name: string; level: string; pct: number }
+type Section =
+  | { id: string; navLabel: string; type: 'cv'; items: CVItem[] }
+  | { id: string; navLabel: string; type: 'skills'; filename: string; categories: Record<string, string[]>; skills: string[] }
+  | { id: string; navLabel: string; type: 'languages'; filename: string; items: LangItem[] }
 
-// Transform work experience data for terminal CVSection component
-const workItems = workExperience.map((work) => ({
-  title: work.company,
-  subtitle: work.position,
-  period: work.period,
-  location: work.location,
-  technologies: work.technologies,
-  highlights: work.highlights,
-  positions: work.positions,
-}))
+const sections = whoamiData.sections as Section[]
 ---
 
 <TVLayout title="whoami">
@@ -33,87 +35,90 @@ const workItems = workExperience.map((work) => ({
       <span class="terminal-prompt">$</span> <span class="whoami-text">WHOAMI</span>
     </h1>
 
+    <!-- ── Nav (generated from sections list) ── -->
     <nav class="page-nav">
-      <button class="page-nav__link" data-target="#education">Education</button>
-      <button class="page-nav__link" data-target="#work-experience">Work Experience</button>
-      <button class="page-nav__link" data-target="#skills">Tech Skills</button>
-      <button class="page-nav__link" data-target="#languages">Languages</button>
+      {sections.map((s) => (
+        <button class="page-nav__link" data-target={`#${s.id}`}>{s.navLabel}</button>
+      ))}
       <span class="page-nav__divider" aria-hidden="true"></span>
       <button class="page-nav__link page-nav__top" data-scroll-top aria-label="Scroll to top">&#9650; TOP</button>
     </nav>
 
-    <div id="education">
-      <CVSection title="Education" items={educationItems} />
-    </div>
+    <!-- ── Sections (rendered dynamically by type) ── -->
+    {sections.map((s) => {
+      // ── type: cv (Education, Work Experience, …) ──
+      if (s.type === 'cv') {
+        return (
+          <div id={s.id} data-section>
+            <CVSection title={s.navLabel} items={s.items} />
+          </div>
+        )
+      }
 
-    <div id="work-experience">
-      <CVSection title="Work Experience" items={workItems} />
-    </div>
-
-    <section class="terminal-section" id="skills">
-      <h2 class="terminal-header">
-        <span class="prompt">$</span>
-        <span class="command">cat</span>
-        <span class="filename">skills_&_technologies.txt</span>
-      </h2>
-      <div class="terminal-content">
-        <div class="skills-grid">
-          {Object.entries(skills.technologies).map(([category, items]) => (
-            <div class="skill-category">
-              <h3 class="skill-category__title">
-                <span class="category-prompt">></span> {category}
-              </h3>
-              <div class="badges">
-                {items.map((tech) => <Badge label={tech} />)}
+      // ── type: skills ──
+      if (s.type === 'skills') {
+        return (
+          <section class="terminal-section" id={s.id} data-section>
+            <h2 class="terminal-header">
+              <span class="prompt">$</span>
+              <span class="command">cat</span>
+              <span class="filename">{s.filename}</span>
+            </h2>
+            <div class="terminal-content">
+              <div class="skills-grid">
+                {Object.entries(s.categories).map(([category, items]) => (
+                  <div class="skill-category">
+                    <h3 class="skill-category__title">
+                      <span class="category-prompt">></span> {category}
+                    </h3>
+                    <div class="badges">
+                      {items.map((tech) => <Badge label={tech} />)}
+                    </div>
+                  </div>
+                ))}
+                <div class="skill-category">
+                  <h3 class="skill-category__title">
+                    <span class="category-prompt">></span> Skills
+                  </h3>
+                  <div class="badges">
+                    {s.skills.map((skill) => <Badge label={skill} variant="secondary" />)}
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-          <div class="skill-category">
-            <h3 class="skill-category__title">
-              <span class="category-prompt">></span> Skills
-            </h3>
-            <div class="badges">
-              {skills.skills.map((skill) => <Badge label={skill} variant="secondary" />)}
+          </section>
+        )
+      }
+
+      // ── type: languages ──
+      if (s.type === 'languages') {
+        return (
+          <section class="terminal-section" id={s.id} data-section>
+            <h2 class="terminal-header">
+              <span class="prompt">$</span>
+              <span class="command">cat</span>
+              <span class="filename">{s.filename}</span>
+            </h2>
+            <div class="terminal-content">
+              <ul class="languages-list">
+                {s.items.map((lang) => (
+                  <li>
+                    <div class="lang-header">
+                      <span class="lang-prompt">></span>
+                      <strong>{lang.name}</strong>
+                      <span class="lang-level">{lang.level}</span>
+                    </div>
+                    <div class="lang-proficiency">
+                      <div class="lang-proficiency-fill" style={`width: ${lang.pct}%`}></div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="terminal-section" id="languages">
-      <h2 class="terminal-header">
-        <span class="prompt">$</span>
-        <span class="command">cat</span>
-        <span class="filename">languages.txt</span>
-      </h2>
-      <div class="terminal-content">
-        <ul class="languages-list">
-          {
-            skills.languages.map((lang) => {
-              const proficiencyMap = {
-                'Mother tongue': 100,
-                'C1 (Advanced)': 85,
-                'B1 (Intermediate)': 60,
-              }
-              const proficiency = proficiencyMap[lang.level] || 50
-
-              return (
-                <li>
-                  <div class="lang-header">
-                    <span class="lang-prompt">></span>
-                    <strong>{lang.name}</strong>
-                    <span class="lang-level">{lang.level}</span>
-                  </div>
-                  <div class="lang-proficiency">
-                    <div class="lang-proficiency-fill" style={`width: ${proficiency}%`}></div>
-                  </div>
-                </li>
-              )
-            })
-          }
-        </ul>
-      </div>
-    </section>
+          </section>
+        )
+      }
+    })}
   </article>
 </TVLayout>
 
@@ -221,10 +226,8 @@ const workItems = workExperience.map((work) => ({
   }
 
   /* Offset scroll targets so they aren't hidden behind the pinned nav */
-  #education,
-  #work-experience,
-  #skills,
-  #languages {
+  /* Targets any element with data-section so new sections work automatically */
+  [data-section] {
     scroll-margin-top: 48px;
   }
 

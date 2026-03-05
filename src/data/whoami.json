@@ -1,0 +1,161 @@
+{
+  "sections": [
+    {
+      "id": "education",
+      "navLabel": "Education",
+      "type": "cv",
+      "items": [
+        {
+          "title": "Technical University of Munich",
+          "subtitle": "M.Sc. in Communications and Electronics Engineering",
+          "period": "Dec. 2025",
+          "location": "Munich, Germany",
+          "gpa": "1.2 (German scale: 1.0 best)",
+          "technologies": [
+            "IoT Security",
+            "Network Security",
+            "Embedded Systems",
+            "Smart Cards"
+          ],
+          "highlights": [
+            "Thesis: Black-box security testing of CV pipelines with holographic projections"
+          ]
+        },
+        {
+          "title": "Hack The Box Academy",
+          "subtitle": "Cybersecurity Trainee",
+          "period": "May 2025 – Present",
+          "location": "",
+          "technologies": [
+            "Burp Suite",
+            "Metasploit",
+            "Kali Linux",
+            "BloodHound",
+            "Python"
+          ],
+          "highlights": [
+            "Completed Penetration Tester & Junior Security Analyst paths",
+            "Hands-on labs: Web exploitation, Active Directory, privilege escalation"
+          ]
+        },
+        {
+          "title": "Istanbul Technical University",
+          "subtitle": "B.Sc. in Electronics and Communications Engineering",
+          "period": "Jul. 2023",
+          "location": "Istanbul, Turkey",
+          "gpa": "3.4/4.0",
+          "technologies": ["ESP8266", "ESP-NOW", "C/C++", "IoT"],
+          "highlights": [
+            "Thesis: Decentralized mesh network for real-time swarm coordination"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "work-experience",
+      "navLabel": "Work Experience",
+      "type": "cv",
+      "items": [
+        {
+          "title": "German Aerospace Center (DLR)",
+          "subtitle": "Cybersecurity Research Intern",
+          "period": "Aug. 2024 – Nov. 2024",
+          "location": "Munich, Germany",
+          "technologies": [
+            "OMNeT++",
+            "SpaceWire",
+            "Threat Modeling",
+            "Protocol Analysis"
+          ],
+          "highlights": [
+            "Offensive protocol assessment of SpaceWire for aerospace networks",
+            "Built adversary emulation in OMNeT++ to demonstrate attack paths"
+          ]
+        },
+        {
+          "title": "Saportif Technology Inc.",
+          "subtitle": "",
+          "period": "Oct. 2020 – Sep. 2023",
+          "location": "Istanbul, Turkey",
+          "positions": [
+            {
+              "position": "IoT Systems Engineer",
+              "period": "Sep. 2022 – Sep. 2023",
+              "technologies": [
+                "ESP32",
+                "Raspberry Pi",
+                "RFID",
+                "TLS",
+                "REST APIs"
+              ],
+              "highlights": [
+                "Developed end-to-end IoT smart door-lock system with RFID access control",
+                "Secured integration with HTTPS/TLS, RBAC, and OWASP Top 10 compliance"
+              ]
+            },
+            {
+              "position": "Full-Stack Developer",
+              "period": "Oct. 2020 – Sep. 2022",
+              "technologies": ["React", "Node.js", "JWT", "PostgreSQL"],
+              "highlights": [
+                "Built and maintained React/Node services with secure-by-default patterns",
+                "Implemented auth controls (RBAC, JWT), CSRF protection, and XSS mitigations"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arcelik Inc.",
+          "subtitle": "Software Engineer Intern",
+          "period": "Jul. 2022 – Sep. 2022",
+          "location": "Istanbul, Turkey",
+          "technologies": ["Python", "Test Automation"],
+          "highlights": [
+            "Built Python test library for virtual testing environment",
+            "Achieved ~80% faster test execution on refrigerator control boards"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "navLabel": "Tech Skills",
+      "type": "skills",
+      "filename": "skills_&_technologies.txt",
+      "categories": {
+        "Programming Languages": ["Python", "C/C++", "Bash", "PowerShell"],
+        "Operating Systems": ["Linux", "Kali Linux", "Windows"],
+        "Security Tools & Platforms": [
+          "Nmap",
+          "Burp Suite",
+          "Wireshark",
+          "OWASP ZAP",
+          "Metasploit",
+          "sqlmap",
+          "Nessus",
+          "BloodHound",
+          "Impacket"
+        ],
+        "Infrastructure & Networking": ["Windows Active Directory"]
+      },
+      "skills": [
+        "Penetration Testing",
+        "Vulnerability Assessment",
+        "Secure Design Principles",
+        "Threat Analysis and Risk Assessment (TARA)",
+        "Applied Cryptography"
+      ]
+    },
+    {
+      "id": "languages",
+      "navLabel": "Languages",
+      "type": "languages",
+      "filename": "languages.txt",
+      "items": [
+        { "name": "Turkish", "level": "Mother tongue", "pct": 100 },
+        { "name": "English", "level": "C1 (Advanced)", "pct": 85 },
+        { "name": "German", "level": "B1 (Intermediate)", "pct": 60 }
+      ]
+    }
+  ]
+}

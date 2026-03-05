@@ -286,3 +286,171 @@ Items are rendered as an expandable progress-bar list (hover to see details).
 1. Find the channel by `id` or `type` and add a new object to its `items` array.
 2. Follow the field reference for that type above.
 3. The HUD item count updates automatically.
+
+---
+
+## whoami.json
+
+Contains all data for the **Whoami** page, rendered as terminal-style sections.
+Edit this file to update CV content — no changes to page code are needed.
+Sections appear in the order they are listed and the nav strip updates automatically.
+
+### Top-level structure
+
+```jsonc
+{
+  "sections": [
+    // One object per section on the Whoami page.
+    // Sections appear in the order they are listed here.
+    // The sticky nav buttons and scroll offsets update automatically.
+  ],
+}
+```
+
+---
+
+### Section fields (shared by all types)
+
+```jsonc
+{
+  "id": "education",
+  // Unique HTML id for the section. Used by nav buttons to scroll to the section.
+  // No spaces — use hyphens for multi-word ids (e.g. "work-experience").
+
+  "navLabel": "Education",
+  // Text shown in the sticky nav button at the top of the page. Free text.
+
+  "type": "cv",
+  // Controls which rendering template is used.
+  // MUST be one of:
+  //   "cv"         → terminal entry list (education, work experience, etc.)
+  //   "skills"     → tech category grids + general skills badges
+  //   "languages"  → language list with proficiency bars on hover
+
+  /* ...plus type-specific fields below */
+}
+```
+
+---
+
+### `type: "cv"` — additional fields
+
+Used for Education, Work Experience, or any future CV-style section.
+
+```jsonc
+{
+  "items": [
+    {
+      "title": "Technical University of Munich",
+      // Primary heading of the entry (institution, company name, etc.).
+
+      "subtitle": "M.Sc. in Communications and Electronics Engineering",
+      // Secondary line below the title (degree title, job title, etc.).
+      // Use "" to show nothing.
+
+      "period": "Dec. 2025",
+      // Date or date range shown in brackets next to the title.
+
+      "location": "Munich, Germany",
+      // Location shown with a 📍 prefix. Use "" to omit.
+
+      "gpa": "1.2 (German scale: 1.0 best)",
+      // (optional) GPA shown with a 🎓 prefix. Omit to hide.
+
+      "technologies": ["IoT Security", "Network Security"],
+      // (optional) Array of tech/tool names shown as [TECH] tags.
+      // Omit to hide the row entirely.
+
+      "highlights": ["Thesis: Black-box security testing of CV pipelines"],
+      // (optional) Array of bullet-point lines shown below the entry.
+      // Omit to show no bullets.
+
+      "positions": [
+        // (optional) Use when one company entry has multiple roles.
+        // When present, "subtitle" is ignored and each role is listed with
+        // a tree connector (├─ / └─) instead.
+        {
+          "position": "IoT Systems Engineer",
+          // Role title.
+
+          "period": "Sep. 2022 – Sep. 2023",
+          // Date range for this specific role.
+
+          "technologies": ["ESP32", "Raspberry Pi", "RFID"],
+          // (optional) Per-role tech tags.
+
+          "highlights": ["Developed end-to-end IoT smart door-lock system"],
+          // (optional) Per-role bullet-point highlights.
+        },
+      ],
+    },
+  ],
+}
+```
+
+---
+
+### `type: "skills"` — additional fields
+
+```jsonc
+{
+  "filename": "skills_&_technologies.txt",
+  // Filename shown in the terminal header (e.g. "$ cat skills_&_technologies.txt").
+  // Free text.
+
+  "categories": {
+    // Object where each key is a category heading and the value is an array
+    // of tool/tech names. Each entry becomes one badge chip.
+    // Categories render in the order they appear.
+    "Programming Languages": ["Python", "C/C++", "Bash", "PowerShell"],
+    "Operating Systems": ["Linux", "Kali Linux", "Windows"],
+  },
+
+  "skills": [
+    "Penetration Testing",
+    "Vulnerability Assessment",
+    // Array of general skill labels rendered as secondary-variant (outlined)
+    // badges under a "Skills" heading, after all tech categories.
+  ],
+}
+```
+
+---
+
+### `type: "languages"` — additional fields
+
+```jsonc
+{
+  "filename": "languages.txt",
+  // Filename shown in the terminal header. Free text.
+
+  "items": [
+    {
+      "name": "Turkish",
+      // Language name — displayed in uppercase.
+
+      "level": "Mother tongue",
+      // Proficiency label shown next to the name. Free text.
+
+      "pct": 100,
+      // Numeric fill percentage (0–100) for the proficiency bar revealed on hover.
+      // Suggested values: Mother tongue → 100, C1 → 85, B1 → 60.
+    },
+  ],
+}
+```
+
+---
+
+### Adding a new section
+
+1. Open `whoami.json` and append a new object to the `sections` array.
+2. Set `type` to one of `"cv"`, `"skills"`, or `"languages"`.
+3. Set a unique `id` (no spaces — use hyphens).
+4. The nav strip button and scroll offset are added automatically — no code changes needed.
+
+### Adding a new entry to an existing section
+
+- **`cv`** — add a new object to `items`.
+- **`skills`** — add a new key to `categories`, or a new string to `skills`.
+- **`languages`** — add a new object to `items`.

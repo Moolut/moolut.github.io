@@ -12,7 +12,7 @@
           "title": "Certified Junior Cybersecurity Analyst",
           "issuer": "Hack The Box Academy",
           "year": "2025",
-          "url": "https://academy.hackthebox.com/achievement/badge/cjca",
+          "url": "/assets/certs/htb-cjca.pdf",
           "urlLabel": "VIEW CERT →",
           "chips": [
             "Enterprise Pentest",
