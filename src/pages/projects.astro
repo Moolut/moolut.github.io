@@ -4,25 +4,35 @@ import TVLayout from '../layouts/TVLayout.astro'
 // ── Case file dataset (self-contained, no external import needed) ────────────
 const CASE_FILES = [
   {
-    fileId: 'UI-001',
+    fileId: 'UI',
     type: 'PROJECT',
-    status: 'COMPLETE',
+    status: 'IN PROGRESS',
     group: 'SOFTWARE',
     title: 'moolut.github.io — Retro CRT Portfolio',
     year: '2026',
     context: 'Personal',
     problem: 'Generic portfolio templates feel identical and forgettable.',
-    approach:
-      'Built a retro CRT UI system with interactive OSD components, modular pages, and a Case Files project viewer.',
-    result:
-      'A cohesive portfolio with themed navigation, achievements dashboard, and scalable project case format.',
-    pipeline: 'Design → Implement → Polish → Iterate',
-    tools: ['Astro', 'Svelte', 'CSS', 'TypeScript'],
-    tags: ['UI', 'CRT', 'Web', 'Astro', 'Svelte'],
-    links: { github: 'https://github.com/Moolut/moolut.github.io', report: '', video: '' },
+    result: 'A cohesive retro CRT portfolio with modular pages and a scalable Case Files viewer.',
+    overview: 'A retro CRT-themed portfolio built as a modular site with reusable UI components and interactive pages. The goal was to create a memorable interface that supports quick scanning and deep dives.',
+    whatIBuilt: [
+      'A cohesive CRT UI system (scanlines/noise, typography, consistent components).',
+      'Multiple themed pages (index/whoami/achievements/projects) with shared design language.',
+      'A Case Files project viewer with filters and modal-based case reading.',
+    ],
+    techDetails: [
+      'Frontend stack: Astro + Svelte + TypeScript + CSS.',
+      'Component-first structure (cards, tabs, modal viewer, artifacts dock).',
+      'UI states designed for both hover and keyboard focus navigation.',
+    ],
+    outputs: [
+      'A production-ready portfolio with a distinctive theme and structured project presentation.',
+    ],
+    tools: ["Astro","Svelte","TypeScript","CSS (theme tokens)","GitHub Pages"],
+    tags: ["Frontend","UI Systems","Retro CRT","Component Design","Portfolio"],
+    artifacts: { github: 'https://github.com/Moolut/moolut.github.io', report: '', video: '', demo: 'https://moolut.github.io/' },
   },
   {
-    fileId: 'HW-002',
+    fileId: 'HW',
     type: 'THESIS',
     status: 'COMPLETE',
     group: 'EMBEDDED',
@@ -30,32 +40,27 @@ const CASE_FILES = [
     year: '2025',
     context: 'Thesis',
     problem: 'Render dynamic visuals on a high-speed POV fan reliably and synchronously.',
-    approach:
-      'Developed firmware and control software coordinating LED patterns with rotation timing for stable real-time rendering.',
-    result: 'A synchronized display pipeline capable of showing images/text on custom POV fan hardware.',
-    pipeline: 'Design → Implement → Sync → Validate',
-    tools: ['C++', 'Arduino', 'Firmware'],
-    tags: ['Embedded', 'Firmware', 'POV', 'LEDs', 'C++'],
-    links: { github: 'https://github.com/Moolut/pov_fan', report: '', video: '' },
+    result: 'A synchronized LED rendering pipeline for stable image/text output on custom POV fan hardware.',
+    overview: 'Firmware and control software for a holographic POV (Persistence of Vision) fan display. The system renders images/text by synchronizing LED patterns with high-speed rotation timing to create a stable floating display illusion.',
+    whatIBuilt: [
+      'A timing-synchronized LED frame generation and playback pipeline.',
+      'Control logic to map image/text content into rotation-aligned LED frames.',
+      'A project structure suitable for firmware iteration and testing.',
+    ],
+    techDetails: [
+      'Emphasis on stable timing: rotation alignment → frame scheduling → consistent output.',
+      'Firmware-oriented development with reproducible build/run workflow.',
+      'Implementation primarily in C++ with embedded tooling.',
+    ],
+    outputs: [
+      'A repeatable approach to stable mid-air POV rendering on custom hardware.',
+    ],
+    tools: ["C++ (firmware)","MCU platform (ESP32/Arduino workflow)","LED frame mapping","Rotation timing sync","Hardware prototyping"],
+    tags: ["Embedded Display","POV Rendering","Real-time Timing","LED Control","Hardware Prototyping"],
+    artifacts: { github: 'https://github.com/Moolut/pov_fan', report: '', video: '', demo: '' },
   },
   {
-    fileId: 'ES-003',
-    type: 'COLLECTION',
-    status: 'COMPLETE',
-    group: 'EMBEDDED',
-    title: 'embedded-systems-and-security — Course Lab Collection',
-    year: '2025',
-    context: 'Course',
-    problem: 'Need structured hands-on practice across embedded systems topics in one place.',
-    approach: 'Collected and organized course exercises and mini-projects into a single reference repo.',
-    result: 'A consolidated lab collection for quick lookup and repeatable experiments.',
-    pipeline: 'Collect → Structure → Document → Reuse',
-    tools: ['C', 'Embedded tooling'],
-    tags: ['Embedded', 'Labs', 'Systems', 'TUM', 'C'],
-    links: { github: 'https://github.com/Moolut/embedded-systems-and-security', report: '', video: '' },
-  },
-  {
-    fileId: 'SC-004',
+    fileId: 'SC',
     type: 'COURSE PROJECT',
     status: 'COMPLETE',
     group: 'SECURITY',
@@ -63,66 +68,142 @@ const CASE_FILES = [
     year: '2025',
     context: 'Course',
     problem: 'Implement smartcard communication flows and explore security considerations in practice.',
-    approach: 'Worked with ISO 7816 protocol tasks and lab experiments around side-channel/DPA countermeasures.',
-    result: 'A working smartcard communication setup with documented security experiments.',
-    pipeline: 'Implement → Test → Measure → Document',
-    tools: ['C', 'ISO7816', 'Lab tooling'],
-    tags: ['Smartcard', 'ISO7816', 'Crypto', 'Side-channel', 'C'],
-    links: { github: 'https://github.com/Moolut/smartcard-lab', report: '', video: '' },
+    result: 'Working ISO 7816 communication plus documented security experiments and countermeasure evaluation.',
+    overview: 'SmartCard Security Project for TUM SmartCard Lab. Focused on implementing secure communication flows and evaluating security weaknesses and countermeasures with evidence-driven measurements.',
+    whatIBuilt: [
+      'ISO 7816 communication work and lab protocol tasks.',
+      'Countermeasure experiments targeting side-channel resistance.',
+      'Documentation/report artifacts capturing measurements and conclusions.',
+    ],
+    techDetails: [
+      'Masking and shuffling countermeasures applied to AES S-box operations.',
+      'Power trace uniformity measurement before/after protections.',
+      'Performance vs security tradeoff evaluation and reporting.',
+    ],
+    outputs: [
+      'Evidence-backed evaluation of countermeasures and their overhead.',
+    ],
+    tools: ["C (embedded)","ISO 7816 protocol work","AES S-box masking/shuffling","Power trace acquisition","Evaluation workflow"],
+    tags: ["Smartcard Security","ISO 7816","Side-Channel Resistance","AES Hardening","Measurement & Evaluation"],
+    artifacts: { github: 'https://github.com/Moolut/smartcard-lab', report: '', video: '', demo: '' },
   },
   {
-    fileId: 'CT-005',
+    fileId: 'ES',
+    type: 'COLLECTION',
+    status: 'COMPLETE',
+    group: 'EMBEDDED',
+    title: 'embedded-systems-and-security — Course Lab Collection',
+    year: '2024',
+    context: 'Course',
+    problem: 'Need structured hands-on practice across embedded systems topics in one place.',
+    result: 'A consolidated set of graded labs covering timing, exploitation, crypto, and HID side-channel concepts.',
+    overview: "Three graded assignments from TUM's Embedded Systems and Security course, each focusing on a different embedded reliability/security concept using the Infineon XMC4500 platform.",
+    whatIBuilt: [
+      'Assignment 1: LED Morse transmission + timing features driven by timers/interrupts.',
+      'Assignment 2: Stack overflow exploration + transition to authenticated encryption for secure command sending.',
+      'Assignment 3: USB HID keyboard emulation + timing side-channel exploitation workflow.',
+    ],
+    techDetails: [
+      'Embedded timing + interrupt-driven interaction (timers, SysTick/CCU4-style workflows).',
+      'Practical memory exploitation lessons and mitigation considerations.',
+      'Secure messaging using authenticated encryption (libsodium-style secretbox approach).',
+      'USB HID protocol + keyboard layout handling + timing analysis.',
+    ],
+    outputs: [
+      'A structured lab archive demonstrating embedded implementation and security analysis skills.',
+    ],
+    tools: ["C (bare-metal MCU)","Infineon XMC4500","libsodium (secretbox/AE)","Timers & interrupts (SysTick/CCU4)","USB HID emulation"],
+    tags: ["Embedded Security","Exploitation & Defense","Applied Cryptography","USB HID","Timing Side-Channels"],
+    artifacts: { github: 'https://github.com/Moolut/embedded-systems-and-security', report: '', video: '', demo: '' },
+  },
+  {
+    fileId: 'CT',
     type: 'WRITEUPS',
     status: 'COMPLETE',
     group: 'SECURITY',
     title: 'iot-security-ctf — CTF Solutions & Writeups',
-    year: '2025',
+    year: '2024',
     context: 'Course',
     problem: 'Solve practical security challenges and keep solutions reproducible for later reference.',
-    approach: 'Documented challenge solutions with clear reasoning, steps, and artifacts when applicable.',
-    result: 'A structured writeup collection covering mixed challenge categories.',
-    pipeline: 'Solve → Verify → Write → Archive',
-    tools: ['Python', 'Wireshark', 'Linux'],
-    tags: ['CTF', 'IoT', 'Crypto', 'Web', 'Writeups'],
-    links: { github: 'https://github.com/Moolut/iot-security-ctf', report: '', video: '' },
+    result: 'A structured writeup archive covering crypto, IoT protocol issues, and web vulnerabilities.',
+    overview: 'Solutions and writeups for TUM IoT Security CTF challenges. Organized as a reusable archive with reasoning, steps, and artifacts where applicable.',
+    whatIBuilt: [
+      'Per-challenge solution notes and reproducible steps.',
+      'Exploit/analysis code when useful to support the writeups.',
+      'A structured repo layout for quick lookup and revision.',
+    ],
+    techDetails: [
+      'Cryptography/cryptanalysis coverage (including classical cipher work).',
+      'IoT protocol weaknesses and device exploitation themes.',
+      'Web security topics (injection/auth/session-style weaknesses).',
+    ],
+    outputs: [
+      'A repeatable reference archive of solved challenges and security reasoning.',
+    ],
+    tools: ["Python","Wireshark","Linux CLI tooling","Hashcat","sqlmap","dirbuster/gobuster","nmap", "MQTT"],
+    tags: ["CTF Writeups","IoT Security","Cryptanalysis","Web Vulnerabilities","Protocol Analysis"],
+    artifacts: { github: 'https://github.com/Moolut/iot-security-ctf', report: '', video: '', demo: '' },
   },
   {
-    fileId: 'ASM-006',
+    fileId: 'ASM',
     type: 'PROJECT',
     status: 'COMPLETE',
     group: 'EMBEDDED',
     title: 'flappy-bird — ARM Cortex-M0 Assembly Game',
-    year: '2025',
+    year: '2022',
     context: 'Course',
     problem: 'Build a complete game loop on constrained hardware using low-level code.',
-    approach: 'Implemented a Flappy Bird clone in ARM Cortex-M0 assembly including timing, input, and rendering logic.',
-    result: 'A working embedded game demonstrating low-level control and constraints-aware design.',
-    pipeline: 'Write → Assemble → Link → Debug',
-    tools: ['ARM ASM', 'GDB'],
-    tags: ['Assembly', 'ARM', 'Embedded', 'Low-level', 'Game'],
-    links: { github: 'https://github.com/Moolut/flappy-bird', report: '', video: '' },
+    result: 'A working Flappy Bird clone demonstrating timing, input, rendering, and collision logic in ARM assembly.',
+    overview: 'A Flappy Bird clone written entirely in ARM Cortex-M0 assembly to explore bare-metal programming and register-level rendering on constrained hardware.',
+    whatIBuilt: [
+      'A full game loop with timing and state management.',
+      'Interrupt-driven button input for game control.',
+      'Manual sprite/map rendering and collision detection.',
+    ],
+    techDetails: [
+      'Low-level ARM instruction usage with manual register/memory management.',
+      'Stack operations and interrupt handling patterns.',
+      'Constraints-aware design for embedded execution.',
+    ],
+    outputs: [
+      'A complete embedded game demonstrating low-level control and reliability under constraints.',
+    ],
+    tools: ["ARM Cortex-M0 assembly","Assembler/linker toolchain","GDB debugging","Interrupts & timers","Memory-mapped I/O"],
+    tags: ["ARM Assembly","Bare-Metal","Interrupts","Graphics/Rendering","Embedded Game"],
+    artifacts: { github: 'https://github.com/Moolut/flappy-bird', report: '', video: '', demo: '' },
   },
   {
-    fileId: 'CPP-007',
+    fileId: 'CPP',
     type: 'PROJECT',
     status: 'COMPLETE',
     group: 'SOFTWARE',
     title: 'Logic-Simulator — C++ / SFML Circuit Simulator',
-    year: '2025',
+    year: '2022',
     context: 'Course',
     problem: 'Interactively simulate logic circuits with a visual interface.',
-    approach: 'Built a graphical simulator in C++ using SFML with drag-and-simulate interactions.',
-    result: 'A usable sandbox for experimenting with logic gate networks and circuit behavior.',
-    pipeline: 'Design → Implement → Simulate → Refine',
-    tools: ['C++', 'SFML'],
-    tags: ['C++', 'SFML', 'Simulation', 'GUI', 'OOP'],
-    links: { github: 'https://github.com/Moolut/Logic-Simulator', report: '', video: '' },
+    result: 'A graphical sandbox to build and simulate logic gate networks and circuit behavior.',
+    overview: 'A graphical logic circuit simulator built in C++ using SFML. Users can create circuits interactively and observe their behavior in real time.',
+    whatIBuilt: [
+      'A GUI for constructing circuits with draggable components.',
+      'A simulation engine for common digital components.',
+      'A sprite-based representation of logic elements and connections.',
+    ],
+    techDetails: [
+      'Supported elements include AND/OR/XOR/NOT gates, D flip-flops, clock, LEDs.',
+      'OOP-driven design to model components and connections cleanly.',
+      'SFML-based rendering loop and interaction handling.',
+    ],
+    outputs: [
+      'An interactive sandbox for experimenting with digital logic composition.',
+    ],
+    tools: ["C++ (OOP)","SFML (rendering/input)","Event loop + UI interactions","Logic component model","Build tooling (CMake/Make)"],
+    tags: ["C++","SFML","Logic Simulation","GUI","OOP Design"],
+    artifacts: { github: 'https://github.com/Moolut/Logic-Simulator', report: '', video: '', demo: '' },
   },
 ]
 
 // ── Derived constants ────────────────────────────────────────────────────────
 const today   = new Date().toISOString().slice(0, 10)
-const MAX_TAGS = 5
 const GROUPS   = ['ALL', 'SECURITY', 'EMBEDDED', 'SOFTWARE'] as const
 
 type Group  = typeof GROUPS[number]
@@ -134,22 +215,26 @@ const STATUS_META: Record<Status, { color: string }> = {
   'ARCHIVED':    { color: '#ff5050' },
 }
 
+// ── Computed: attach displayId (text prefix + sequential number) ────────────
+const CASES = CASE_FILES.map((f, i) => ({
+  ...f,
+  displayId: `${f.fileId}-${String(i + 1).padStart(3, '0')}`,
+}))
+
 function groupCount(g: Group) {
   return g === 'ALL'
     ? CASE_FILES.length
     : CASE_FILES.filter(f => f.group === g).length
 }
 
-function overflowCount(tags: string[]) {
-  return tags.length > MAX_TAGS ? tags.length - MAX_TAGS : 0
-}
+
 ---
 
 <TVLayout title="projects">
   <article class="cf-page">
 
     {/* ── Serialise data for client JS (use a plain div — Astro strips script[type=*] from templates) ── */}
-    <div id="cf-data" style="display:none" aria-hidden="true" set:text={JSON.stringify(CASE_FILES)}></div>
+    <div id="cf-data" style="display:none" aria-hidden="true" set:text={JSON.stringify(CASES)}></div>
 
     {/* ── Page header ── */}
     <header class="cf-header">
@@ -180,22 +265,19 @@ function overflowCount(tags: string[]) {
 
     {/* ── Card grid ── */}
     <ul class="cf-grid" role="list" aria-label="Project case files">
-      {CASE_FILES.map((f, i) => {
-        const sm      = STATUS_META[f.status as Status]
-        const visible = f.tags.slice(0, MAX_TAGS)
-        const extra   = overflowCount(f.tags)
-        const seq     = String(i + 1).padStart(2, '0')
+      {CASES.map((f) => {
+        const sm = STATUS_META[f.status as Status]
 
         return (
           <li
             class="cf-card"
             tabindex="0"
             data-group={f.group}
-            data-slug={f.fileId}
+            data-slug={f.displayId}
           >
             {/* ① Folder tab */}
             <div class="cf-tab" aria-hidden="true">
-              <span class="cf-tab__id">{f.fileId}</span>
+              <span class="cf-tab__id">{f.displayId}</span>
               <span class="cf-tab__type">{f.type}</span>
             </div>
 
@@ -207,7 +289,7 @@ function overflowCount(tags: string[]) {
             <div class="cf-body">
               {/* Top bar */}
               <div class="cf-body__topbar" aria-hidden="true">
-                <span class="cf-seq">{seq}</span>
+                <span class="cf-seq">{f.displayId.split('-')[1]}</span>
                 <span
                   class="cf-stamp"
                   style={`color:${sm.color};border-color:${sm.color}`}
@@ -237,39 +319,26 @@ function overflowCount(tags: string[]) {
 
               {/* Tags */}
               <div class="cf-tags" role="list" aria-label="Tags">
-                {visible.map((t: string) => (
+                {f.tags.map((t: string) => (
                   <span class="cf-chip" role="listitem">{t}</span>
                 ))}
-                {extra > 0 && (
-                  <div class="cf-overflow-wrap">
-                    <span class="cf-chip cf-chip--more" role="listitem" tabindex="0">+{extra}</span>
-                    <div class="cf-overflow-tip" role="tooltip">
-                      {f.tags.slice(MAX_TAGS).map((t: string) => (
-                        <span class="cf-chip">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <span class="cf-chip cf-chip--more" aria-hidden="true"></span>
               </div>
 
               {/* CTA row — always visible */}
               <div class="cf-actions">
                 <button
                   class="cf-btn cf-btn--primary"
-                  data-read-case={f.fileId}
+                  data-read-case={f.displayId}
                   aria-label={`Open case file: ${f.title}`}
                 >READ CASE →</button>
-                {f.links.github
-                  ? <a class="cf-btn" href={f.links.github} target="_blank" rel="noopener noreferrer">GITHUB</a>
+                {f.artifacts.github
+                  ? <a class="cf-btn" href={f.artifacts.github} target="_blank" rel="noopener noreferrer">GITHUB</a>
                   : <span class="cf-btn cf-btn--locked" aria-disabled="true">GITHUB</span>
                 }
-                {f.links.report
-                  ? <a class="cf-btn" href={f.links.report} target="_blank" rel="noopener noreferrer">REPORT</a>
-                  : <span class="cf-btn cf-btn--locked" aria-disabled="true">REPORT</span>
-                }
-                {f.links.video
-                  ? <a class="cf-btn" href={f.links.video} target="_blank" rel="noopener noreferrer">VIDEO</a>
-                  : <span class="cf-btn cf-btn--locked" aria-disabled="true">VIDEO</span>
+                {f.artifacts.demo
+                  ? <a class="cf-btn" href={f.artifacts.demo} target="_blank" rel="noopener noreferrer">DEMO</a>
+                  : <span class="cf-btn cf-btn--locked" aria-disabled="true">DEMO</span>
                 }
               </div>
             </div>
@@ -295,10 +364,10 @@ function overflowCount(tags: string[]) {
     {/* Dim scrim */}
     <div class="cfm-scrim" aria-hidden="true"></div>
 
-    {CASE_FILES.map((f) => {
+    {CASES.map((f) => {
       const sm = STATUS_META[f.status as Status]
       return (
-        <div class="cfm-panel" data-modal-id={f.fileId} hidden>
+        <div class="cfm-panel" data-modal-id={f.displayId} hidden>
 
           {/* Close */}
           <button class="cfm-close" aria-label="Close case file">✕</button>
@@ -315,7 +384,7 @@ function overflowCount(tags: string[]) {
               {/* Header tab-bar */}
               <div class="cfm-tabrow" aria-hidden="true">
                 <div class="cfm-tab">
-                  <span class="cfm-tab__id">{f.fileId}</span>
+                  <span class="cfm-tab__id">{f.displayId}</span>
                   <span class="cfm-tab__type">{f.type}</span>
                 </div>
                 <span
@@ -327,66 +396,88 @@ function overflowCount(tags: string[]) {
 
               {/* Scrollable body */}
               <div class="cfm-body">
-                <h2 class="cfm-title" id={`cfm-title-${f.fileId}`}>{f.title}</h2>
-
+                <h2 class="cfm-title" id={`cfm-title-${f.displayId}`}>{f.title}</h2>
                 <p class="cfm-meta">
                   {f.context}<span aria-hidden="true"> · </span>{f.year}
                 </p>
 
+                {/* ── OVERVIEW ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
+                <section class="cfm-section">
+                  <h3 class="cfm-section__hd">OVERVIEW</h3>
+                  <p class="cfm-prose">{f.overview}</p>
+                </section>
 
-                <dl class="cfm-fields">
-                  <div class="cfm-field">
-                    <dt>PROBLEM</dt>
-                    <dd>{f.problem}</dd>
-                  </div>
-                  <div class="cfm-field">
-                    <dt>APPROACH</dt>
-                    <dd>{f.approach}</dd>
-                  </div>
-                  <div class="cfm-field">
-                    <dt>RESULT</dt>
-                    <dd>{f.result}</dd>
-                  </div>
-                </dl>
-
+                {/* ── WHAT I BUILT ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
+                <section class="cfm-section">
+                  <h3 class="cfm-section__hd">WHAT I BUILT</h3>
+                  <ul class="cfm-list">
+                    {(f.whatIBuilt as string[]).map((item) => (
+                      <li class="cfm-list__item">{item}</li>
+                    ))}
+                  </ul>
+                </section>
 
-                <div class="cfm-row">
-                  <span class="cfm-key">PIPELINE</span>
-                  <span class="cfm-val">{f.pipeline}</span>
+                {/* ── TECH DETAILS ── */}
+                <hr class="cfm-rule" aria-hidden="true" />
+                <section class="cfm-section">
+                  <h3 class="cfm-section__hd">TECH DETAILS</h3>
+                  <ul class="cfm-list cfm-list--tech">
+                    {(f.techDetails as string[]).map((item) => (
+                      <li class="cfm-list__item">{item}</li>
+                    ))}
+                  </ul>
+                </section>
+
+                {/* ── RESULTS ── */}
+                <hr class="cfm-rule" aria-hidden="true" />
+                <section class="cfm-section">
+                  <h3 class="cfm-section__hd">RESULTS</h3>
+                  <ul class="cfm-list cfm-list--result">
+                    {(f.outputs as string[]).map((item) => (
+                      <li class="cfm-list__item">{item}</li>
+                    ))}
+                  </ul>
+                </section>
+
+                {/* ── TOOLS / TAGS ── */}
+                <hr class="cfm-rule" aria-hidden="true" />
+                <div class="cfm-meta-grid">
+                  <div class="cfm-row cfm-row--chips">
+                    <span class="cfm-key">TOOLS</span>
+                    <div class="cfm-chips">
+                      {(f.tools as string[]).map((t) => <span class="cfm-chip">{t}</span>)}
+                    </div>
+                  </div>
+                  <div class="cfm-row cfm-row--chips">
+                    <span class="cfm-key">TAGS</span>
+                    <div class="cfm-chips">
+                      {(f.tags as string[]).map((t) => <span class="cfm-chip cfm-chip--tag">{t}</span>)}
+                    </div>
+                  </div>
                 </div>
 
-                <div class="cfm-row cfm-row--chips">
-                  <span class="cfm-key">TOOLS</span>
-                  <div class="cfm-chips">
-                    {f.tools.map((t: string) => <span class="cfm-chip">{t}</span>)}
-                  </div>
-                </div>
-
-                <div class="cfm-row cfm-row--chips">
-                  <span class="cfm-key">TAGS</span>
-                  <div class="cfm-chips">
-                    {f.tags.map((t: string) => <span class="cfm-chip cfm-chip--tag">{t}</span>)}
-                  </div>
-                </div>
-
+                {/* ── ARTIFACTS DOCK ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
-
                 <section class="cfm-artifacts" aria-label="External artifacts">
                   <h3 class="cfm-artifacts__heading">ARTIFACTS DOCK</h3>
                   <div class="cfm-artifacts__links">
-                    {f.links.github
-                      ? <a class="cfm-art-btn" href={f.links.github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">GITHUB</span>
+                    {(f.artifacts as any).github
+                      ? <a class="cfm-art-btn" href={(f.artifacts as any).github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">GITHUB · LOCKED</span>
                     }
-                    {f.links.report
-                      ? <a class="cfm-art-btn" href={f.links.report} target="_blank" rel="noopener noreferrer">REPORT ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">REPORT</span>
+                    {(f.artifacts as any).demo
+                      ? <a class="cfm-art-btn" href={(f.artifacts as any).demo} target="_blank" rel="noopener noreferrer">DEMO ↗</a>
+                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">DEMO · LOCKED</span>
                     }
-                    {f.links.video
-                      ? <a class="cfm-art-btn" href={f.links.video} target="_blank" rel="noopener noreferrer">VIDEO ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">VIDEO</span>
+                    {(f.artifacts as any).report
+                      ? <a class="cfm-art-btn" href={(f.artifacts as any).report} target="_blank" rel="noopener noreferrer">REPORT ↗</a>
+                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">REPORT · LOCKED</span>
+                    }
+                    {(f.artifacts as any).video
+                      ? <a class="cfm-art-btn" href={(f.artifacts as any).video} target="_blank" rel="noopener noreferrer">VIDEO ↗</a>
+                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">VIDEO · LOCKED</span>
                     }
                   </div>
                 </section>
@@ -396,7 +487,7 @@ function overflowCount(tags: string[]) {
             {/* ── Right: ghost panel ── */}
             <div class="cfm-ghost" aria-hidden="true">
               <div class="cfm-ghost__grid"></div>
-              <div class="cfm-ghost__label">INTEL · {f.fileId}</div>
+              <div class="cfm-ghost__label">INTEL · {f.displayId}</div>
             </div>
 
           </div>
@@ -412,7 +503,7 @@ function overflowCount(tags: string[]) {
 <script>
 // ─── Data ───────────────────────────────────────────────────────────────────
 const _dataEl = document.getElementById('cf-data')
-const ALL_CASES: { fileId: string; group: string; [k: string]: unknown }[] =
+const ALL_CASES: { fileId: string; displayId: string; group: string; [k: string]: unknown }[] =
   _dataEl ? JSON.parse(_dataEl.textContent || _dataEl.getAttribute('data-json') || '[]') : []
 
 // ─── State ──────────────────────────────────────────────────────────────────
@@ -468,7 +559,7 @@ function applyFilter(group: string) {
 
   // Rebuild filtered id list
   filteredIds = (group === 'ALL' ? ALL_CASES : ALL_CASES.filter(f => f.group === group))
-    .map(f => f.fileId)
+    .map(f => f.displayId)
 }
 
 // ─── Modal open / close ──────────────────────────────────────────────────────
@@ -641,6 +732,55 @@ document.addEventListener('astro:page-load', () => {
   ;(window as any).__cfPopstateBound = false
   init()
 })
+
+// ─── Tag overflow measurement ─────────────────────────────────────────────
+function updateTagOverflow(container: HTMLElement) {
+  const chips = Array.from(container.querySelectorAll<HTMLElement>('.cf-chip:not(.cf-chip--more)'))
+  const more  = container.querySelector<HTMLElement>('.cf-chip--more')
+  if (!chips.length || !more) return
+
+  // Reset: show all chips, hide MORE
+  chips.forEach(c => c.classList.remove('cf-chip--hide'))
+  more.style.display = 'none'
+  more.textContent    = ''
+
+  const cRight = container.getBoundingClientRect().right
+
+  // Find the first chip that clips past the container edge
+  let cutoff = chips.length // assume all fit
+  for (let i = 0; i < chips.length; i++) {
+    if (chips[i].getBoundingClientRect().right > cRight + 1) {
+      cutoff = i
+      break
+    }
+  }
+  if (cutoff === chips.length) return // everything fits, done
+
+  // Iteratively hide chips from cutoff backwards until MORE itself fits.
+  // We must hide the overflowing chips FIRST so that MORE lands in the
+  // correct position before we measure it.
+  for (let cut = cutoff; cut >= 0; cut--) {
+    // Apply hide from cut onwards
+    chips.forEach((c, i) => {
+      if (i >= cut) c.classList.add('cf-chip--hide')
+      else          c.classList.remove('cf-chip--hide')
+    })
+    more.style.display = 'inline-block'
+    more.textContent   = `+${chips.length - cut} MORE`
+
+    // If MORE fits now (or we've pulled all chips), we're done
+    if (more.getBoundingClientRect().right <= cRight + 1 || cut === 0) break
+  }
+}
+
+function updateAllTagOverflows() {
+  document.querySelectorAll<HTMLElement>('.cf-tags').forEach(updateTagOverflow)
+}
+
+updateAllTagOverflows()
+// Re-run after fonts load (web fonts change chip widths)
+document.fonts.ready.then(updateAllTagOverflows)
+window.addEventListener('resize', updateAllTagOverflows)
 </script>
 
 </TVLayout>
@@ -681,7 +821,7 @@ document.addEventListener('astro:page-load', () => {
   }
 
   .cf-title {
-    font-size: clamp(18px, 2.8vw, 28px);
+    font-size: var(--font-size-secondary);
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -692,7 +832,7 @@ document.addEventListener('astro:page-load', () => {
   .cf-title__slash { color: var(--cf-accent); opacity: 0.4; }
 
   .cf-subtitle {
-    font-size: 0.58rem;
+    font-size: clamp(0.6rem, 1.1vw, 0.72rem);
     letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--cf-muted);
@@ -726,15 +866,15 @@ document.addEventListener('astro:page-load', () => {
   .cf-filter__tab {
     position: relative;
     font-family: var(--font-primary);
-    font-size: 0.45rem;
+    font-size: 0.58rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--cf-muted);
     background: transparent;
     border: 1px solid rgba(0, 212, 184, 0.14);
     border-bottom: 2px solid transparent;
-    padding: 0.28em 0.75em 0.26em;
-    cursor: pointer;
+    padding: 0.38em 1rem 0.34em;
+    cursor: var(--cursor-pointer);
     clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
     transition: background 0.15s, border-color 0.15s, color 0.15s, border-bottom-color 0.15s;
     background-image: none !important;
@@ -818,9 +958,18 @@ document.addEventListener('astro:page-load', () => {
     display: flex;
     flex-direction: column;
     outline: none;
-    cursor: pointer;
+    cursor: var(--cursor-default);
     min-width: 0;        /* prevents blowout in the grid cell */
     overflow-x: clip;    /* clips the 100vw ::after line without creating a scroll container */
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  /* Subtle scale-up on hovered card */
+  .cf-card:hover { transform: scale(1.02); z-index: 2; }
+
+  /* Dim all sibling cards while one is hovered */
+  .cf-grid:has(.cf-card:hover) .cf-card:not(:hover):not(:focus-within) {
+    opacity: 0.65;
   }
 
   .cf-card:focus-visible { outline: 2px solid var(--cf-accent); outline-offset: 4px; }
@@ -975,8 +1124,21 @@ document.addEventListener('astro:page-load', () => {
   .cf-meta { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cf-muted); margin: 0; line-height: 1.4; }
   .cf-meta__sep { opacity: 0.4; }
 
-  /* Fields */
-  .cf-fields { display: flex; flex-direction: column; gap: 0.24rem; margin: 0; }
+  /* Fields — fixed-height window: card never grows, text scrolls on hover */
+  .cf-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.24rem;
+    margin: 0;
+    max-height: 8rem;    /* holds 2-line clamp at rest with room to scroll on hover */
+    overflow: hidden;
+    transition: none;    /* height is always the same, no transition needed */
+  }
+
+  /* Thin CRT-green scrollbar for the fields area */
+  .cf-fields::-webkit-scrollbar       { width: 2px; }
+  .cf-fields::-webkit-scrollbar-thumb { background: rgba(0,212,184,0.45); }
+  .cf-fields::-webkit-scrollbar-track { background: transparent; }
 
   .cf-field {
     display: grid;
@@ -1007,19 +1169,29 @@ document.addEventListener('astro:page-load', () => {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    max-height: calc(1.6em * 2 + 0.1em);
-    transition: max-height 0.35s ease;
+    /* No max-height / transition here — cf-fields is the fixed container */
   }
 
-  /* On hover / focus: uncap and let card grow downward */
+  /* On hover: reveal full text inside the fixed-height fields window (scrollable) */
+  .cf-card:hover .cf-fields,
+  .cf-card:focus-within .cf-fields {
+    overflow-y: auto;
+  }
+
   .cf-card:hover .cf-field dd,
   .cf-card:focus-within .cf-field dd {
     -webkit-line-clamp: unset;
-    max-height: 16rem;
+    overflow: visible;
   }
 
   /* Tags */
-  .cf-tags { display: flex; flex-wrap: wrap; gap: 0.22rem; align-items: center; }
+  .cf-tags {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    gap: 0.22rem;
+    align-items: center;
+  }
 
   .cf-chip {
     font-size: 0.44rem;
@@ -1029,56 +1201,31 @@ document.addEventListener('astro:page-load', () => {
     border: 1px solid rgba(0,212,184,0.18);
     color: rgba(0,212,184,0.52);
     white-space: nowrap;
-    cursor: default;
+    cursor: var(--cursor-default);
   }
 
+  /* MORE chip — hidden until JS detects overflow */
   .cf-chip--more {
+    display: none;
     border-style: dashed;
     opacity: 0.6;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s, opacity 0.15s;
+    flex-shrink: 0;
+    cursor: var(--cursor-default);
   }
 
-  .cf-chip--more:hover,
-  .cf-chip--more:focus-visible {
-    border-color: var(--cf-accent);
-    color: var(--cf-accent);
-    opacity: 1;
-    outline: none;
-  }
+  /* Chips hidden by JS measurement */
+  .cf-chip--hide { display: none; }
 
-  /* Overflow tooltip wrapper */
-  .cf-overflow-wrap {
-    position: relative;
-    display: inline-flex;
-  }
-
-  .cf-overflow-tip {
-    position: absolute;
-    bottom: calc(100% + 6px);
-    left: 0;
-    z-index: 20;
-    display: flex;
+  /* On card hover: wrap all, hide MORE, reveal hidden chips */
+  .cf-card:hover .cf-tags,
+  .cf-card:focus-within .cf-tags {
     flex-wrap: wrap;
-    gap: 0.2rem;
-    padding: 0.45rem 0.55rem;
-    background: rgba(7, 14, 12, 0.97);
-    border: 1px solid var(--cf-accent-b);
-    box-shadow: 0 0 16px rgba(0,212,184,0.14);
-    min-width: 8rem;
-    max-width: 14rem;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(4px);
-    transition: opacity 0.15s, transform 0.15s;
+    overflow: visible;
   }
-
-  .cf-overflow-wrap:hover .cf-overflow-tip,
-  .cf-overflow-wrap:focus-within .cf-overflow-tip {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
+  .cf-card:hover .cf-chip--more,
+  .cf-card:focus-within .cf-chip--more { display: none !important; }
+  .cf-card:hover .cf-chip--hide,
+  .cf-card:focus-within .cf-chip--hide { display: inline-block; }
 
   /* CTA row — always in normal flow */
   .cf-actions {
@@ -1103,7 +1250,7 @@ document.addEventListener('astro:page-load', () => {
     border: 1px solid rgba(215,232,224,0.08);
     color: rgba(215,232,224,0.20);
     background: transparent;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     user-select: none;
     background-image: none !important;
     transition: border-color 0.18s, color 0.18s, box-shadow 0.18s, transform 0.1s;
@@ -1142,7 +1289,7 @@ document.addEventListener('astro:page-load', () => {
 
   .cf-btn--locked {
     opacity: 0.10;
-    cursor: default;
+    cursor: var(--cursor-default);
     pointer-events: none;
     border-style: dashed;
   }
@@ -1215,7 +1362,7 @@ document.addEventListener('astro:page-load', () => {
     background: transparent;
     border: 1px solid rgba(215,232,224,0.14);
     padding: 0.2em 0.55em;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     line-height: 1;
     transition: color 0.14s, border-color 0.14s, box-shadow 0.14s;
   }
@@ -1239,7 +1386,7 @@ document.addEventListener('astro:page-load', () => {
     background: rgba(0,212,184,0.04);
     border: 1px solid rgba(0,212,184,0.16);
     padding: 0.5em 0.6em;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     transform: translateY(-50%);
     transition: color 0.14s, border-color 0.14s, background 0.14s;
     line-height: 1;
@@ -1258,7 +1405,7 @@ document.addEventListener('astro:page-load', () => {
 
   .cfm-nav:disabled {
     opacity: 0.18;
-    cursor: default;
+    cursor: var(--cursor-default);
     pointer-events: none;
   }
 
@@ -1341,30 +1488,64 @@ document.addEventListener('astro:page-load', () => {
   .cfm-meta { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cfm-muted); margin: 0; }
   .cfm-rule { border: none; border-top: 1px solid var(--cfm-bdr); margin: 0; }
 
-  /* Fields */
-  .cfm-fields { display: flex; flex-direction: column; gap: 0.65rem; margin: 0; }
+  /* ── Modal rich sections ── */
+  .cfm-section { display: flex; flex-direction: column; gap: 0.45rem; }
 
-  .cfm-field {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 0.5rem;
-    align-items: start;
-    font-size: 0.52rem;
-    line-height: 1.65;
-    letter-spacing: 0.04em;
-  }
-
-  .cfm-field dt {
-    font-size: 0.4rem;
-    letter-spacing: 0.13em;
+  .cfm-section__hd {
+    font-size: 0.38rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--cfm-accent);
     opacity: 0.55;
-    white-space: nowrap;
-    padding-top: 0.1em;
+    margin: 0;
+    border-left: 2px solid var(--cfm-accent);
+    padding-left: 0.5rem;
   }
 
-  .cfm-field dd { color: var(--cfm-text); margin: 0; min-width: 0; }
+  .cfm-prose {
+    font-size: 0.52rem;
+    line-height: 1.75;
+    letter-spacing: 0.03em;
+    color: var(--cfm-text);
+    margin: 0;
+  }
+
+  .cfm-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .cfm-list__item {
+    font-size: 0.5rem;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+    color: var(--cfm-text);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .cfm-list__item::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--cfm-accent);
+    opacity: 0.5;
+  }
+
+  /* TECH DETAILS: same color as other sections */
+  .cfm-list--tech .cfm-list__item { color: var(--cfm-text); }
+  .cfm-list--tech .cfm-list__item::before { opacity: 0.5; }
+
+  /* RESULTS: slightly highlighted */
+  .cfm-list--result .cfm-list__item { color: var(--cfm-text); }
+  .cfm-list--result .cfm-list__item::before { content: '✓'; opacity: 0.6; }
+
+  /* Meta grid below RESULTS */
+  .cfm-meta-grid { display: flex; flex-direction: column; gap: 0.45rem; }
 
   /* Pipeline / Tools / Tags rows */
   .cfm-row {
@@ -1435,7 +1616,7 @@ document.addEventListener('astro:page-load', () => {
     color: var(--cfm-accent);
     background: transparent;
     background-image: none !important;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     transition: border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.1s;
   }
 
@@ -1452,7 +1633,7 @@ document.addEventListener('astro:page-load', () => {
   .cfm-art-btn--locked {
     opacity: 0.13;
     border-style: dashed;
-    cursor: default;
+    cursor: var(--cursor-default);
     pointer-events: none;
   }
 
