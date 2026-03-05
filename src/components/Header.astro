@@ -153,6 +153,12 @@ const buildTimeDate = new Intl.DateTimeFormat('en-US', {
   }
 
   @media (max-width: 480px) {
+    /* Reduce the large blank hero space so content isn't pushed too far down */
+    .header {
+      min-height: 180px;
+      height: 35vh;
+    }
+
     .nav {
       margin-bottom: 2rem;
     }

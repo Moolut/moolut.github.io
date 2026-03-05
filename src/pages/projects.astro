@@ -1669,19 +1669,116 @@ window.addEventListener('resize', updateAllTagOverflows)
     flex-shrink: 0;
   }
 
-  /* ── Responsive ── */
-  @media (max-width: 480px) {
-    .cf-header    { flex-direction: column; align-items: flex-start; }
-    .cf-field     { grid-template-columns: 4.2rem 1fr; }
+  /* ══════════════════════════════════════════════════════════════
+     Responsive overrides — desktop layout is never touched above
+  ══════════════════════════════════════════════════════════════ */
+
+  /* 768 px — general layout tightening */
+  @media (max-width: 768px) {
+    .cf-actions { flex-wrap: wrap; }
+    .cf-hud     { flex-wrap: wrap; gap: 0.3rem; }
   }
 
+  /* 480 px — page header, fields */
+  @media (max-width: 480px) {
+    .cf-header  { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .cf-field   { grid-template-columns: 4.2rem 1fr; }
+    .cf-body    { padding: 0.75rem 0.85rem; gap: 0.5rem; }
+    .cf-title   { font-size: clamp(14px, 5vw, 24px); }
+  }
+
+  /* 699 px — modal: full-screen, right panel as bottom strip */
   @media (max-width: 699px) {
-    .cfm-panel  { max-height: 95vh; margin: 0.5rem; }
-    .cfm-left   { border-right: none; }
-    .cfm-field  { grid-template-columns: 5rem 1fr; }
-    .cfm-row    { grid-template-columns: 5rem 1fr; }
-    .cfm-nav--prev { left: 0.2rem; }
-    .cfm-nav--next { right: 0.2rem; }
+    /* Full-screen modal */
+    .cfm-overlay { align-items: flex-start; }
+    .cfm-panel {
+      position: fixed;
+      inset: 0;
+      margin: 0;
+      max-height: 100%;
+      height: 100dvh;
+    }
+
+    /* Switch inner layout from grid to flex-column */
+    .cfm-inner {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .cfm-left {
+      flex: 1;
+      min-height: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--cfm-bdr);
+    }
+
+    /* Right panel: compact horizontal strip at the bottom */
+    .cfm-right {
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 0;
+      height: 7rem;
+      border-left: none;
+      overflow: hidden;
+    }
+    .cfm-right::before,
+    .cfm-right__grid,
+    .cfm-crt-scan,
+    .cfm-right__label { display: none; }
+
+    .cfm-attach {
+      flex: 1;
+      min-width: 0;
+      border-bottom: none;
+      border-right: 1px solid var(--cfm-bdr);
+      padding: 0.5rem 0.65rem;
+      overflow-y: auto;
+    }
+    .cfm-attach__links {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.2rem 0.25rem;
+    }
+    .cfm-att-btn { flex-shrink: 0; }
+
+    .cfm-outline {
+      flex: 1;
+      min-width: 0;
+      padding: 0.5rem 0.65rem;
+      overflow-y: auto;
+    }
+    .cfm-outline__list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.1rem;
+    }
+    .cfm-outline__item {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.22em 0.35em;
+      font-size: 0.37rem;
+    }
+    .cfm-outline__item--active {
+      border-left-color: transparent;
+      border-bottom-color: var(--cfm-accent);
+    }
+
+    /* Field / row grids */
+    .cfm-field { grid-template-columns: 5rem 1fr; }
+    .cfm-row   { grid-template-columns: 5rem 1fr; }
+
+    /* Prev/Next: float above the 7rem bottom strip */
+    .cfm-nav       { top: auto; bottom: 7.5rem; transform: none; }
+    .cfm-nav--prev { left:  0.4rem; }
+    .cfm-nav--next { right: 0.4rem; }
+
+    /* Close: larger touch target */
+    .cfm-close      { padding: 0.6em; top: 0.35rem; right: 0.35rem; }
+    .cfm-close__icon { width: 0.6rem; height: 0.6rem; }
+
+    /* Inner padding */
+    .cfm-tabrow { padding: 0.5rem 0.85rem; }
+    .cfm-body   { padding: 1rem 0.9rem 1.2rem; }
   }
 </style>
 

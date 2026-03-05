@@ -859,7 +859,64 @@ const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1)
     text-transform: uppercase;
   }
 
-  /* ── Mobile ── */
+  /* ── Mobile 768px ── */
+  @media (max-width: 768px) {
+    /* HUD: stack nav + date vertically so they don't overlap */
+    .hud-strip {
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-start;
+      padding: 0.5em 0.75em;
+    }
+    .hud-nav {
+      position: static;
+      transform: none;
+      flex-wrap: wrap;
+    }
+    .hud-updated {
+      margin-left: 0;
+      text-align: left;
+    }
+
+    /* Shrink progress bar track so it fits on small screens */
+    .path-bar-track { width: 5rem; }
+
+    /* Touch toggle: show expanded panel when .is-open is set by JS */
+    .path-row.is-open .path-panel {
+      max-height: 12rem;
+      opacity: 1;
+      padding: 0.6rem 0 0.75rem 0.75rem;
+    }
+    .path-row.is-open .path-arrow__off { opacity: 0; }
+    .path-row.is-open .path-arrow__on  { opacity: 1; }
+    .path-row.is-open .path-bar-fill {
+      animation: bar-load 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* On touch devices, swap hint text to "TAP PATH FOR DETAILS" */
+    @media (hover: none) {
+      .path-hint { font-size: 0; letter-spacing: 0; }
+      .path-hint::after {
+        content: '// TAP PATH FOR DETAILS';
+        font-size: clamp(0.45rem, 1.3vw, 0.55rem);
+        letter-spacing: 0.08em;
+        color: rgba(255, 204, 0, 0.35);
+        font-family: var(--font-primary);
+        text-transform: uppercase;
+      }
+    }
+
+    /* Timeline: single column so year doesn't get squashed */
+    .timeline-item {
+      grid-template-columns: 1fr;
+    }
+    .timeline-year {
+      text-align: left;
+      margin-top: 0.2rem;
+    }
+  }
+
+  /* ── Mobile 580px ── */
   @media (max-width: 580px) {
     .hud-strip {
       font-size: 0.55rem;
@@ -875,6 +932,10 @@ const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1)
       align-items: center;
       gap: 0.6rem;
       margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+      font-size: clamp(20px, 6vw, 32px);
     }
   }
 </style>
@@ -907,6 +968,21 @@ const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1)
     })
   }
 
+  // Touch toggle for HTB path panels (on desktop these open on hover only)
+  function initPathTouch() {
+    document.querySelectorAll('.path-row').forEach((row) => {
+      row.addEventListener('click', () => {
+        if (!window.matchMedia('(hover: hover)').matches) {
+          row.classList.toggle('is-open')
+        }
+      })
+    })
+  }
+
   initHudScroll()
-  document.addEventListener('astro:page-load', initHudScroll)
+  initPathTouch()
+  document.addEventListener('astro:page-load', () => {
+    initHudScroll()
+    initPathTouch()
+  })
 </script>

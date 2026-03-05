@@ -1178,6 +1178,48 @@ import TVLayout from '../layouts/TVLayout.astro'
 
   /* ── Microtext watermark shared by all cards ── */
 
+  /* ── Mobile 480px: index page ── */
+  @media (max-width: 480px) {
+    /* Caption bar: wrap to prevent horizontal overflow.
+       Without this the bar (~510px) overflows the ~460px container and
+       creates a page-wide horizontal scroll that breaks every section. */
+    .lower-third-caption-bar {
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+    }
+    .caption-left {
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    /* "CAPTION: ABOUT" is redundant alongside "// ABOUT" — drop it */
+    .caption-meta { display: none; }
+    .caption-right { gap: 0.5rem; }
+
+    /* Drive cards: tighter side padding so content breathes properly */
+    .drive-card {
+      padding: 1rem 1rem 1.1rem;
+    }
+    /* Keep header-strip bleed matching the new card padding */
+    .card-header-strip {
+      margin: -1rem -1rem 0.75rem -1rem;
+    }
+
+    /* About panel body: reduce side padding to match card rhythm */
+    .lower-third-content {
+      padding: 1rem;
+    }
+
+    /* Tagline: clamp down so it never wraps awkwardly */
+    .hero-tagline {
+      font-size: clamp(16px, 4.2vw, 20px);
+    }
+
+    /* Social buttons: tighter padding so all four stay on one row */
+    .social-link {
+      padding: 0.4em 0.75em;
+    }
+  }
 </style>
 
 <script>

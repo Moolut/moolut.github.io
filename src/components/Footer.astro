@@ -90,4 +90,15 @@ import SpaceTrigger from './SpaceTrigger.svelte'
     position: absolute;
     right: 0;
   }
+
+  @media (max-width: 600px) {
+    .footer__bottom {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer__space {
+      position: static;
+    }
+  }
 </style>

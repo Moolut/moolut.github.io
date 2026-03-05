@@ -118,6 +118,11 @@ body,
   }
 }
 
+/* ── Mobile: widen the container so content isn't too cramped ── */
+@media (max-width: 768px) {
+  :root { --container-width: 96%; }
+}
+
 body {
   cursor: var(--cursor-default);
 }
