@@ -1,209 +1,10 @@
 ---
 import TVLayout from '../layouts/TVLayout.astro'
-
-// ── Case file dataset (self-contained, no external import needed) ────────────
-const CASE_FILES = [
-  {
-    fileId: 'UI',
-    type: 'PROJECT',
-    status: 'IN PROGRESS',
-    group: 'SOFTWARE',
-    title: 'moolut.github.io — Retro CRT Portfolio',
-    year: '2026',
-    context: 'Personal',
-    problem: 'Generic portfolio templates feel identical and forgettable.',
-    result: 'A cohesive retro CRT portfolio with modular pages and a scalable Case Files viewer.',
-    overview: 'A retro CRT-themed portfolio built as a modular site with reusable UI components and interactive pages. The goal was to create a memorable interface that supports quick scanning and deep dives.',
-    whatIBuilt: [
-      'A cohesive CRT UI system (scanlines/noise, typography, consistent components).',
-      'Multiple themed pages (index/whoami/achievements/projects) with shared design language.',
-      'A Case Files project viewer with filters and modal-based case reading.',
-    ],
-    techDetails: [
-      'Frontend stack: Astro + Svelte + TypeScript + CSS.',
-      'Component-first structure (cards, tabs, modal viewer, artifacts dock).',
-      'UI states designed for both hover and keyboard focus navigation.',
-    ],
-    outputs: [
-      'A production-ready portfolio with a distinctive theme and structured project presentation.',
-    ],
-    tools: ["Astro","Svelte","TypeScript","CSS (theme tokens)","GitHub Pages"],
-    tags: ["Frontend","UI Systems","Retro CRT","Component Design","Portfolio"],
-    artifacts: { github: 'https://github.com/Moolut/moolut.github.io', report: '', video: '', demo: 'https://moolut.github.io/' },
-  },
-  {
-    fileId: 'HW',
-    type: 'THESIS',
-    status: 'COMPLETE',
-    group: 'EMBEDDED',
-    title: 'pov_fan — POV Fan Firmware + Control Software',
-    year: '2025',
-    context: 'Thesis',
-    problem: 'Render dynamic visuals on a high-speed POV fan reliably and synchronously.',
-    result: 'A synchronized LED rendering pipeline for stable image/text output on custom POV fan hardware.',
-    overview: 'Firmware and control software for a holographic POV (Persistence of Vision) fan display. The system renders images/text by synchronizing LED patterns with high-speed rotation timing to create a stable floating display illusion.',
-    whatIBuilt: [
-      'A timing-synchronized LED frame generation and playback pipeline.',
-      'Control logic to map image/text content into rotation-aligned LED frames.',
-      'A project structure suitable for firmware iteration and testing.',
-    ],
-    techDetails: [
-      'Emphasis on stable timing: rotation alignment → frame scheduling → consistent output.',
-      'Firmware-oriented development with reproducible build/run workflow.',
-      'Implementation primarily in C++ with embedded tooling.',
-    ],
-    outputs: [
-      'A repeatable approach to stable mid-air POV rendering on custom hardware.',
-    ],
-    tools: ["C++ (firmware)","MCU platform (ESP32/Arduino workflow)","LED frame mapping","Rotation timing sync","Hardware prototyping"],
-    tags: ["Embedded Display","POV Rendering","Real-time Timing","LED Control","Hardware Prototyping"],
-    artifacts: { github: 'https://github.com/Moolut/pov_fan', report: '', video: '', demo: '' },
-  },
-  {
-    fileId: 'SC',
-    type: 'COURSE PROJECT',
-    status: 'COMPLETE',
-    group: 'SECURITY',
-    title: 'smartcard-lab — ISO 7816 Communication + Security Experiments',
-    year: '2025',
-    context: 'Course',
-    problem: 'Implement smartcard communication flows and explore security considerations in practice.',
-    result: 'Working ISO 7816 communication plus documented security experiments and countermeasure evaluation.',
-    overview: 'SmartCard Security Project for TUM SmartCard Lab. Focused on implementing secure communication flows and evaluating security weaknesses and countermeasures with evidence-driven measurements.',
-    whatIBuilt: [
-      'ISO 7816 communication work and lab protocol tasks.',
-      'Countermeasure experiments targeting side-channel resistance.',
-      'Documentation/report artifacts capturing measurements and conclusions.',
-    ],
-    techDetails: [
-      'Masking and shuffling countermeasures applied to AES S-box operations.',
-      'Power trace uniformity measurement before/after protections.',
-      'Performance vs security tradeoff evaluation and reporting.',
-    ],
-    outputs: [
-      'Evidence-backed evaluation of countermeasures and their overhead.',
-    ],
-    tools: ["C (embedded)","ISO 7816 protocol work","AES S-box masking/shuffling","Power trace acquisition","Evaluation workflow"],
-    tags: ["Smartcard Security","ISO 7816","Side-Channel Resistance","AES Hardening","Measurement & Evaluation"],
-    artifacts: { github: 'https://github.com/Moolut/smartcard-lab', report: '', video: '', demo: '' },
-  },
-  {
-    fileId: 'ES',
-    type: 'COLLECTION',
-    status: 'COMPLETE',
-    group: 'EMBEDDED',
-    title: 'embedded-systems-and-security — Course Lab Collection',
-    year: '2024',
-    context: 'Course',
-    problem: 'Need structured hands-on practice across embedded systems topics in one place.',
-    result: 'A consolidated set of graded labs covering timing, exploitation, crypto, and HID side-channel concepts.',
-    overview: "Three graded assignments from TUM's Embedded Systems and Security course, each focusing on a different embedded reliability/security concept using the Infineon XMC4500 platform.",
-    whatIBuilt: [
-      'Assignment 1: LED Morse transmission + timing features driven by timers/interrupts.',
-      'Assignment 2: Stack overflow exploration + transition to authenticated encryption for secure command sending.',
-      'Assignment 3: USB HID keyboard emulation + timing side-channel exploitation workflow.',
-    ],
-    techDetails: [
-      'Embedded timing + interrupt-driven interaction (timers, SysTick/CCU4-style workflows).',
-      'Practical memory exploitation lessons and mitigation considerations.',
-      'Secure messaging using authenticated encryption (libsodium-style secretbox approach).',
-      'USB HID protocol + keyboard layout handling + timing analysis.',
-    ],
-    outputs: [
-      'A structured lab archive demonstrating embedded implementation and security analysis skills.',
-    ],
-    tools: ["C (bare-metal MCU)","Infineon XMC4500","libsodium (secretbox/AE)","Timers & interrupts (SysTick/CCU4)","USB HID emulation"],
-    tags: ["Embedded Security","Exploitation & Defense","Applied Cryptography","USB HID","Timing Side-Channels"],
-    artifacts: { github: 'https://github.com/Moolut/embedded-systems-and-security', report: '', video: '', demo: '' },
-  },
-  {
-    fileId: 'CT',
-    type: 'WRITEUPS',
-    status: 'COMPLETE',
-    group: 'SECURITY',
-    title: 'iot-security-ctf — CTF Solutions & Writeups',
-    year: '2024',
-    context: 'Course',
-    problem: 'Solve practical security challenges and keep solutions reproducible for later reference.',
-    result: 'A structured writeup archive covering crypto, IoT protocol issues, and web vulnerabilities.',
-    overview: 'Solutions and writeups for TUM IoT Security CTF challenges. Organized as a reusable archive with reasoning, steps, and artifacts where applicable.',
-    whatIBuilt: [
-      'Per-challenge solution notes and reproducible steps.',
-      'Exploit/analysis code when useful to support the writeups.',
-      'A structured repo layout for quick lookup and revision.',
-    ],
-    techDetails: [
-      'Cryptography/cryptanalysis coverage (including classical cipher work).',
-      'IoT protocol weaknesses and device exploitation themes.',
-      'Web security topics (injection/auth/session-style weaknesses).',
-    ],
-    outputs: [
-      'A repeatable reference archive of solved challenges and security reasoning.',
-    ],
-    tools: ["Python","Wireshark","Linux CLI tooling","Hashcat","sqlmap","dirbuster/gobuster","nmap", "MQTT"],
-    tags: ["CTF Writeups","IoT Security","Cryptanalysis","Web Vulnerabilities","Protocol Analysis"],
-    artifacts: { github: 'https://github.com/Moolut/iot-security-ctf', report: '', video: '', demo: '' },
-  },
-  {
-    fileId: 'ASM',
-    type: 'PROJECT',
-    status: 'COMPLETE',
-    group: 'EMBEDDED',
-    title: 'flappy-bird — ARM Cortex-M0 Assembly Game',
-    year: '2022',
-    context: 'Course',
-    problem: 'Build a complete game loop on constrained hardware using low-level code.',
-    result: 'A working Flappy Bird clone demonstrating timing, input, rendering, and collision logic in ARM assembly.',
-    overview: 'A Flappy Bird clone written entirely in ARM Cortex-M0 assembly to explore bare-metal programming and register-level rendering on constrained hardware.',
-    whatIBuilt: [
-      'A full game loop with timing and state management.',
-      'Interrupt-driven button input for game control.',
-      'Manual sprite/map rendering and collision detection.',
-    ],
-    techDetails: [
-      'Low-level ARM instruction usage with manual register/memory management.',
-      'Stack operations and interrupt handling patterns.',
-      'Constraints-aware design for embedded execution.',
-    ],
-    outputs: [
-      'A complete embedded game demonstrating low-level control and reliability under constraints.',
-    ],
-    tools: ["ARM Cortex-M0 assembly","Assembler/linker toolchain","GDB debugging","Interrupts & timers","Memory-mapped I/O"],
-    tags: ["ARM Assembly","Bare-Metal","Interrupts","Graphics/Rendering","Embedded Game"],
-    artifacts: { github: 'https://github.com/Moolut/flappy-bird', report: '', video: '', demo: '' },
-  },
-  {
-    fileId: 'CPP',
-    type: 'PROJECT',
-    status: 'COMPLETE',
-    group: 'SOFTWARE',
-    title: 'Logic-Simulator — C++ / SFML Circuit Simulator',
-    year: '2022',
-    context: 'Course',
-    problem: 'Interactively simulate logic circuits with a visual interface.',
-    result: 'A graphical sandbox to build and simulate logic gate networks and circuit behavior.',
-    overview: 'A graphical logic circuit simulator built in C++ using SFML. Users can create circuits interactively and observe their behavior in real time.',
-    whatIBuilt: [
-      'A GUI for constructing circuits with draggable components.',
-      'A simulation engine for common digital components.',
-      'A sprite-based representation of logic elements and connections.',
-    ],
-    techDetails: [
-      'Supported elements include AND/OR/XOR/NOT gates, D flip-flops, clock, LEDs.',
-      'OOP-driven design to model components and connections cleanly.',
-      'SFML-based rendering loop and interaction handling.',
-    ],
-    outputs: [
-      'An interactive sandbox for experimenting with digital logic composition.',
-    ],
-    tools: ["C++ (OOP)","SFML (rendering/input)","Event loop + UI interactions","Logic component model","Build tooling (CMake/Make)"],
-    tags: ["C++","SFML","Logic Simulation","GUI","OOP Design"],
-    artifacts: { github: 'https://github.com/Moolut/Logic-Simulator', report: '', video: '', demo: '' },
-  },
-]
+import CASE_FILES from '../data/projects.json'
 
 // ── Derived constants ────────────────────────────────────────────────────────
-const today   = new Date().toISOString().slice(0, 10)
+const _d     = new Date()
+const today   = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1).padStart(2,'0')}/${_d.getFullYear()}`
 const GROUPS   = ['ALL', 'SECURITY', 'EMBEDDED', 'SOFTWARE'] as const
 
 type Group  = typeof GROUPS[number]
@@ -370,7 +171,7 @@ function groupCount(g: Group) {
         <div class="cfm-panel" data-modal-id={f.displayId} hidden>
 
           {/* Close */}
-          <button class="cfm-close" aria-label="Close case file">✕</button>
+          <button class="cfm-close" aria-label="Close case file"><span class="cfm-close__icon" aria-hidden="true"></span></button>
 
           {/* Prev / Next */}
           <button class="cfm-nav cfm-nav--prev" aria-label="Previous case">◄</button>
@@ -403,14 +204,14 @@ function groupCount(g: Group) {
 
                 {/* ── OVERVIEW ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
-                <section class="cfm-section">
+                <section class="cfm-section" id={`cfm-sec-overview-${f.displayId}`}>
                   <h3 class="cfm-section__hd">OVERVIEW</h3>
                   <p class="cfm-prose">{f.overview}</p>
                 </section>
 
                 {/* ── WHAT I BUILT ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
-                <section class="cfm-section">
+                <section class="cfm-section" id={`cfm-sec-built-${f.displayId}`}>
                   <h3 class="cfm-section__hd">WHAT I BUILT</h3>
                   <ul class="cfm-list">
                     {(f.whatIBuilt as string[]).map((item) => (
@@ -421,7 +222,7 @@ function groupCount(g: Group) {
 
                 {/* ── TECH DETAILS ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
-                <section class="cfm-section">
+                <section class="cfm-section" id={`cfm-sec-tech-${f.displayId}`}>
                   <h3 class="cfm-section__hd">TECH DETAILS</h3>
                   <ul class="cfm-list cfm-list--tech">
                     {(f.techDetails as string[]).map((item) => (
@@ -432,7 +233,7 @@ function groupCount(g: Group) {
 
                 {/* ── RESULTS ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
-                <section class="cfm-section">
+                <section class="cfm-section" id={`cfm-sec-results-${f.displayId}`}>
                   <h3 class="cfm-section__hd">RESULTS</h3>
                   <ul class="cfm-list cfm-list--result">
                     {(f.outputs as string[]).map((item) => (
@@ -443,51 +244,80 @@ function groupCount(g: Group) {
 
                 {/* ── TOOLS / TAGS ── */}
                 <hr class="cfm-rule" aria-hidden="true" />
-                <div class="cfm-meta-grid">
-                  <div class="cfm-row cfm-row--chips">
-                    <span class="cfm-key">TOOLS</span>
-                    <div class="cfm-chips">
-                      {(f.tools as string[]).map((t) => <span class="cfm-chip">{t}</span>)}
+                <section class="cfm-section cfm-section--notitle" id={`cfm-sec-tools-${f.displayId}`}>
+                  <div class="cfm-meta-grid">
+                    <div class="cfm-row cfm-row--chips">
+                      <span class="cfm-key">TOOLS</span>
+                      <div class="cfm-chips">
+                        {(f.tools as string[]).map((t) => <span class="cfm-chip">{t}</span>)}
+                      </div>
                     </div>
-                  </div>
-                  <div class="cfm-row cfm-row--chips">
-                    <span class="cfm-key">TAGS</span>
-                    <div class="cfm-chips">
-                      {(f.tags as string[]).map((t) => <span class="cfm-chip cfm-chip--tag">{t}</span>)}
+                    <div class="cfm-row cfm-row--chips">
+                      <span class="cfm-key">TAGS</span>
+                      <div class="cfm-chips">
+                        {(f.tags as string[]).map((t) => <span class="cfm-chip cfm-chip--tag">{t}</span>)}
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* ── ARTIFACTS DOCK ── */}
-                <hr class="cfm-rule" aria-hidden="true" />
-                <section class="cfm-artifacts" aria-label="External artifacts">
-                  <h3 class="cfm-artifacts__heading">ARTIFACTS DOCK</h3>
-                  <div class="cfm-artifacts__links">
-                    {(f.artifacts as any).github
-                      ? <a class="cfm-art-btn" href={(f.artifacts as any).github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">GITHUB · LOCKED</span>
-                    }
-                    {(f.artifacts as any).demo
-                      ? <a class="cfm-art-btn" href={(f.artifacts as any).demo} target="_blank" rel="noopener noreferrer">DEMO ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">DEMO · LOCKED</span>
-                    }
-                    {(f.artifacts as any).report
-                      ? <a class="cfm-art-btn" href={(f.artifacts as any).report} target="_blank" rel="noopener noreferrer">REPORT ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">REPORT · LOCKED</span>
-                    }
-                    {(f.artifacts as any).video
-                      ? <a class="cfm-art-btn" href={(f.artifacts as any).video} target="_blank" rel="noopener noreferrer">VIDEO ↗</a>
-                      : <span class="cfm-art-btn cfm-art-btn--locked" aria-disabled="true">VIDEO · LOCKED</span>
-                    }
                   </div>
                 </section>
+
               </div>
             </div>
 
-            {/* ── Right: ghost panel ── */}
-            <div class="cfm-ghost" aria-hidden="true">
-              <div class="cfm-ghost__grid"></div>
-              <div class="cfm-ghost__label">INTEL · {f.displayId}</div>
+            {/* ── Right: utility panel ── */}
+            <div class="cfm-right" data-outline-for={f.displayId}>
+              {/* Ambient CRT scanning bar */}
+              <div class="cfm-crt-scan" aria-hidden="true"></div>
+              {/* Dot-grid texture */}
+              <div class="cfm-right__grid" aria-hidden="true"></div>
+
+              {/* ATTACHMENTS dock */}
+              <div class="cfm-attach">
+                <div class="cfm-right__hd">ATTACHMENTS</div>
+                <div class="cfm-attach__links">
+                  {(f.artifacts as any).github
+                    ? <a class="cfm-att-btn" href={(f.artifacts as any).github} target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+                    : <span class="cfm-att-btn cfm-att-btn--locked" aria-disabled="true">GITHUB</span>
+                  }
+                  {(f.artifacts as any).report
+                    ? <a class="cfm-att-btn" href={(f.artifacts as any).report} target="_blank" rel="noopener noreferrer">REPORT ↗</a>
+                    : <span class="cfm-att-btn cfm-att-btn--locked" aria-disabled="true">REPORT</span>
+                  }
+                  {(f.artifacts as any).video
+                    ? <a class="cfm-att-btn" href={(f.artifacts as any).video} target="_blank" rel="noopener noreferrer">VIDEO ↗</a>
+                    : <span class="cfm-att-btn cfm-att-btn--locked" aria-disabled="true">VIDEO</span>
+                  }
+                  {(f.artifacts as any).demo
+                    ? <a class="cfm-att-btn" href={(f.artifacts as any).demo} target="_blank" rel="noopener noreferrer">DEMO ↗</a>
+                    : <span class="cfm-att-btn cfm-att-btn--locked" aria-disabled="true">DEMO</span>
+                  }
+                </div>
+              </div>
+
+              {/* OUTLINE jump list */}
+              <nav class="cfm-outline" aria-label="Jump to section">
+                <div class="cfm-right__hd">OUTLINE</div>
+                <ul class="cfm-outline__list" role="list">
+                  {[
+                    { key: 'overview', label: 'OVERVIEW' },
+                    { key: 'built',    label: 'WHAT I BUILT' },
+                    { key: 'tech',     label: 'TECH DETAILS' },
+                    { key: 'results',  label: 'RESULTS' },
+                    { key: 'tools',    label: 'TOOLS / TAGS' },
+                  ].map(({ key, label }) => (
+                    <li>
+                      <button
+                        class="cfm-outline__item"
+                        data-target={`cfm-sec-${key}-${f.displayId}`}
+                        aria-label={`Jump to ${label}`}
+                      >{label}</button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              {/* Intel label */}
+              <div class="cfm-right__label" aria-hidden="true">INTEL · {f.displayId}</div>
             </div>
 
           </div>
@@ -585,15 +415,20 @@ function openModal(fileId: string, trigger?: HTMLElement | null) {
   document.body.style.overflow = 'hidden'
   document.addEventListener('keydown', onModalKeydown)
 
+  setupOutline(panel)
+
+  history.replaceState({ case: fileId }, '', `${location.pathname}?case=${fileId}`)
+
   requestAnimationFrame(() => {
     panel.querySelector<HTMLElement>('.cfm-close')?.focus()
   })
 }
 
-function closeModal(updateUrl = true) {
+function closeModal() {
   const modal = getModal()
   allPanels().forEach(p => p.setAttribute('hidden', ''))
   modal.setAttribute('hidden', '')
+  teardownOutline()
   activeFileId = ''
 
   document.body.style.overflow = ''
@@ -602,11 +437,7 @@ function closeModal(updateUrl = true) {
   returnFocus?.focus()
   returnFocus = null
 
-  if (updateUrl) {
-    const url = new URL(location.href)
-    url.searchParams.delete(URL_PARAM)
-    history.pushState({}, '', url)
-  }
+  history.replaceState({}, '', location.pathname)
 }
 
 function syncNavButtons() {
@@ -623,12 +454,14 @@ function navigateModal(dir: 1 | -1) {
   const idx  = filteredIds.indexOf(activeFileId)
   const next = filteredIds[idx + dir]
   if (!next) return
+  teardownOutline()
   allPanels().forEach(p => p.setAttribute('hidden', ''))
   activeFileId = next
   const nextPanel = getPanel(next)
   nextPanel.removeAttribute('hidden')
   getModal().setAttribute('aria-labelledby', `cfm-title-${next}`)
   syncNavButtons()
+  setupOutline(nextPanel)
   nextPanel.querySelector<HTMLElement>('.cfm-close')?.focus()
   const url = new URL(location.href)
   url.searchParams.set(URL_PARAM, next)
@@ -658,15 +491,12 @@ function onModalKeydown(e: KeyboardEvent) {
   else trapFocus(e)
 }
 
-// ─── URL sync ────────────────────────────────────────────────────────────────
+// ─── URL sync (initial load only) ───────────────────────────────────────────
 function syncFromURL() {
   const slug = new URL(location.href).searchParams.get(URL_PARAM)
   if (slug) {
-    // rebuild filteredIds with current group so nav works
     applyFilter(activeGroup)
-    openModal(slug)
-  } else if (!getModal().hidden) {
-    closeModal(false)
+    openModal(slug) // replaceState inside openModal is a safe no-op here
   }
 }
 
@@ -683,11 +513,7 @@ function init() {
   // ── READ CASE buttons ────────────────────────────────────────────────────
   document.querySelectorAll<HTMLButtonElement>('[data-read-case]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id  = btn.dataset.readCase!
-      const url = new URL(location.href)
-      url.searchParams.set(URL_PARAM, id)
-      history.pushState({ case: id }, '', url)
-      openModal(id, btn)
+      openModal(btn.dataset.readCase!, btn) // replaceState handled inside openModal
     })
   })
 
@@ -717,21 +543,68 @@ function init() {
     card.querySelector<HTMLButtonElement>('[data-read-case]')?.click()
   })
 
-  // ── Browser back/forward ─────────────────────────────────────────────────
-  if (!(window as any).__cfPopstateBound) {
-    ;(window as any).__cfPopstateBound = true
-    window.addEventListener('popstate', () => syncFromURL())
-  }
-
-  // Auto-open if URL already has ?case=
+  // Auto-open if URL already has ?case= on initial page load
   syncFromURL()
 }
 
 init()
-document.addEventListener('astro:page-load', () => {
-  ;(window as any).__cfPopstateBound = false
-  init()
-})
+document.addEventListener('astro:page-load', () => init())
+
+// ─── Outline: IntersectionObserver + scroll-to ────────────────────────────
+let _outlineObserver: IntersectionObserver | null = null
+
+function setupOutline(panel: HTMLElement) {
+  teardownOutline()
+
+  const body    = panel.querySelector<HTMLElement>('.cfm-body')
+  const items   = Array.from(panel.querySelectorAll<HTMLButtonElement>('.cfm-outline__item'))
+  if (!body || !items.length) return
+
+  // Click → scroll left panel to section
+  items.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target!)
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  })
+
+  // IntersectionObserver rooted on .cfm-body
+  const sectionIds = items.map(b => b.dataset.target!)
+
+  _outlineObserver = new IntersectionObserver(
+    (entries) => {
+      // Find the topmost intersecting section
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+      if (!visible.length) return
+      const activeId = visible[0].target.id
+      items.forEach(btn => {
+        btn.classList.toggle('cfm-outline__item--active', btn.dataset.target === activeId)
+        btn.setAttribute('aria-current', btn.dataset.target === activeId ? 'true' : 'false')
+      })
+    },
+    {
+      root: body,
+      rootMargin: '0px 0px -60% 0px',
+      threshold: 0,
+    }
+  )
+
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id)
+    if (el) _outlineObserver!.observe(el)
+  })
+
+  // Set first item active by default
+  items[0]?.classList.add('cfm-outline__item--active')
+  items[0]?.setAttribute('aria-current', 'true')
+}
+
+function teardownOutline() {
+  _outlineObserver?.disconnect()
+  _outlineObserver = null
+}
 
 // ─── Tag overflow measurement ─────────────────────────────────────────────
 function updateTagOverflow(container: HTMLElement) {
@@ -825,7 +698,7 @@ window.addEventListener('resize', updateAllTagOverflows)
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--cf-text);
+    color: #fff;
     margin: 0 0 0.3rem;
   }
 
@@ -1265,6 +1138,8 @@ window.addEventListener('resize', updateAllTagOverflows)
     outline: none;
   }
 
+  .cf-btn::after { display: none !important; }
+
   .cf-btn:active { transform: translateY(1px); }
 
   /* Primary CTA – teal, bold glow on hover */
@@ -1353,26 +1228,50 @@ window.addEventListener('resize', updateAllTagOverflows)
   /* Close button */
   .cfm-close {
     position: absolute;
-    top: 0.6rem;
-    right: 0.6rem;
+    top: 0.55rem;
+    right: 0.55rem;
     z-index: 10;
-    font-family: var(--font-primary);
-    font-size: 0.7rem;
-    color: var(--cfm-muted);
     background: transparent;
     border: 1px solid rgba(215,232,224,0.14);
-    padding: 0.2em 0.55em;
+    padding: 0.38em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: var(--cursor-pointer);
-    line-height: 1;
-    transition: color 0.14s, border-color 0.14s, box-shadow 0.14s;
+    transition: border-color 0.14s, box-shadow 0.14s;
   }
+
+  .cfm-close__icon {
+    position: relative;
+    display: block;
+    width: 0.45rem;
+    height: 0.45rem;
+  }
+  .cfm-close__icon::before,
+  .cfm-close__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--cfm-muted);
+    transition: background 0.14s;
+  }
+  .cfm-close__icon::before { transform: translateY(-50%) rotate(45deg); }
+  .cfm-close__icon::after  { transform: translateY(-50%) rotate(-45deg); }
 
   .cfm-close:hover,
   .cfm-close:focus-visible {
-    color: var(--cfm-text);
     border-color: rgba(0,212,184,0.35);
     box-shadow: 0 0 8px rgba(0,212,184,0.2);
     outline: none;
+  }
+  .cfm-close:hover .cfm-close__icon::before,
+  .cfm-close:hover .cfm-close__icon::after,
+  .cfm-close:focus-visible .cfm-close__icon::before,
+  .cfm-close:focus-visible .cfm-close__icon::after {
+    background: var(--cfm-text);
   }
 
   /* Prev / Next nav buttons */
@@ -1589,95 +1488,185 @@ window.addEventListener('resize', updateAllTagOverflows)
     color: rgba(215,232,224,0.42);
   }
 
-  /* Artifacts dock */
-  .cfm-artifacts { display: flex; flex-direction: column; gap: 0.55rem; }
-
-  .cfm-artifacts__heading {
-    font-size: 0.42rem;
-    letter-spacing: 0.17em;
-    text-transform: uppercase;
-    color: var(--cfm-accent);
-    opacity: 0.48;
-    margin: 0;
-    font-weight: normal;
-  }
-
-  .cfm-artifacts__links { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-
-  .cfm-art-btn {
-    display: inline-block;
-    font-family: var(--font-primary);
-    font-size: 0.45rem;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.32em 0.8em;
-    border: 1px solid rgba(0,212,184,0.40);
-    color: var(--cfm-accent);
-    background: transparent;
-    background-image: none !important;
-    cursor: var(--cursor-pointer);
-    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.1s;
-  }
-
-  .cfm-art-btn:hover,
-  .cfm-art-btn:focus-visible {
-    border-color: var(--cfm-accent);
-    background: var(--cfm-accent-d);
-    box-shadow: 0 0 12px rgba(0,212,184,0.22);
-    outline: none;
-  }
-
-  .cfm-art-btn:active { transform: translateY(1px); }
-
-  .cfm-art-btn--locked {
-    opacity: 0.13;
-    border-style: dashed;
-    cursor: var(--cursor-default);
-    pointer-events: none;
-  }
-
-  /* Ghost right panel */
-  .cfm-ghost {
+  /* ── Right utility panel ───────────────────────────────────────────────── */
+  .cfm-right {
     position: relative;
+    display: none;
+    flex-direction: column;
     overflow: hidden;
     background: rgba(0,212,184,0.012);
-    display: none;
+    border-left: 1px solid var(--cfm-bdr);
   }
+  @media (min-width: 700px) { .cfm-right { display: flex; } }
 
-  @media (min-width: 700px) { .cfm-ghost { display: block; } }
-
-  .cfm-ghost__grid {
+  /* Dot-grid texture */
+  .cfm-right__grid {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(0,212,184,0.11) 1px, transparent 1px);
-    background-size: 20px 20px;
-    background-position: 10px 10px;
+    background-image: radial-gradient(circle, rgba(0,212,184,0.09) 1px, transparent 1px);
+    background-size: 18px 18px;
+    background-position: 9px 9px;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .cfm-ghost::before {
+  /* CRT scanning bar */
+  .cfm-crt-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 212, 184, 0.045) 45%,
+      rgba(0, 212, 184, 0.07) 50%,
+      rgba(0, 212, 184, 0.045) 55%,
+      transparent 100%
+    );
+    animation: cfm-scan 6s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes cfm-scan {
+    0%   { top: -60px; }
+    100% { top: 100%; }
+  }
+
+  /* CRT scanline overlay */
+  .cfm-right::before {
     content: '';
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
-      to bottom, transparent 0px, transparent 4px,
-      rgba(0,0,0,0.06) 4px, rgba(0,0,0,0.06) 5px
+      to bottom, transparent 0px, transparent 3px,
+      rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
     );
     pointer-events: none;
     z-index: 1;
   }
 
-  .cfm-ghost__label {
-    position: absolute;
-    bottom: 1.2rem;
-    right: 1.2rem;
-    font-size: 0.36rem;
-    letter-spacing: 0.24em;
+  /* Shared section heading */
+  .cfm-right__hd {
+    font-size: 0.37rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--cfm-accent);
-    opacity: 0.13;
-    white-space: nowrap;
+    opacity: 0.5;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--cfm-bdr);
+    margin-bottom: 0.55rem;
+  }
+
+  /* ATTACHMENTS dock */
+  .cfm-attach {
+    position: relative;
     z-index: 2;
+    padding: 1rem 1rem 0.75rem;
+    border-bottom: 1px solid var(--cfm-bdr);
+    flex-shrink: 0;
+  }
+
+  .cfm-attach__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .cfm-att-btn {
+    display: block;
+    font-size: 0.42rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.28em 0.6em;
+    border: 1px solid rgba(0,212,184,0.3);
+    color: var(--cfm-accent);
+    text-decoration: none;
+    background-image: none !important;
+    background-size: 0 0 !important;
+    transition: background 0.15s, border-color 0.15s;
+    cursor: var(--cursor-pointer);
+  }
+  .cfm-att-btn::after { display: none !important; }
+  .cfm-att-btn:hover,
+  .cfm-att-btn:focus-visible {
+    background: rgba(0,212,184,0.1);
+    border-color: var(--cfm-accent);
+    outline: none;
+  }
+  .cfm-att-btn:focus-visible { outline: 1px solid var(--cfm-accent); outline-offset: 2px; }
+
+  .cfm-att-btn--locked {
+    opacity: 0.25;
+    border-style: dashed;
+    cursor: var(--cursor-default);
+    pointer-events: none;
+  }
+  .cfm-att-btn--locked::after {
+    content: ' · LOCKED';
+    opacity: 0.7;
+  }
+
+  /* OUTLINE */
+  .cfm-outline {
+    position: relative;
+    z-index: 2;
+    padding: 0.9rem 1rem;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .cfm-outline__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .cfm-outline__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-left: 2px solid transparent;
+    padding: 0.28em 0.55em;
+    font-size: 0.4rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cfm-muted);
+    cursor: var(--cursor-pointer);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .cfm-outline__item:hover {
+    color: var(--cfm-text);
+    background: rgba(0,212,184,0.05);
+  }
+  .cfm-outline__item:focus-visible {
+    outline: 1px solid var(--cfm-accent);
+    outline-offset: 2px;
+  }
+  .cfm-outline__item--active {
+    color: var(--cfm-accent);
+    border-left-color: var(--cfm-accent);
+    background: rgba(0,212,184,0.06);
+  }
+
+  /* Intel watermark */
+  .cfm-right__label {
+    position: relative;
+    z-index: 2;
+    padding: 0.6rem 1rem;
+    font-size: 0.34rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cfm-accent);
+    opacity: 0.38;
+    white-space: nowrap;
+    border-top: 1px solid var(--cfm-bdr);
+    flex-shrink: 0;
   }
 
   /* ── Responsive ── */

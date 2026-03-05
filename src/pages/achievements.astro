@@ -40,7 +40,8 @@ const htbPaths = [
   },
 ]
 
-const today = new Date().toISOString().slice(0, 10)
+const _d = new Date()
+const today = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1).padStart(2,'0')}/${_d.getFullYear()}`
 ---
 
 <TVLayout title="achievements">
@@ -50,11 +51,11 @@ const today = new Date().toISOString().slice(0, 10)
     <!-- ── HUD STRIP ── -->
     <div class="hud-strip" aria-label="Achievement summary">
       <div class="hud-nav">
-        <a class="hud-link" href="#ch-01">CERTS: <strong>1</strong></a>
+        <button class="hud-link" data-target="#ch-01">CERTS: <strong>1</strong></button>
         <span class="hud-sep">|</span>
-        <a class="hud-link" href="#ch-02">CTF PODIUMS: <strong>3</strong></a>
+        <button class="hud-link" data-target="#ch-02">CTF PODIUMS: <strong>3</strong></button>
         <span class="hud-sep">|</span>
-        <a class="hud-link" href="#ch-03">HTB TRACKS: <strong>3</strong></a>
+        <button class="hud-link" data-target="#ch-03">HTB TRACKS: <strong>3</strong></button>
       </div>
       <span class="hud-updated">UPDATED: <strong>{today}</strong></span>
     </div>
@@ -245,6 +246,12 @@ const today = new Date().toISOString().slice(0, 10)
   }
 
   .hud-link {
+    /* button reset */
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    /* styles */
     color: inherit;
     text-decoration: underline;
     text-decoration-style: dashed;
@@ -271,6 +278,13 @@ const today = new Date().toISOString().slice(0, 10)
     opacity: 0.3;
     font-size: 0.55rem;
     letter-spacing: 0.07em;
+  }
+
+  /* Offset scroll targets so they aren't hidden behind the sticky HUD strip */
+  #ch-01,
+  #ch-02,
+  #ch-03 {
+    scroll-margin-top: 48px;
   }
 
   /* ── Shared Block ── */
@@ -517,6 +531,8 @@ const today = new Date().toISOString().slice(0, 10)
         0 0 4px rgba(255, 204, 0, 0.3),
         inset 0 0 12px rgba(255, 204, 0, 0.15);
     }
+
+    &::after { display: none !important; }
   }
 
   /* ── CTF Timeline ── */
@@ -902,12 +918,10 @@ const today = new Date().toISOString().slice(0, 10)
       const link = e.target?.closest?.('.hud-link')
       if (!link) return
 
-      e.preventDefault()
-
       const scrollRoot = document.querySelector('.tv-content')
       if (!scrollRoot) return
 
-      const targetId = link.getAttribute('href')
+      const targetId = link.dataset.target
       if (!targetId) return
 
       const target = document.querySelector(targetId)
