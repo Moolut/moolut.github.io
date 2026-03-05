@@ -377,6 +377,7 @@ const { title, items } = Astro.props
 
   @media (max-width: 768px) {
     .terminal-section {
+      margin-bottom: 2rem;
       border-width: 1px;
     }
 
@@ -408,18 +409,21 @@ const { title, items } = Astro.props
     }
 
     .entry-header {
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: row;
+      align-items: baseline;
+      flex-wrap: wrap;
       gap: 0.3rem;
       margin-bottom: 0.4rem;
     }
 
     .entry-prompt {
       font-size: 17px;
+      flex-shrink: 0;
     }
 
     .entry-title {
-      width: 100%;
+      flex: 1;
+      min-width: 0;
       font-size: 16px;
     }
 
@@ -455,8 +459,9 @@ const { title, items } = Astro.props
     }
 
     .position-header {
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: row;
+      align-items: baseline;
+      flex-wrap: wrap;
       gap: 0.3rem;
       margin-bottom: 0.4rem;
     }
@@ -464,6 +469,7 @@ const { title, items } = Astro.props
     .position-connector {
       font-size: 14px;
       margin-right: 0.2rem;
+      flex-shrink: 0;
     }
 
     .position-title {
@@ -525,7 +531,7 @@ const { title, items } = Astro.props
 
   @media (max-width: 500px) {
     .terminal-section {
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
     }
 
     .terminal-content {

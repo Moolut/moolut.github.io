@@ -63,25 +63,40 @@ const buildTimeDate = new Intl.DateTimeFormat('en-US', {
             </ul>
           </>
         ) : (
-          <ul class="nav__breadcrumb">
-            <li>
-              <a href="/">m00lut</a>
-            </li>
-            {breadcrumb.slice(0, -1).map((b) => (
+          <>
+            <ul class="nav__breadcrumb">
               <li>
-                <a href={b.href}>{b.label}</a>
+                <a href="/">m00lut</a>
               </li>
-            ))}
-            <li
-              class="js-text-nav text-nav"
-              contenteditable
-              role="textbox"
-              aria-label="navigation by text"
-              data-original-text={currentPageLabel}
-            >
-              {currentPageLabel}
-            </li>
-          </ul>
+              {breadcrumb.slice(0, -1).map((b) => (
+                <li>
+                  <a href={b.href}>{b.label}</a>
+                </li>
+              ))}
+              <li
+                class="js-text-nav text-nav"
+                contenteditable
+                role="textbox"
+                aria-label="navigation by text"
+                data-original-text={currentPageLabel}
+              >
+                {currentPageLabel}
+              </li>
+            </ul>
+            <ul class="nav__menu">
+              {homeNav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={currentPath === item.href ? 'page' : undefined}
+                    class={currentPath === item.href ? 'nav__menu-active' : ''}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
         )
       }
     </nav>
@@ -152,7 +167,7 @@ const buildTimeDate = new Intl.DateTimeFormat('en-US', {
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 499px) {
     /* Reduce the large blank hero space so content isn't pushed too far down */
     .header {
       min-height: 180px;
@@ -166,6 +181,21 @@ const buildTimeDate = new Intl.DateTimeFormat('en-US', {
     .nav__menu li {
       margin-top: 0.6rem;
     }
+
+    /* Align date and channel switch on the same row, full width */
+    .header__info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .nav__menu-active {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
   }
 
   .text-nav {
