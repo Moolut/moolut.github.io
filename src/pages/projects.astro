@@ -1,16 +1,143 @@
 ---
 import TVLayout from '../layouts/TVLayout.astro'
-import { caseFiles } from '../modules/projects'
-import type { CaseFile, CaseFileStatus } from '../modules/projects'
 
-const today = new Date().toISOString().slice(0, 10)
+// ── Case file dataset (self-contained, no external import needed) ────────────
+const CASE_FILES = [
+  {
+    fileId: 'UI-001',
+    type: 'PROJECT',
+    status: 'COMPLETE',
+    group: 'SOFTWARE',
+    title: 'moolut.github.io — Retro CRT Portfolio',
+    year: '2026',
+    context: 'Personal',
+    problem: 'Generic portfolio templates feel identical and forgettable.',
+    approach:
+      'Built a retro CRT UI system with interactive OSD components, modular pages, and a Case Files project viewer.',
+    result:
+      'A cohesive portfolio with themed navigation, achievements dashboard, and scalable project case format.',
+    pipeline: 'Design → Implement → Polish → Iterate',
+    tools: ['Astro', 'Svelte', 'CSS', 'TypeScript'],
+    tags: ['UI', 'CRT', 'Web', 'Astro', 'Svelte'],
+    links: { github: 'https://github.com/Moolut/moolut.github.io', report: '', video: '' },
+  },
+  {
+    fileId: 'HW-002',
+    type: 'THESIS',
+    status: 'COMPLETE',
+    group: 'EMBEDDED',
+    title: 'pov_fan — POV Fan Firmware + Control Software',
+    year: '2025',
+    context: 'Thesis',
+    problem: 'Render dynamic visuals on a high-speed POV fan reliably and synchronously.',
+    approach:
+      'Developed firmware and control software coordinating LED patterns with rotation timing for stable real-time rendering.',
+    result: 'A synchronized display pipeline capable of showing images/text on custom POV fan hardware.',
+    pipeline: 'Design → Implement → Sync → Validate',
+    tools: ['C++', 'Arduino', 'Firmware'],
+    tags: ['Embedded', 'Firmware', 'POV', 'LEDs', 'C++'],
+    links: { github: 'https://github.com/Moolut/pov_fan', report: '', video: '' },
+  },
+  {
+    fileId: 'ES-003',
+    type: 'COLLECTION',
+    status: 'COMPLETE',
+    group: 'EMBEDDED',
+    title: 'embedded-systems-and-security — Course Lab Collection',
+    year: '2025',
+    context: 'Course',
+    problem: 'Need structured hands-on practice across embedded systems topics in one place.',
+    approach: 'Collected and organized course exercises and mini-projects into a single reference repo.',
+    result: 'A consolidated lab collection for quick lookup and repeatable experiments.',
+    pipeline: 'Collect → Structure → Document → Reuse',
+    tools: ['C', 'Embedded tooling'],
+    tags: ['Embedded', 'Labs', 'Systems', 'TUM', 'C'],
+    links: { github: 'https://github.com/Moolut/embedded-systems-and-security', report: '', video: '' },
+  },
+  {
+    fileId: 'SC-004',
+    type: 'COURSE PROJECT',
+    status: 'COMPLETE',
+    group: 'SECURITY',
+    title: 'smartcard-lab — ISO 7816 Communication + Security Experiments',
+    year: '2025',
+    context: 'Course',
+    problem: 'Implement smartcard communication flows and explore security considerations in practice.',
+    approach: 'Worked with ISO 7816 protocol tasks and lab experiments around side-channel/DPA countermeasures.',
+    result: 'A working smartcard communication setup with documented security experiments.',
+    pipeline: 'Implement → Test → Measure → Document',
+    tools: ['C', 'ISO7816', 'Lab tooling'],
+    tags: ['Smartcard', 'ISO7816', 'Crypto', 'Side-channel', 'C'],
+    links: { github: 'https://github.com/Moolut/smartcard-lab', report: '', video: '' },
+  },
+  {
+    fileId: 'CT-005',
+    type: 'WRITEUPS',
+    status: 'COMPLETE',
+    group: 'SECURITY',
+    title: 'iot-security-ctf — CTF Solutions & Writeups',
+    year: '2025',
+    context: 'Course',
+    problem: 'Solve practical security challenges and keep solutions reproducible for later reference.',
+    approach: 'Documented challenge solutions with clear reasoning, steps, and artifacts when applicable.',
+    result: 'A structured writeup collection covering mixed challenge categories.',
+    pipeline: 'Solve → Verify → Write → Archive',
+    tools: ['Python', 'Wireshark', 'Linux'],
+    tags: ['CTF', 'IoT', 'Crypto', 'Web', 'Writeups'],
+    links: { github: 'https://github.com/Moolut/iot-security-ctf', report: '', video: '' },
+  },
+  {
+    fileId: 'ASM-006',
+    type: 'PROJECT',
+    status: 'COMPLETE',
+    group: 'EMBEDDED',
+    title: 'flappy-bird — ARM Cortex-M0 Assembly Game',
+    year: '2025',
+    context: 'Course',
+    problem: 'Build a complete game loop on constrained hardware using low-level code.',
+    approach: 'Implemented a Flappy Bird clone in ARM Cortex-M0 assembly including timing, input, and rendering logic.',
+    result: 'A working embedded game demonstrating low-level control and constraints-aware design.',
+    pipeline: 'Write → Assemble → Link → Debug',
+    tools: ['ARM ASM', 'GDB'],
+    tags: ['Assembly', 'ARM', 'Embedded', 'Low-level', 'Game'],
+    links: { github: 'https://github.com/Moolut/flappy-bird', report: '', video: '' },
+  },
+  {
+    fileId: 'CPP-007',
+    type: 'PROJECT',
+    status: 'COMPLETE',
+    group: 'SOFTWARE',
+    title: 'Logic-Simulator — C++ / SFML Circuit Simulator',
+    year: '2025',
+    context: 'Course',
+    problem: 'Interactively simulate logic circuits with a visual interface.',
+    approach: 'Built a graphical simulator in C++ using SFML with drag-and-simulate interactions.',
+    result: 'A usable sandbox for experimenting with logic gate networks and circuit behavior.',
+    pipeline: 'Design → Implement → Simulate → Refine',
+    tools: ['C++', 'SFML'],
+    tags: ['C++', 'SFML', 'Simulation', 'GUI', 'OOP'],
+    links: { github: 'https://github.com/Moolut/Logic-Simulator', report: '', video: '' },
+  },
+]
 
+// ── Derived constants ────────────────────────────────────────────────────────
+const today   = new Date().toISOString().slice(0, 10)
 const MAX_TAGS = 5
+const GROUPS   = ['ALL', 'SECURITY', 'EMBEDDED', 'SOFTWARE'] as const
 
-const STATUS_META: Record<CaseFileStatus, { color: string }> = {
+type Group  = typeof GROUPS[number]
+type Status = 'COMPLETE' | 'IN PROGRESS' | 'ARCHIVED'
+
+const STATUS_META: Record<Status, { color: string }> = {
   'COMPLETE':    { color: '#4dff91' },
   'IN PROGRESS': { color: '#f0d030' },
   'ARCHIVED':    { color: '#ff5050' },
+}
+
+function groupCount(g: Group) {
+  return g === 'ALL'
+    ? CASE_FILES.length
+    : CASE_FILES.filter(f => f.group === g).length
 }
 
 function overflowCount(tags: string[]) {
@@ -21,44 +148,64 @@ function overflowCount(tags: string[]) {
 <TVLayout title="projects">
   <article class="cf-page">
 
-    <!-- ── Page header ── -->
+    {/* ── Serialise data for client JS (use a plain div — Astro strips script[type=*] from templates) ── */}
+    <div id="cf-data" style="display:none" aria-hidden="true" set:text={JSON.stringify(CASE_FILES)}></div>
+
+    {/* ── Page header ── */}
     <header class="cf-header">
       <div>
         <h1 class="cf-title">CASE FILES <span class="cf-title__slash">//</span> PROJECTS</h1>
         <p class="cf-subtitle">Documented work · structured findings · evidence on record.</p>
       </div>
       <div class="cf-hud">
-        <span>FILES: <strong>{caseFiles.length}</strong></span>
+        <span>FILES: <strong>{CASE_FILES.length}</strong></span>
         <span class="cf-hud__sep">|</span>
         <span>UPDATED: <strong>{today}</strong></span>
       </div>
     </header>
 
-    <!-- ── Card grid ── -->
+    {/* ── Folder-tab filter bar ── */}
+    <nav class="cf-filter" aria-label="Filter by group">
+      {GROUPS.map((g) => (
+        <button
+          class={`cf-filter__tab${g === 'ALL' ? ' cf-filter__tab--active' : ''}`}
+          data-filter={g}
+          aria-pressed={g === 'ALL' ? 'true' : 'false'}
+        >
+          {g}
+          <span class="cf-filter__count">({groupCount(g)})</span>
+        </button>
+      ))}
+    </nav>
+
+    {/* ── Card grid ── */}
     <ul class="cf-grid" role="list" aria-label="Project case files">
-      {caseFiles.map((f: CaseFile, i: number) => {
-        const sm      = STATUS_META[f.status]
+      {CASE_FILES.map((f, i) => {
+        const sm      = STATUS_META[f.status as Status]
         const visible = f.tags.slice(0, MAX_TAGS)
         const extra   = overflowCount(f.tags)
         const seq     = String(i + 1).padStart(2, '0')
 
         return (
-          <li class="cf-card" tabindex="0" data-index={i}>
-
+          <li
+            class="cf-card"
+            tabindex="0"
+            data-group={f.group}
+            data-slug={f.fileId}
+          >
             {/* ① Folder tab */}
             <div class="cf-tab" aria-hidden="true">
               <span class="cf-tab__id">{f.fileId}</span>
               <span class="cf-tab__type">{f.type}</span>
             </div>
 
-            {/* ② Paper-stack layers (decorative) */}
+            {/* ② Paper-stack layers */}
             <div class="cf-layer cf-layer--1" aria-hidden="true"></div>
             <div class="cf-layer cf-layer--2" aria-hidden="true"></div>
 
             {/* ③ Card body */}
             <div class="cf-body">
-
-              {/* top bar: seq + status stamp */}
+              {/* Top bar */}
               <div class="cf-body__topbar" aria-hidden="true">
                 <span class="cf-seq">{seq}</span>
                 <span
@@ -68,15 +215,15 @@ function overflowCount(tags: string[]) {
                 >{f.status}</span>
               </div>
 
-              {/* title */}
+              {/* Title */}
               <h2 class="cf-title-card">{f.title}</h2>
 
-              {/* context · year */}
+              {/* Meta */}
               <p class="cf-meta">
                 {f.context}<span class="cf-meta__sep" aria-hidden="true"> · </span>{f.year}
               </p>
 
-              {/* PROBLEM / RESULT (collapsed); APPROACH lives in drawer) */}
+              {/* PROBLEM + RESULT — 2-line clamp, expands on hover */}
               <dl class="cf-fields">
                 <div class="cf-field">
                   <dt>PROBLEM</dt>
@@ -94,44 +241,24 @@ function overflowCount(tags: string[]) {
                   <span class="cf-chip" role="listitem">{t}</span>
                 ))}
                 {extra > 0 && (
-                  <span class="cf-chip cf-chip--more" role="listitem">+{extra}</span>
+                  <div class="cf-overflow-wrap">
+                    <span class="cf-chip cf-chip--more" role="listitem" tabindex="0">+{extra}</span>
+                    <div class="cf-overflow-tip" role="tooltip">
+                      {f.tags.slice(MAX_TAGS).map((t: string) => (
+                        <span class="cf-chip">{t}</span>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
 
-              {/* Mobile accordion toggle (hidden on desktop pointer:fine) */}
-              <button
-                class="cf-dtoggle"
-                aria-expanded="false"
-                aria-controls={`cf-drawer-${i}`}
-              >
-                DETAILS <span class="cf-dtoggle__arrow" aria-hidden="true">▾</span>
-              </button>
-
-              {/* Hover/tap drawer — APPROACH + PIPELINE + TOOLS */}
-              <div
-                class="cf-drawer"
-                id={`cf-drawer-${i}`}
-                role="region"
-                aria-label="Approach, pipeline and tools"
-                hidden
-              >
-                <div class="cf-drawer__row">
-                  <span class="cf-drawer__key">APPROACH</span>
-                  <span class="cf-drawer__val">{f.approach}</span>
-                </div>
-                <div class="cf-drawer__row">
-                  <span class="cf-drawer__key">PIPELINE</span>
-                  <span class="cf-drawer__val">{f.pipeline}</span>
-                </div>
-                <div class="cf-drawer__row">
-                  <span class="cf-drawer__key">TOOLS</span>
-                  <span class="cf-drawer__val">{f.tools.join(' · ')}</span>
-                </div>
-              </div>
-
-              {/* Action buttons */}
+              {/* CTA row — always visible */}
               <div class="cf-actions">
-                <button class="cf-btn cf-btn--primary" data-read-case={f.slug}>READ CASE →</button>
+                <button
+                  class="cf-btn cf-btn--primary"
+                  data-read-case={f.fileId}
+                  aria-label={`Open case file: ${f.title}`}
+                >READ CASE →</button>
                 {f.links.github
                   ? <a class="cf-btn" href={f.links.github} target="_blank" rel="noopener noreferrer">GITHUB</a>
                   : <span class="cf-btn cf-btn--locked" aria-disabled="true">GITHUB</span>
@@ -145,16 +272,18 @@ function overflowCount(tags: string[]) {
                   : <span class="cf-btn cf-btn--locked" aria-disabled="true">VIDEO</span>
                 }
               </div>
-
             </div>
           </li>
         )
       })}
     </ul>
 
+    {/* ── Inline placeholder when filter yields nothing ── */}
+    <p class="cf-empty" hidden aria-live="polite">NO FILES MATCH THIS FILTER.</p>
+
   </article>
 
-  {/* ── Case file modal (pre-rendered panels, shown by JS) ── */}
+  {/* ── Modal overlay (one panel per case, all SSR'd) ── */}
   <div
     id="cf-modal"
     class="cfm-overlay"
@@ -163,24 +292,27 @@ function overflowCount(tags: string[]) {
     aria-labelledby=""
     hidden
   >
-    {/* Dim scrim (click to close) */}
+    {/* Dim scrim */}
     <div class="cfm-scrim" aria-hidden="true"></div>
 
-    {/* One panel per case, JS shows the right one */}
-    {caseFiles.map((f: CaseFile) => {
-      const sm = STATUS_META[f.status]
+    {CASE_FILES.map((f) => {
+      const sm = STATUS_META[f.status as Status]
       return (
-        <div class="cfm-panel" data-modal-slug={f.slug} hidden>
+        <div class="cfm-panel" data-modal-id={f.fileId} hidden>
 
-          {/* Close button */}
+          {/* Close */}
           <button class="cfm-close" aria-label="Close case file">✕</button>
+
+          {/* Prev / Next */}
+          <button class="cfm-nav cfm-nav--prev" aria-label="Previous case">◄</button>
+          <button class="cfm-nav cfm-nav--next" aria-label="Next case">►</button>
 
           <div class="cfm-inner">
 
-            {/* ── Left: dossier content ── */}
+            {/* ── Left: dossier ── */}
             <div class="cfm-left">
 
-              {/* Folder-tab header */}
+              {/* Header tab-bar */}
               <div class="cfm-tabrow" aria-hidden="true">
                 <div class="cfm-tab">
                   <span class="cfm-tab__id">{f.fileId}</span>
@@ -195,7 +327,7 @@ function overflowCount(tags: string[]) {
 
               {/* Scrollable body */}
               <div class="cfm-body">
-                <h2 class="cfm-title" id={`cfm-title-${f.slug}`}>{f.title}</h2>
+                <h2 class="cfm-title" id={`cfm-title-${f.fileId}`}>{f.title}</h2>
 
                 <p class="cfm-meta">
                   {f.context}<span aria-hidden="true"> · </span>{f.year}
@@ -261,7 +393,7 @@ function overflowCount(tags: string[]) {
               </div>
             </div>
 
-            {/* ── Right: ghost panel (decorative) ── */}
+            {/* ── Right: ghost panel ── */}
             <div class="cfm-ghost" aria-hidden="true">
               <div class="cfm-ghost__grid"></div>
               <div class="cfm-ghost__label">INTEL · {f.fileId}</div>
@@ -273,72 +405,154 @@ function overflowCount(tags: string[]) {
     })}
   </div>
 
-</TVLayout>
 
-{/* ── Scripts ── */}
+{/* ══════════════════════════════════════════════════════════════════════
+    Client-side logic: filter tabs + modal (open/close/nav/URL sync)
+══════════════════════════════════════════════════════════════════════ */}
 <script>
-// ────────────────────────────────────────────────
-//  Drawer accordion (mobile)
-// ────────────────────────────────────────────────
-function initDrawers() {
-  const grid = document.querySelector('.cf-grid')
-  if (!grid) return
+// ─── Data ───────────────────────────────────────────────────────────────────
+const _dataEl = document.getElementById('cf-data')
+const ALL_CASES: { fileId: string; group: string; [k: string]: unknown }[] =
+  _dataEl ? JSON.parse(_dataEl.textContent || _dataEl.getAttribute('data-json') || '[]') : []
 
-  grid.addEventListener('click', (e: Event) => {
-    const btn = (e.target as Element).closest<HTMLButtonElement>('.cf-dtoggle')
-    if (!btn) return
-    const card   = btn.closest<HTMLElement>('.cf-card')!
-    const drawer = card.querySelector<HTMLElement>('.cf-drawer')!
-    const open   = btn.getAttribute('aria-expanded') === 'true'
+// ─── State ──────────────────────────────────────────────────────────────────
+let activeGroup   = 'ALL'     // current folder-tab filter
+let activeFileId  = ''        // currently open modal case id
+let filteredIds:  string[] = [] // ordered file ids in current filter
+let returnFocus:  HTMLElement | null = null // button that opened modal
 
-    grid.querySelectorAll<HTMLElement>('.cf-card').forEach(c => {
-      if (c === card) return
-      c.querySelector<HTMLButtonElement>('.cf-dtoggle')?.setAttribute('aria-expanded', 'false')
-      const d = c.querySelector<HTMLElement>('.cf-drawer')
-      if (d) d.hidden = true
-    })
+const URL_PARAM = 'case'
 
-    btn.setAttribute('aria-expanded', String(!open))
-    drawer.hidden = open
-  })
-
-  grid.addEventListener('keydown', (e: Event) => {
-    const ke = e as KeyboardEvent
-    if (ke.key !== 'Enter' && ke.key !== ' ') return
-    if ((ke.target as Element).closest('a, button')) return
-    const card = (ke.target as Element).closest('.cf-card')
-    if (!card) return
-    ke.preventDefault()
-    card.querySelector<HTMLButtonElement>('.cf-dtoggle')?.click()
-  })
+// ─── Helpers ────────────────────────────────────────────────────────────────
+function getModal()  { return document.getElementById('cf-modal') as HTMLElement }
+function getPanel(id: string) {
+  return getModal().querySelector<HTMLElement>(`[data-modal-id="${id}"]`)!
 }
-
-// ────────────────────────────────────────────────
-//  Case file modal
-// ────────────────────────────────────────────────
-const PARAM = 'case'
-
-let _modal:   HTMLElement | null = null
-let _panel:   HTMLElement | null = null
-let _trigger: HTMLElement | null = null
-
-function getModal() {
-  return _modal ?? (_modal = document.getElementById('cf-modal') as HTMLElement | null)
+function allCards()  {
+  return Array.from(document.querySelectorAll<HTMLElement>('.cf-card'))
+}
+function allPanels() {
+  return Array.from(document.querySelectorAll<HTMLElement>('.cfm-panel'))
 }
 
 function getFocusable(root: HTMLElement): HTMLElement[] {
   return Array.from(
     root.querySelectorAll<HTMLElement>(
-      'a[href],button:not([disabled]),input,textarea,select,[tabindex]:not([tabindex="-1"])'
+      'a[href],button:not([disabled]),input,textarea,[tabindex]:not([tabindex="-1"])'
     )
-  ).filter(el => !el.closest('[hidden]'))
+  ).filter(el => !el.hidden && !el.closest('[hidden]'))
 }
 
-function trapFocus(e: KeyboardEvent) {
+// ─── Filter tab logic ────────────────────────────────────────────────────────
+function applyFilter(group: string) {
+  activeGroup = group
+
+  // Update tab buttons
+  document.querySelectorAll<HTMLElement>('.cf-filter__tab').forEach(btn => {
+    const active = btn.dataset.filter === group
+    btn.classList.toggle('cf-filter__tab--active', active)
+    btn.setAttribute('aria-pressed', String(active))
+  })
+
+  // Show/hide cards
+  let visible = 0
+  allCards().forEach(card => {
+    const match = group === 'ALL' || card.dataset.group === group
+    card.hidden = !match
+    if (match) visible++
+  })
+
+  // Empty state
+  const empty = document.querySelector<HTMLElement>('.cf-empty')!
+  empty.hidden = visible > 0
+
+  // Rebuild filtered id list
+  filteredIds = (group === 'ALL' ? ALL_CASES : ALL_CASES.filter(f => f.group === group))
+    .map(f => f.fileId)
+}
+
+// ─── Modal open / close ──────────────────────────────────────────────────────
+function openModal(fileId: string, trigger?: HTMLElement | null) {
   const modal = getModal()
-  if (!modal || e.key !== 'Tab') return
-  const items = getFocusable(modal)
+
+  // Hide any open panel
+  allPanels().forEach(p => p.setAttribute('hidden', ''))
+
+  const panel = getPanel(fileId)
+  if (!panel) return
+
+  returnFocus  = trigger ?? null
+  activeFileId = fileId
+
+  panel.removeAttribute('hidden')
+  modal.setAttribute('aria-labelledby', `cfm-title-${fileId}`)
+  modal.removeAttribute('hidden')
+
+  // Update prev/next button visibility
+  syncNavButtons()
+
+  document.body.style.overflow = 'hidden'
+  document.addEventListener('keydown', onModalKeydown)
+
+  requestAnimationFrame(() => {
+    panel.querySelector<HTMLElement>('.cfm-close')?.focus()
+  })
+}
+
+function closeModal(updateUrl = true) {
+  const modal = getModal()
+  allPanels().forEach(p => p.setAttribute('hidden', ''))
+  modal.setAttribute('hidden', '')
+  activeFileId = ''
+
+  document.body.style.overflow = ''
+  document.removeEventListener('keydown', onModalKeydown)
+
+  returnFocus?.focus()
+  returnFocus = null
+
+  if (updateUrl) {
+    const url = new URL(location.href)
+    url.searchParams.delete(URL_PARAM)
+    history.pushState({}, '', url)
+  }
+}
+
+function syncNavButtons() {
+  const panel = getPanel(activeFileId)
+  if (!panel) return
+  const idx  = filteredIds.indexOf(activeFileId)
+  const prev = panel.querySelector<HTMLButtonElement>('.cfm-nav--prev')!
+  const next = panel.querySelector<HTMLButtonElement>('.cfm-nav--next')!
+  prev.disabled = idx <= 0
+  next.disabled = idx >= filteredIds.length - 1
+}
+
+function navigateModal(dir: 1 | -1) {
+  const idx  = filteredIds.indexOf(activeFileId)
+  const next = filteredIds[idx + dir]
+  if (!next) return
+  allPanels().forEach(p => p.setAttribute('hidden', ''))
+  activeFileId = next
+  const nextPanel = getPanel(next)
+  nextPanel.removeAttribute('hidden')
+  getModal().setAttribute('aria-labelledby', `cfm-title-${next}`)
+  syncNavButtons()
+  nextPanel.querySelector<HTMLElement>('.cfm-close')?.focus()
+  const url = new URL(location.href)
+  url.searchParams.set(URL_PARAM, next)
+  history.replaceState({ case: next }, '', url)
+}
+
+// ─── Focus trap + keyboard ────────────────────────────────────────────────────
+function trapFocus(e: KeyboardEvent) {
+  const modal  = getModal()
+  if (modal.hidden) return
+  const panel  = getPanel(activeFileId)
+  if (!panel) return
+  const items  = getFocusable(panel)
   if (!items.length) return
+  if (e.key !== 'Tab') return
   const first = items[0]
   const last  = items[items.length - 1]
   if (e.shiftKey) {
@@ -348,165 +562,120 @@ function trapFocus(e: KeyboardEvent) {
   }
 }
 
-function onKeydown(e: KeyboardEvent) {
-  if (e.key === 'Escape') closeModal()
+function onModalKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') { e.preventDefault(); closeModal() }
   else trapFocus(e)
 }
 
-function openModal(slug: string, trigger?: HTMLElement | null) {
-  const modal = getModal()
-  if (!modal) return
-
-  // hide any currently active panel
-  _panel?.setAttribute('hidden', '')
-
-  const panel = modal.querySelector<HTMLElement>(`[data-modal-slug="${slug}"]`)
-  if (!panel) return
-
-  _trigger = trigger ?? null
-  _panel   = panel
-
-  panel.removeAttribute('hidden')
-  modal.setAttribute('aria-labelledby', `cfm-title-${slug}`)
-  modal.removeAttribute('hidden')
-
-  // lock body scroll
-  document.body.style.overflow = 'hidden'
-
-  // focus the close button
-  requestAnimationFrame(() => {
-    panel.querySelector<HTMLElement>('.cfm-close')?.focus()
-  })
-
-  document.addEventListener('keydown', onKeydown)
-}
-
-function closeModal(pushState = true) {
-  const modal = getModal()
-  if (!modal) return
-
-  _panel?.setAttribute('hidden', '')
-  _panel = null
-  modal.setAttribute('hidden', '')
-
-  document.body.style.overflow = ''
-  document.removeEventListener('keydown', onKeydown)
-
-  _trigger?.focus()
-  _trigger = null
-
-  if (pushState) {
-    const url = new URL(location.href)
-    url.searchParams.delete(PARAM)
-    history.pushState({}, '', url)
-  }
-}
-
+// ─── URL sync ────────────────────────────────────────────────────────────────
 function syncFromURL() {
-  const modal = getModal()
-  if (!modal) return
-  const slug = new URL(location.href).searchParams.get(PARAM)
+  const slug = new URL(location.href).searchParams.get(URL_PARAM)
   if (slug) {
+    // rebuild filteredIds with current group so nav works
+    applyFilter(activeGroup)
     openModal(slug)
-  } else if (!modal.hidden) {
+  } else if (!getModal().hidden) {
     closeModal(false)
   }
 }
 
-function initModal() {
-  const modal = getModal()
-  if (!modal) return
+// ─── Init ────────────────────────────────────────────────────────────────────
+function init() {
+  // Initial filter
+  applyFilter('ALL')
 
-  // Wire up all READ CASE buttons
-  document.querySelectorAll<HTMLElement>('[data-read-case]').forEach(btn => {
-    // prevent duplicate listeners on re-init
-    if ((btn as any).__cfModalBound) return
-    ;(btn as any).__cfModalBound = true
+  // ── Filter tabs ──────────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('.cf-filter__tab').forEach(btn => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter!))
+  })
 
+  // ── READ CASE buttons ────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('[data-read-case]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const slug = (btn as HTMLButtonElement).dataset.readCase!
-      const url  = new URL(location.href)
-      url.searchParams.set(PARAM, slug)
-      history.pushState({ case: slug }, '', url)
-      openModal(slug, btn)
+      const id  = btn.dataset.readCase!
+      const url = new URL(location.href)
+      url.searchParams.set(URL_PARAM, id)
+      history.pushState({ case: id }, '', url)
+      openModal(id, btn)
     })
   })
 
-  // Scrim click → close
-  const scrim = modal.querySelector('.cfm-scrim')
-  if (scrim && !(scrim as any).__cfModalBound) {
-    ;(scrim as any).__cfModalBound = true
-    scrim.addEventListener('click', () => closeModal())
-  }
-
-  // All close buttons
-  modal.querySelectorAll<HTMLElement>('.cfm-close').forEach(btn => {
-    if ((btn as any).__cfModalBound) return
-    ;(btn as any).__cfModalBound = true
+  // ── Modal close buttons ──────────────────────────────────────────────────
+  getModal().querySelectorAll<HTMLButtonElement>('.cfm-close').forEach(btn => {
     btn.addEventListener('click', () => closeModal())
   })
 
-  // Back/forward browser nav
+  // ── Modal scrim (click outside) ──────────────────────────────────────────
+  getModal().querySelector('.cfm-scrim')!.addEventListener('click', () => closeModal())
+
+  // ── Modal nav buttons ────────────────────────────────────────────────────
+  getModal().querySelectorAll<HTMLButtonElement>('.cfm-nav').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navigateModal(btn.classList.contains('cfm-nav--next') ? 1 : -1)
+    })
+  })
+
+  // ── Card keyboard (Enter/Space opens modal) ──────────────────────────────
+  document.querySelector('.cf-grid')!.addEventListener('keydown', (e) => {
+    const ke = e as KeyboardEvent
+    if (ke.key !== 'Enter' && ke.key !== ' ') return
+    if ((ke.target as Element).closest('a, button')) return
+    const card = (ke.target as Element).closest<HTMLElement>('.cf-card')
+    if (!card) return
+    ke.preventDefault()
+    card.querySelector<HTMLButtonElement>('[data-read-case]')?.click()
+  })
+
+  // ── Browser back/forward ─────────────────────────────────────────────────
   if (!(window as any).__cfPopstateBound) {
     ;(window as any).__cfPopstateBound = true
-    window.addEventListener('popstate', syncFromURL)
+    window.addEventListener('popstate', () => syncFromURL())
   }
 
-  // Auto-open on page load if ?case=slug present
+  // Auto-open if URL already has ?case=
   syncFromURL()
 }
 
-initDrawers()
-initModal()
+init()
 document.addEventListener('astro:page-load', () => {
-  // Reset bound flags so listeners are re-attached after navigation
-  document.querySelectorAll('[data-read-case]').forEach(b => { delete (b as any).__cfModalBound })
-  const m = document.getElementById('cf-modal')
-  if (m) {
-    delete (m.querySelector('.cfm-scrim') as any)?.__cfModalBound
-    m.querySelectorAll('.cfm-close').forEach(b => { delete (b as any).__cfModalBound })
-  }
-  initDrawers()
-  initModal()
+  ;(window as any).__cfPopstateBound = false
+  init()
 })
 </script>
 
+</TVLayout>
+
 <style>
-  /* ════════════════════════════════════════════
-     Design tokens (page-scoped)
-  ════════════════════════════════════════════ */
+  /* Box-sizing reset: padding/border never add to widths */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* ═══════════════════════════════════════════════
+     Design tokens
+  ═══════════════════════════════════════════════ */
   .cf-page {
-    /* Teal/cyan = ONLY interactive accent */
     --cf-accent:   #00d4b8;
     --cf-accent-d: rgba(0, 212, 184, 0.10);
     --cf-accent-b: rgba(0, 212, 184, 0.25);
-
-    /* Status colours — stamps only */
-    --cf-ok:     #4dff91;   /* COMPLETE    */
-    --cf-warn:   #f0d030;   /* IN PROGRESS */
-    --cf-danger: #ff5050;   /* ARCHIVED    */
-
-    /* Surfaces */
-    --cf-panel: rgba(10, 16, 14, 0.97);
-    --cf-text:  rgba(215, 232, 224, 0.92);
-    --cf-muted: rgba(215, 232, 224, 0.45);
-    --cf-bdr:   rgba(0, 212, 184, 0.14);
-
+    --cf-panel:    rgba(10, 16, 14, 0.97);
+    --cf-text:     rgba(215, 232, 224, 0.92);
+    --cf-muted:    rgba(215, 232, 224, 0.45);
+    --cf-bdr:      rgba(0, 212, 184, 0.14);
     font-family: var(--font-primary);
     color: var(--cf-text);
-    max-width: 100%;
+    width: 100%;
+    min-width: 0;
   }
 
-  /* ════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════
      Page header
-  ════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════ */
   .cf-header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.8rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--cf-bdr);
   }
@@ -520,10 +689,7 @@ document.addEventListener('astro:page-load', () => {
     margin: 0 0 0.3rem;
   }
 
-  .cf-title__slash {
-    color: var(--cf-accent);
-    opacity: 0.4;
-  }
+  .cf-title__slash { color: var(--cf-accent); opacity: 0.4; }
 
   .cf-subtitle {
     font-size: 0.58rem;
@@ -547,42 +713,122 @@ document.addEventListener('astro:page-load', () => {
 
   .cf-hud__sep { opacity: 0.3; }
 
-  /* ════════════════════════════════════════════
-     Grid
-  ════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════════
+     Folder-tab filter bar
+  ═══════════════════════════════════════════════ */
+  .cf-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .cf-filter__tab {
+    position: relative;
+    font-family: var(--font-primary);
+    font-size: 0.45rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cf-muted);
+    background: transparent;
+    border: 1px solid rgba(0, 212, 184, 0.14);
+    border-bottom: 2px solid transparent;
+    padding: 0.28em 0.75em 0.26em;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
+    transition: background 0.15s, border-color 0.15s, color 0.15s, border-bottom-color 0.15s;
+    background-image: none !important;
+  }
+
+  .cf-filter__tab:hover,
+  .cf-filter__tab:focus-visible {
+    border-color: var(--cf-accent-b);
+    border-bottom-color: rgba(0, 212, 184, 0.35);
+    color: var(--cf-text);
+    background: rgba(0, 212, 184, 0.05);
+    outline: none;
+  }
+
+  /* Teal underline + fill on active */
+  .cf-filter__tab--active {
+    background: rgba(0, 212, 184, 0.10);
+    border-color: var(--cf-accent-b);
+    border-bottom-color: var(--cf-accent);
+    color: var(--cf-accent);
+    box-shadow: 0 2px 10px rgba(0,212,184,0.12), inset 0 -1px 0 var(--cf-accent);
+  }
+
+  /* Cursor dot indicator on active */
+  .cf-filter__tab--active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--cf-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--cf-accent);
+  }
+
+  .cf-filter__count {
+    opacity: 0.55;
+    margin-left: 0.25em;
+  }
+
+  /* ═══════════════════════════════════════════════
+     Card grid
+  ═══════════════════════════════════════════════ */
   .cf-grid {
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: 1fr;
-    /* Extra row gap accommodates the stacked layers visually */
+    /* Fixed 2-column layout; single column on narrow screens */
+    grid-template-columns: repeat(2, 1fr);
     gap: 3rem 2rem;
+    width: 100%;
+    min-width: 0;
+    align-items: start; /* rows don't stretch — each card grows to its own height */
   }
 
-  @media (min-width: 700px) {
-    .cf-grid { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 600px) {
+    .cf-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
-  /* ════════════════════════════════════════════
+  .cf-card[hidden] { display: none !important; }
+
+  .cf-empty {
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cf-muted);
+    opacity: 0.5;
+    margin-top: 1rem;
+  }
+
+  /* ═══════════════════════════════════════════════
      Card wrapper
-  ════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════ */
   .cf-card {
     position: relative;
     display: flex;
     flex-direction: column;
     outline: none;
+    cursor: pointer;
+    min-width: 0;        /* prevents blowout in the grid cell */
+    overflow-x: clip;    /* clips the 100vw ::after line without creating a scroll container */
   }
 
-  .cf-card:focus-visible {
-    outline: 2px solid var(--cf-accent);
-    outline-offset: 4px;
-  }
+  .cf-card:focus-visible { outline: 2px solid var(--cf-accent); outline-offset: 4px; }
 
-  /* ── ① Folder tab ── */
+  /* ── Folder tab ── */
   .cf-tab {
     position: relative;
-    align-self: flex-start;       /* width = content, not full card */
+    align-self: flex-start;
     display: flex;
     align-items: baseline;
     gap: 0.55rem;
@@ -591,12 +837,10 @@ document.addEventListener('astro:page-load', () => {
     border: 1px solid var(--cf-bdr);
     border-bottom: none;
     z-index: 2;
-    /* notched top-right corner like a real folder tab */
     clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
     transition: background 0.18s, border-color 0.18s;
   }
 
-  /* Horizontal rule completing the folder top edge to the right of the tab */
   .cf-tab::after {
     content: '';
     position: absolute;
@@ -608,39 +852,24 @@ document.addEventListener('astro:page-load', () => {
     pointer-events: none;
   }
 
-  .cf-tab__id {
-    font-size: 0.57rem;
-    letter-spacing: 0.18em;
-    color: var(--cf-accent);
-    font-weight: bold;
-  }
+  .cf-tab__id   { font-size: 0.57rem; letter-spacing: 0.18em; color: var(--cf-accent); font-weight: bold; }
+  .cf-tab__type { font-size: 0.41rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cf-accent); opacity: 0.4; }
 
-  .cf-tab__type {
-    font-size: 0.41rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--cf-accent);
-    opacity: 0.4;
-  }
-
-  /* ── ② Paper-stack layers ── */
+  /* ── Paper-stack layers ── */
   .cf-layer {
     position: absolute;
-    /* offset top by approx tab height so layers only sit behind the body */
     top: calc(1.6rem + 1px);
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     border: 1px solid var(--cf-bdr);
     background: rgba(0, 212, 184, 0.03);
     pointer-events: none;
     z-index: 0;
   }
 
-  .cf-layer--1 { transform: translate(3px, 4px);  opacity: 0.6; }
-  .cf-layer--2 { transform: translate(6px, 8px);  opacity: 0.3; }
+  .cf-layer--1 { transform: translate(3px, 4px); opacity: 0.6; }
+  .cf-layer--2 { transform: translate(6px, 8px); opacity: 0.3; }
 
-  /* ── ③ Card body ── */
+  /* ── Card body ── */
   .cf-body {
     position: relative;
     z-index: 1;
@@ -650,9 +879,10 @@ document.addEventListener('astro:page-load', () => {
     gap: 0.65rem;
     background: var(--cf-panel);
     border: 1px solid var(--cf-bdr);
-    border-top: none;   /* tab's ::after line is the top border */
+    border-top: none;
     padding: 1rem 1.1rem;
     transition: border-color 0.2s, box-shadow 0.2s;
+    /* no overflow:hidden — let card grow downward freely */
   }
 
   /* Scanline wash */
@@ -662,16 +892,23 @@ document.addEventListener('astro:page-load', () => {
     inset: 0;
     background: repeating-linear-gradient(
       to bottom,
-      transparent 0px,
-      transparent 3px,
-      rgba(0, 0, 0, 0.05) 3px,
-      rgba(0, 0, 0, 0.05) 4px
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px
     );
     pointer-events: none;
     z-index: 0;
   }
 
   .cf-body > * { position: relative; z-index: 1; }
+
+  /* ── Tuning flicker (plays once on hover-in) ── */
+  @keyframes cf-tune {
+    0%   { filter: brightness(1)    contrast(1);    }
+    22%  { filter: brightness(1.10) contrast(1.06); transform: translateX(0.5px);  }
+    55%  { filter: brightness(0.93) contrast(0.97); transform: translateX(-0.5px); }
+    82%  { filter: brightness(1.04) contrast(1.02); transform: translateX(0);      }
+    100% { filter: brightness(1)    contrast(1);    transform: translateX(0);      }
+  }
 
   /* Card hover / focus-within */
   .cf-card:hover .cf-tab,
@@ -681,33 +918,30 @@ document.addEventListener('astro:page-load', () => {
   }
 
   .cf-card:hover .cf-tab::after,
-  .cf-card:focus-within .cf-tab::after {
-    background: var(--cf-accent-b);
-  }
+  .cf-card:focus-within .cf-tab::after { background: var(--cf-accent-b); }
 
   .cf-card:hover .cf-body,
   .cf-card:focus-within .cf-body {
-    border-color: var(--cf-accent-b);
+    border-color: rgba(0, 212, 184, 0.38);
     box-shadow:
-      0 0 22px rgba(0, 212, 184, 0.07),
-      inset 0 0 40px rgba(0, 212, 184, 0.025);
+      0 0 0 1px rgba(0, 212, 184, 0.18),
+      0 0 32px rgba(0, 212, 184, 0.11),
+      inset 0 0 50px rgba(0, 212, 184, 0.035);
   }
 
-  /* ── Top bar ── */
-  .cf-body__topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* Brief tune flicker fires only on pointer hover (not keyboard focus) */
+  @media (hover: hover) {
+    .cf-card:hover .cf-body {
+      animation: cf-tune 120ms ease both;
+    }
   }
 
-  .cf-seq {
-    font-size: 0.4rem;
-    letter-spacing: 0.2em;
-    color: var(--cf-accent);
-    opacity: 0.28;
-  }
+  /* Top bar */
+  .cf-body__topbar { display: flex; align-items: center; justify-content: space-between; }
 
-  /* ── Status stamp ── */
+  .cf-seq { font-size: 0.4rem; letter-spacing: 0.2em; color: var(--cf-accent); opacity: 0.28; }
+
+  /* Status stamp */
   .cf-stamp {
     display: inline-block;
     font-size: 0.44rem;
@@ -717,11 +951,11 @@ document.addEventListener('astro:page-load', () => {
     padding: 0.14em 0.55em;
     transform: rotate(-2deg);
     filter: drop-shadow(0 0 3px currentColor);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
     opacity: 0.88;
   }
 
-  /* ── Title ── */
+  /* Title – always 2 lines high for consistent rhythm */
   .cf-title-card {
     font-size: clamp(13px, 1.7vw, 16px);
     font-weight: bold;
@@ -730,32 +964,19 @@ document.addEventListener('astro:page-load', () => {
     color: var(--cf-text);
     line-height: 1.45;
     margin: 0;
-    /* max 2 lines */
+    min-height: calc(1.45em * 2);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  /* ── Context · year ── */
-  .cf-meta {
-    font-size: 0.5rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--cf-muted);
-    margin: 0;
-    line-height: 1.4;
-  }
-
+  /* Meta */
+  .cf-meta { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cf-muted); margin: 0; line-height: 1.4; }
   .cf-meta__sep { opacity: 0.4; }
 
-  /* ── PROBLEM / APPROACH / RESULT ── */
-  .cf-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 0.24rem;
-    margin: 0;
-  }
+  /* Fields */
+  .cf-fields { display: flex; flex-direction: column; gap: 0.24rem; margin: 0; }
 
   .cf-field {
     display: grid;
@@ -781,165 +1002,96 @@ document.addEventListener('astro:page-load', () => {
     color: var(--cf-text);
     margin: 0;
     min-width: 0;
+    /* 2-line clamp at rest */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    max-height: calc(1.6em * 2 + 0.1em);
+    transition: max-height 0.35s ease;
   }
 
-  /* ── Tags ── */
-  .cf-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.22rem;
+  /* On hover / focus: uncap and let card grow downward */
+  .cf-card:hover .cf-field dd,
+  .cf-card:focus-within .cf-field dd {
+    -webkit-line-clamp: unset;
+    max-height: 16rem;
   }
+
+  /* Tags */
+  .cf-tags { display: flex; flex-wrap: wrap; gap: 0.22rem; align-items: center; }
 
   .cf-chip {
     font-size: 0.44rem;
     letter-spacing: 0.09em;
     text-transform: uppercase;
     padding: 0.18em 0.52em;
-    border: 1px solid rgba(0, 212, 184, 0.18);
-    color: rgba(0, 212, 184, 0.52);
+    border: 1px solid rgba(0,212,184,0.18);
+    color: rgba(0,212,184,0.52);
     white-space: nowrap;
     cursor: default;
-    transition: border-color 0.14s, color 0.14s;
   }
 
   .cf-chip--more {
     border-style: dashed;
-    opacity: 0.5;
-  }
-
-  /* ── Mobile accordion toggle ── */
-  .cf-dtoggle {
-    display: none;              /* hidden on desktop (pointer:fine) */
-    align-items: center;
-    gap: 0.3rem;
-    font-family: var(--font-primary);
-    font-size: 0.44rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--cf-accent);
-    background: transparent;
-    border: 1px solid rgba(0, 212, 184, 0.2);
-    padding: 0.3em 0.65em;
+    opacity: 0.6;
     cursor: pointer;
-    width: fit-content;
-    transition: border-color 0.15s;
-    background-image: none !important;
+    transition: border-color 0.15s, color 0.15s, opacity 0.15s;
   }
 
-  .cf-dtoggle:hover,
-  .cf-dtoggle:focus-visible {
-    border-color: var(--cf-accent-b);
+  .cf-chip--more:hover,
+  .cf-chip--more:focus-visible {
+    border-color: var(--cf-accent);
+    color: var(--cf-accent);
+    opacity: 1;
     outline: none;
   }
 
-  .cf-dtoggle[aria-expanded='true'] .cf-dtoggle__arrow {
-    display: inline-block;
-    transform: rotate(180deg);
+  /* Overflow tooltip wrapper */
+  .cf-overflow-wrap {
+    position: relative;
+    display: inline-flex;
   }
 
-  @media (pointer: coarse) {
-    .cf-dtoggle { display: flex; }
-  }
-
-  /* ── Hover / tap drawer ── */
-  .cf-drawer {
+  .cf-overflow-tip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    z-index: 20;
     display: flex;
-    flex-direction: column;
-    gap: 0.28rem;
-    border-top: 1px solid rgba(0, 212, 184, 0.1);
-    padding-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    padding: 0.45rem 0.55rem;
+    background: rgba(7, 14, 12, 0.97);
+    border: 1px solid var(--cf-accent-b);
+    box-shadow: 0 0 16px rgba(0,212,184,0.14);
+    min-width: 8rem;
+    max-width: 14rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
   }
 
-  /*
-    DESKTOP (pointer:fine):
-    Always in flow; CSS transition shows/hides via max-height.
-    `display:flex !important` overrides the HTML `hidden` attr.
-  */
-  @media (pointer: fine) {
-    .cf-drawer {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      padding-top: 0;
-      border-top-color: transparent;
-      transition:
-        max-height 0.24s ease,
-        opacity    0.20s ease,
-        padding-top 0.20s,
-        border-top-color 0.20s;
-      display: flex !important;
-    }
-
-    .cf-card:hover .cf-drawer,
-    .cf-card:focus-within .cf-drawer {
-      max-height: 12rem;
-      opacity: 1;
-      padding-top: 0.5rem;
-      border-top-color: rgba(0, 212, 184, 0.1);
-    }
+  .cf-overflow-wrap:hover .cf-overflow-tip,
+  .cf-overflow-wrap:focus-within .cf-overflow-tip {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
-  /*
-    MOBILE (pointer:coarse):
-    `hidden` attr toggled by JS accordion; no CSS override needed.
-  */
-  @media (pointer: coarse) {
-    .cf-drawer[hidden] { display: none !important; }
-  }
-
-  .cf-drawer__row {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr;
-    gap: 0.4rem;
-    font-size: 0.49rem;
-    letter-spacing: 0.06em;
-    line-height: 1.6;
-    align-items: start;
-  }
-
-  .cf-drawer__key {
-    font-size: 0.41rem;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--cf-accent);
-    opacity: 0.48;
-    white-space: nowrap;
-    padding-top: 0.05em;
-  }
-
-  .cf-drawer__val {
-    color: var(--cf-muted);
-    min-width: 0;
-  }
-
-  /* APPROACH (first drawer row) — 2-line clamp */
-  .cf-drawer__row:first-child .cf-drawer__val {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* PIPELINE + TOOLS — single-line ellipsis */
-  .cf-drawer__row:not(:first-child) .cf-drawer__val {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* ── Action buttons ── */
+  /* CTA row — always in normal flow */
   .cf-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.32rem;
     margin-top: auto;
-    padding-top: 0.1rem;
+    padding-top: 0.35rem;
   }
 
+  /* ═══════════════════════════════════════════════
+     Secondary buttons – very muted by default
+  ═══════════════════════════════════════════════ */
   .cf-btn {
     display: inline-block;
     font-family: var(--font-primary);
@@ -948,78 +1100,63 @@ document.addEventListener('astro:page-load', () => {
     text-transform: uppercase;
     text-decoration: none;
     padding: 0.32em 0.75em;
-    border: 1px solid rgba(215, 232, 224, 0.12);
-    color: rgba(215, 232, 224, 0.30);
+    border: 1px solid rgba(215,232,224,0.08);
+    color: rgba(215,232,224,0.20);
     background: transparent;
     cursor: pointer;
     user-select: none;
     background-image: none !important;
-    transition:
-      border-color 0.15s,
-      color        0.15s,
-      background   0.15s,
-      box-shadow   0.15s,
-      transform    0.1s;
+    transition: border-color 0.18s, color 0.18s, box-shadow 0.18s, transform 0.1s;
   }
 
   .cf-btn:hover,
   .cf-btn:focus-visible {
-    border-color: rgba(215, 232, 224, 0.40);
-    color: var(--cf-text);
-    box-shadow: 0 0 6px rgba(215, 232, 224, 0.07);
+    border-color: rgba(215,232,224,0.38);
+    color: rgba(215,232,224,0.80);
+    box-shadow: 0 0 8px rgba(215,232,224,0.06);
     background-image: none !important;
     outline: none;
   }
 
   .cf-btn:active { transform: translateY(1px); }
 
-  /* Primary CTA */
+  /* Primary CTA – teal, bold glow on hover */
   .cf-btn--primary {
-    border-color: rgba(0, 212, 184, 0.55);
+    border-color: rgba(0,212,184,0.50);
     color: var(--cf-accent);
   }
 
   .cf-btn--primary:hover,
   .cf-btn--primary:focus-visible {
     border-color: var(--cf-accent);
-    background: var(--cf-accent-d);
+    background: rgba(0,212,184,0.08);
     color: var(--cf-accent);
-    box-shadow: 0 0 14px rgba(0, 212, 184, 0.28);
+    box-shadow: 0 0 18px rgba(0,212,184,0.35), 0 0 6px rgba(0,212,184,0.20);
+    text-shadow: 0 0 8px rgba(0,212,184,0.6);
   }
 
   .cf-btn--primary:active {
     transform: translateY(1px);
-    box-shadow: 0 0 8px rgba(0, 212, 184, 0.18);
+    box-shadow: 0 0 10px rgba(0,212,184,0.20);
   }
 
-  /* Locked / unavailable */
   .cf-btn--locked {
-    opacity: 0.14;
+    opacity: 0.10;
     cursor: default;
     pointer-events: none;
-    user-select: none;
     border-style: dashed;
   }
 
-  /* ── Responsive tweaks ── */
-  @media (max-width: 480px) {
-    .cf-header { flex-direction: column; align-items: flex-start; }
-    .cf-field   { grid-template-columns: 4.2rem 1fr; }
-    .cf-drawer__row { grid-template-columns: 4rem 1fr; }
-  }
-
-  /* ════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════
      Case-file modal overlay
-  ════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════ */
   .cfm-overlay {
-    /* Design tokens (match page) */
     --cfm-accent:   #00d4b8;
-    --cfm-accent-d: rgba(0, 212, 184, 0.10);
-    --cfm-accent-b: rgba(0, 212, 184, 0.25);
-    --cfm-panel:    #080f0d;
-    --cfm-text:     rgba(215, 232, 224, 0.92);
-    --cfm-muted:    rgba(215, 232, 224, 0.45);
-    --cfm-bdr:      rgba(0, 212, 184, 0.14);
+    --cfm-accent-d: rgba(0,212,184,0.10);
+    --cfm-panel:    #070e0c;
+    --cfm-text:     rgba(215,232,224,0.92);
+    --cfm-muted:    rgba(215,232,224,0.45);
+    --cfm-bdr:      rgba(0,212,184,0.14);
 
     position: fixed;
     inset: 0;
@@ -1029,30 +1166,24 @@ document.addEventListener('astro:page-load', () => {
     justify-content: center;
     font-family: var(--font-primary);
     color: var(--cfm-text);
-    /* entry animation */
-    animation: cfm-fadein 0.18s ease both;
+    animation: cfm-fadein 0.16s ease both;
   }
 
   .cfm-overlay[hidden] { display: none !important; }
 
-  @keyframes cfm-fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  @keyframes cfm-fadein { from { opacity: 0; } to { opacity: 1; } }
 
-  /* Dim scrim + CRT noise */
+  /* Scrim */
   .cfm-scrim {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.82);
-    /* subtle CRT noise via SVG data URI */
+    background: rgba(0,0,0,0.84);
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-      linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.82));
-    cursor: default;
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+      linear-gradient(rgba(0,0,0,0.84),rgba(0,0,0,0.84));
   }
 
-  /* Modal panel (per case) */
+  /* Modal panel */
   .cfm-panel {
     position: relative;
     z-index: 1;
@@ -1062,18 +1193,76 @@ document.addEventListener('astro:page-load', () => {
     margin: 1rem;
     display: flex;
     flex-direction: column;
-    /* entry scale-in from slightly small */
-    animation: cfm-scalein 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: cfm-scalein 0.22s cubic-bezier(0.22,1,0.36,1) both;
   }
 
   .cfm-panel[hidden] { display: none !important; }
 
   @keyframes cfm-scalein {
     from { transform: scale(0.93); opacity: 0; }
-    to   { transform: scale(1);    opacity: 1; }
+    to   { transform: scale(1);   opacity: 1; }
   }
 
-  /* Two-column inner layout */
+  /* Close button */
+  .cfm-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    z-index: 10;
+    font-family: var(--font-primary);
+    font-size: 0.7rem;
+    color: var(--cfm-muted);
+    background: transparent;
+    border: 1px solid rgba(215,232,224,0.14);
+    padding: 0.2em 0.55em;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.14s, border-color 0.14s, box-shadow 0.14s;
+  }
+
+  .cfm-close:hover,
+  .cfm-close:focus-visible {
+    color: var(--cfm-text);
+    border-color: rgba(0,212,184,0.35);
+    box-shadow: 0 0 8px rgba(0,212,184,0.2);
+    outline: none;
+  }
+
+  /* Prev / Next nav buttons */
+  .cfm-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    font-family: var(--font-primary);
+    font-size: 0.55rem;
+    color: var(--cfm-muted);
+    background: rgba(0,212,184,0.04);
+    border: 1px solid rgba(0,212,184,0.16);
+    padding: 0.5em 0.6em;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: color 0.14s, border-color 0.14s, background 0.14s;
+    line-height: 1;
+  }
+
+  .cfm-nav--prev { left:  -2.8rem; }
+  .cfm-nav--next { right: -2.8rem; }
+
+  .cfm-nav:hover,
+  .cfm-nav:focus-visible {
+    color: var(--cfm-accent);
+    border-color: rgba(0,212,184,0.4);
+    background: rgba(0,212,184,0.09);
+    outline: none;
+  }
+
+  .cfm-nav:disabled {
+    opacity: 0.18;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  /* Two-column inner */
   .cfm-inner {
     display: grid;
     grid-template-columns: 1fr;
@@ -1087,31 +1276,6 @@ document.addEventListener('astro:page-load', () => {
     .cfm-inner { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
   }
 
-  /* Close button (top-right) */
-  .cfm-close {
-    position: absolute;
-    top: 0.6rem;
-    right: 0.6rem;
-    z-index: 10;
-    font-family: var(--font-primary);
-    font-size: 0.7rem;
-    color: var(--cfm-muted);
-    background: transparent;
-    border: 1px solid rgba(215, 232, 224, 0.14);
-    padding: 0.2em 0.55em;
-    cursor: pointer;
-    transition: color 0.14s, border-color 0.14s, box-shadow 0.14s;
-    line-height: 1;
-  }
-
-  .cfm-close:hover,
-  .cfm-close:focus-visible {
-    color: var(--cfm-text);
-    border-color: var(--cfm-accent-b);
-    box-shadow: 0 0 8px rgba(0, 212, 184, 0.2);
-    outline: none;
-  }
-
   /* Left column */
   .cfm-left {
     display: flex;
@@ -1120,37 +1284,20 @@ document.addEventListener('astro:page-load', () => {
     border-right: 1px solid var(--cfm-bdr);
   }
 
-  /* Folder-tab header bar */
+  /* Header tab-bar */
   .cfm-tabrow {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.55rem 1.2rem;
     border-bottom: 1px solid var(--cfm-bdr);
-    background: rgba(0, 212, 184, 0.04);
+    background: rgba(0,212,184,0.04);
     flex-shrink: 0;
   }
 
-  .cfm-tab {
-    display: flex;
-    align-items: baseline;
-    gap: 0.55rem;
-  }
-
-  .cfm-tab__id {
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
-    color: var(--cfm-accent);
-    font-weight: bold;
-  }
-
-  .cfm-tab__type {
-    font-size: 0.41rem;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--cfm-accent);
-    opacity: 0.4;
-  }
+  .cfm-tab { display: flex; align-items: baseline; gap: 0.55rem; }
+  .cfm-tab__id   { font-size: 0.58rem; letter-spacing: 0.18em; color: var(--cfm-accent); font-weight: bold; }
+  .cfm-tab__type { font-size: 0.41rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--cfm-accent); opacity: 0.4; }
 
   .cfm-stamp {
     font-size: 0.42rem;
@@ -1172,10 +1319,8 @@ document.addEventListener('astro:page-load', () => {
     display: flex;
     flex-direction: column;
     gap: 0.9rem;
-    /* Scanline wash */
     background-image: repeating-linear-gradient(
-      to bottom,
-      transparent 0px, transparent 3px,
+      to bottom, transparent 0px, transparent 3px,
       rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
     );
     scrollbar-width: thin;
@@ -1190,30 +1335,14 @@ document.addEventListener('astro:page-load', () => {
     color: var(--cfm-text);
     line-height: 1.4;
     margin: 0;
-    padding-right: 2rem; /* space for close btn */
+    padding-right: 2.5rem;
   }
 
-  .cfm-meta {
-    font-size: 0.5rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--cfm-muted);
-    margin: 0;
-  }
-
-  .cfm-rule {
-    border: none;
-    border-top: 1px solid var(--cfm-bdr);
-    margin: 0;
-  }
+  .cfm-meta { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cfm-muted); margin: 0; }
+  .cfm-rule { border: none; border-top: 1px solid var(--cfm-bdr); margin: 0; }
 
   /* Fields */
-  .cfm-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    margin: 0;
-  }
+  .cfm-fields { display: flex; flex-direction: column; gap: 0.65rem; margin: 0; }
 
   .cfm-field {
     display: grid;
@@ -1235,11 +1364,7 @@ document.addEventListener('astro:page-load', () => {
     padding-top: 0.1em;
   }
 
-  .cfm-field dd {
-    color: var(--cfm-text);
-    margin: 0;
-    min-width: 0;
-  }
+  .cfm-field dd { color: var(--cfm-text); margin: 0; min-width: 0; }
 
   /* Pipeline / Tools / Tags rows */
   .cfm-row {
@@ -1264,40 +1389,27 @@ document.addEventListener('astro:page-load', () => {
     padding-top: 0.15em;
   }
 
-  .cfm-val {
-    color: var(--cfm-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .cfm-val { color: var(--cfm-muted); min-width: 0; }
 
-  .cfm-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.2rem;
-  }
+  .cfm-chips { display: flex; flex-wrap: wrap; gap: 0.2rem; }
 
   .cfm-chip {
     font-size: 0.42rem;
     letter-spacing: 0.09em;
     text-transform: uppercase;
     padding: 0.18em 0.5em;
-    border: 1px solid rgba(0, 212, 184, 0.22);
-    color: rgba(0, 212, 184, 0.6);
+    border: 1px solid rgba(0,212,184,0.22);
+    color: rgba(0,212,184,0.6);
     white-space: nowrap;
   }
 
   .cfm-chip--tag {
-    border-color: rgba(215, 232, 224, 0.14);
-    color: rgba(215, 232, 224, 0.42);
+    border-color: rgba(215,232,224,0.14);
+    color: rgba(215,232,224,0.42);
   }
 
   /* Artifacts dock */
-  .cfm-artifacts {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-  }
+  .cfm-artifacts { display: flex; flex-direction: column; gap: 0.55rem; }
 
   .cfm-artifacts__heading {
     font-size: 0.42rem;
@@ -1309,11 +1421,7 @@ document.addEventListener('astro:page-load', () => {
     font-weight: normal;
   }
 
-  .cfm-artifacts__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
+  .cfm-artifacts__links { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
   .cfm-art-btn {
     display: inline-block;
@@ -1323,7 +1431,7 @@ document.addEventListener('astro:page-load', () => {
     text-transform: uppercase;
     text-decoration: none;
     padding: 0.32em 0.8em;
-    border: 1px solid rgba(0, 212, 184, 0.4);
+    border: 1px solid rgba(0,212,184,0.40);
     color: var(--cfm-accent);
     background: transparent;
     background-image: none !important;
@@ -1335,43 +1443,43 @@ document.addEventListener('astro:page-load', () => {
   .cfm-art-btn:focus-visible {
     border-color: var(--cfm-accent);
     background: var(--cfm-accent-d);
-    box-shadow: 0 0 12px rgba(0, 212, 184, 0.22);
+    box-shadow: 0 0 12px rgba(0,212,184,0.22);
     outline: none;
   }
 
   .cfm-art-btn:active { transform: translateY(1px); }
 
   .cfm-art-btn--locked {
-    opacity: 0.14;
+    opacity: 0.13;
     border-style: dashed;
     cursor: default;
     pointer-events: none;
   }
 
-  /* Right ghost panel */
+  /* Ghost right panel */
   .cfm-ghost {
     position: relative;
     overflow: hidden;
-    background: rgba(0, 212, 184, 0.012);
+    background: rgba(0,212,184,0.012);
+    display: none;
   }
+
+  @media (min-width: 700px) { .cfm-ghost { display: block; } }
 
   .cfm-ghost__grid {
     position: absolute;
     inset: 0;
-    background-image:
-      radial-gradient(circle, rgba(0, 212, 184, 0.11) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(0,212,184,0.11) 1px, transparent 1px);
     background-size: 20px 20px;
     background-position: 10px 10px;
   }
 
-  /* subtle scanlines over ghost */
   .cfm-ghost::before {
     content: '';
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
-      to bottom,
-      transparent 0px, transparent 4px,
+      to bottom, transparent 0px, transparent 4px,
       rgba(0,0,0,0.06) 4px, rgba(0,0,0,0.06) 5px
     );
     pointer-events: none;
@@ -1391,14 +1499,19 @@ document.addEventListener('astro:page-load', () => {
     z-index: 2;
   }
 
-  /* Responsive: single-column modal on small screens */
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    .cf-header    { flex-direction: column; align-items: flex-start; }
+    .cf-field     { grid-template-columns: 4.2rem 1fr; }
+  }
+
   @media (max-width: 699px) {
-    .cfm-panel { max-height: 95vh; margin: 0.5rem; }
-    .cfm-inner { grid-template-columns: 1fr; }
-    .cfm-ghost  { display: none; }
+    .cfm-panel  { max-height: 95vh; margin: 0.5rem; }
     .cfm-left   { border-right: none; }
     .cfm-field  { grid-template-columns: 5rem 1fr; }
     .cfm-row    { grid-template-columns: 5rem 1fr; }
+    .cfm-nav--prev { left: 0.2rem; }
+    .cfm-nav--next { right: 0.2rem; }
   }
 </style>
 
