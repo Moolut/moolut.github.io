@@ -1,10 +1,10 @@
 ---
 import TVLayout from '../layouts/TVLayout.astro'
 import CASE_FILES from '../data/projects.json'
+import global from '../data/global.json'
 
 // ── Derived constants ────────────────────────────────────────────────────────
-const _d     = new Date()
-const today   = `${String(_d.getDate()).padStart(2,'0')}/${String(_d.getMonth()+1).padStart(2,'0')}/${_d.getFullYear()}`
+const today = global.lastUpdated
 const GROUPS   = ['ALL', 'SECURITY', 'EMBEDDED', 'SOFTWARE'] as const
 
 type Group  = typeof GROUPS[number]
