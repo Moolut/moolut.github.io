@@ -131,7 +131,7 @@ th {
 }
 
 details summary {
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 kbd {

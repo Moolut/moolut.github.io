@@ -14,11 +14,12 @@
           "technologies": [
             "IoT Security",
             "Network Security",
-            "Embedded Systems",
-            "Smart Cards"
+            "Embedded Systems & Security",
+            "Smart Card Laboratory",
+            "Distributed Embedded Systems"
           ],
           "highlights": [
-            "Thesis: Black-box security testing of CV pipelines with holographic projections"
+            "Thesis: Physical Adversarial Attacks Using Fan-Based Holographic Projections"
           ]
         },
         {
@@ -27,15 +28,26 @@
           "period": "May 2025 – Present",
           "location": "",
           "technologies": [
-            "Burp Suite",
-            "Metasploit",
             "Kali Linux",
+            "Burp Suite",
+            "OWASP ZAP",
+            "Nmap",
+            "Metasploit",
+            "Wireshark",
+            "ffuf",
+            "sqlmap",
+            "John the Ripper",
+            "Hashcat",
+            "Nessus",
             "BloodHound",
-            "Python"
+            "Impacket",
+            "Python",
+            "Bash"
           ],
           "highlights": [
-            "Completed Penetration Tester & Junior Security Analyst paths",
-            "Hands-on labs: Web exploitation, Active Directory, privilege escalation"
+            "Completed HTB job-role paths: Penetration Tester, Junior Cybersecurity Analyst & SOC Analyst",
+            "Practiced full assessment workflow: recon → exploitation → privilege escalation → reporting",
+            "Built reusable artifacts: step-by-step writeups, PoCs, checklists, and report snippets aligned with OWASP Top 10 / WSTG and ATT&CK-style thinking"
           ]
         },
         {
@@ -44,9 +56,14 @@
           "period": "Jul. 2023",
           "location": "Istanbul, Turkey",
           "gpa": "3.4/4.0",
-          "technologies": ["ESP8266", "ESP-NOW", "C/C++", "IoT"],
+          "technologies": [
+            "ESP8266",
+            "C/C++",
+            "Embedded Systems",
+            "Intro. to Microprocessors"
+          ],
           "highlights": [
-            "Thesis: Decentralized mesh network for real-time swarm coordination"
+            "Thesis: ESP8266 Ad Hoc Mesh for Real-Time Swarm Coordination"
           ]
         }
       ]
@@ -62,14 +79,16 @@
           "period": "Aug. 2024 – Nov. 2024",
           "location": "Munich, Germany",
           "technologies": [
-            "OMNeT++",
             "SpaceWire",
             "Threat Modeling",
-            "Protocol Analysis"
+            "Attack-Surface Mapping",
+            "Protocol Analysis",
+            "OMNeT++ (adversary emulation)"
           ],
           "highlights": [
-            "Offensive protocol assessment of SpaceWire for aerospace networks",
-            "Built adversary emulation in OMNeT++ to demonstrate attack paths"
+            "Offensive protocol assessment of SpaceWire: trust boundaries, missing auth/encryption, and protocol weaknesses",
+            "Built adversary-centric threat model and attack-surface map to prioritize exploitation chains",
+            "Implemented traffic replay/spoof/inject/disrupt in OMNeT++ to demonstrate impact and capture evidence"
           ]
         },
         {
@@ -85,21 +104,34 @@
                 "ESP32",
                 "Raspberry Pi",
                 "RFID",
-                "TLS",
-                "REST APIs"
+                "HTTPS/TLS",
+                "REST APIs",
+                "RBAC",
+                "OWASP Top 10"
               ],
               "highlights": [
-                "Developed end-to-end IoT smart door-lock system with RFID access control",
-                "Secured integration with HTTPS/TLS, RBAC, and OWASP Top 10 compliance"
+                "Built end-to-end smart door-lock system integrating devices, RFID access control, and cloud-backed interfaces",
+                "Secured integration with HTTPS/TLS + authenticated APIs; enforced server-side authorization with RBAC",
+                "Added security hardening: input validation, rate limiting, and audit logging"
               ]
             },
             {
               "position": "Full-Stack Developer",
               "period": "Oct. 2020 – Sep. 2022",
-              "technologies": ["React", "Node.js", "JWT", "PostgreSQL"],
+              "technologies": [
+                "React",
+                "Node.js",
+                "SQL",
+                "JWT",
+                "Secure Cookies / Session Controls",
+                "CSRF Protection",
+                "XSS Mitigations (encoding, CSP)",
+                "OWASP Top 10 / WSTG-aligned controls"
+              ],
               "highlights": [
-                "Built and maintained React/Node services with secure-by-default patterns",
-                "Implemented auth controls (RBAC, JWT), CSRF protection, and XSS mitigations"
+                "Built and maintained React/Node services with secure-by-default patterns and peer review",
+                "Implemented auth/session controls (RBAC, JWT), CSRF protections, and XSS mitigations",
+                "Hardened REST APIs with parameterized queries, security headers, and structured error handling"
               ]
             }
           ]
@@ -109,10 +141,14 @@
           "subtitle": "Software Engineer Intern",
           "period": "Jul. 2022 – Sep. 2022",
           "location": "Istanbul, Turkey",
-          "technologies": ["Python", "Test Automation"],
+          "technologies": [
+            "Python",
+            "Test Automation",
+            "Virtual Test Environments"
+          ],
           "highlights": [
-            "Built Python test library for virtual testing environment",
-            "Achieved ~80% faster test execution on refrigerator control boards"
+            "Built a Python test library enabling a software-based virtual testing environment",
+            "Achieved ~80% faster test execution on refrigerator control boards via reusable automation algorithms"
           ]
         }
       ]
@@ -123,20 +159,42 @@
       "type": "skills",
       "filename": "skills_&_technologies.txt",
       "categories": {
-        "Programming Languages": ["Python", "C/C++", "Bash", "PowerShell"],
-        "Operating Systems": ["Linux", "Kali Linux", "Windows"],
-        "Security Tools & Platforms": [
-          "Nmap",
-          "Burp Suite",
-          "Wireshark",
-          "OWASP ZAP",
-          "Metasploit",
-          "sqlmap",
-          "Nessus",
-          "BloodHound",
-          "Impacket"
+        "Programming Languages": [
+          "Python",
+          "C/C++",
+          "Bash",
+          "PowerShell",
+          "JavaScript/Typescript"
         ],
-        "Infrastructure & Networking": ["Windows Active Directory"]
+        "Operating Systems": ["Linux", "Kali Linux", "Windows"],
+        "Offensive Tooling": [
+          "Wireshark",
+          "Burp Suite",
+          "Metasploit",
+          "BloodHound",
+          "Nmap",
+          "Hashcat",
+          "Impacket",
+          "OWASP ZAP",
+          "ffuf",
+          "sqlmap",
+          "John the Ripper",
+          "Nessus"
+        ],
+        "Defensive Tooling": [
+          "Wireshark",
+          "Elastic (SIEM / Elastic Security)",
+          "Splunk",
+          "YARA",
+          "Sigma",
+          "IDS/IPS Tooling (Zeek, Suricata)",
+          "Reverse Engineering (IDA, x64dbg)"
+        ],
+        "Infrastructure & Networking": [
+          "Windows Active Directory",
+          "TCP/IP",
+          "OSI Layers"
+        ]
       },
       "skills": [
         "Penetration Testing",

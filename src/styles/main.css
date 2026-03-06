@@ -127,7 +127,18 @@ body {
   cursor: var(--cursor-default);
 }
 
-a {
+a,
+button,
+[role="button"],
+select,
+label,
+summary,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="file"],
+input[type="checkbox"],
+input[type="radio"] {
   cursor: var(--cursor-pointer);
 }
 

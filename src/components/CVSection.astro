@@ -79,9 +79,21 @@ const { title, items } = Astro.props
                       <span class="position-indent">  </span>
                       <span class="tech-label">[TECH]</span>
                       <div class="tech-tags">
-                        {pos.technologies.map((tech) => (
-                          <span class="tech-tag">{tech}</span>
-                        ))}
+                        <div class="tech-tags-collapsed">
+                          {pos.technologies.slice(0, 5).map((tech) => (
+                            <span class="tech-tag">{tech}</span>
+                          ))}
+                          {pos.technologies.length > 5 && (
+                            <div class="tech-more-badge">
+                              +{pos.technologies.length - 5} MORE
+                              <div class="tech-tags-popup">
+                                {pos.technologies.map((tech) => (
+                                  <span class="tech-tag">{tech}</span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )}
@@ -107,9 +119,21 @@ const { title, items } = Astro.props
               <span class="indent">  </span>
               <span class="tech-label">[TECH]</span>
               <div class="tech-tags">
-                {item.technologies.map((tech) => (
-                  <span class="tech-tag">{tech}</span>
-                ))}
+                <div class="tech-tags-collapsed">
+                  {item.technologies.slice(0, 5).map((tech) => (
+                    <span class="tech-tag">{tech}</span>
+                  ))}
+                  {item.technologies.length > 5 && (
+                    <div class="tech-more-badge">
+                      +{item.technologies.length - 5} MORE
+                      <div class="tech-tags-popup">
+                        {item.technologies.map((tech) => (
+                          <span class="tech-tag">{tech}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -136,7 +160,7 @@ const { title, items } = Astro.props
   .terminal-section {
     margin-bottom: 2rem;
     border: 2px solid var(--text-secondary);
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(8, 10, 12, 0.70);
     padding: 0;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
     width: 100%;
@@ -327,6 +351,48 @@ const { title, items } = Astro.props
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    position: relative;
+  }
+
+  .tech-tags-collapsed {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tech-more-badge {
+    border: 1px dashed rgba(0, 255, 0, 0.5);
+    color: rgba(0, 255, 0, 0.65);
+    padding: 0.2rem 0.6rem;
+    font-size: clamp(12px, 1.3vw, 14px);
+    font-family: var(--font-primary);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    user-select: none;
+    position: relative;
+    cursor: var(--cursor-pointer);
+  }
+
+  .tech-tags-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    right: 0;
+    left: auto;
+    z-index: 20;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    background: #060606;
+    border: 1px solid rgba(0, 255, 0, 0.35);
+    padding: 0.55rem 0.65rem;
+    width: max-content;
+    max-width: 380px;
+    box-shadow: 0 0 16px rgba(0, 255, 0, 0.12);
+  }
+
+  .tech-more-badge:hover .tech-tags-popup {
+    display: flex;
   }
 
   .tech-tag {
