@@ -387,7 +387,7 @@ const { title, items } = Astro.props
     border: 1px solid rgba(0, 255, 0, 0.35);
     padding: 0.55rem 0.65rem;
     width: max-content;
-    max-width: 380px;
+    max-width: min(460px, calc(100vw - 2rem));
     box-shadow: 0 0 16px rgba(0, 255, 0, 0.12);
   }
 

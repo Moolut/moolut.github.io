@@ -25,8 +25,14 @@ const CAPTIONS = {
   CC2: 'CAPTION: SYS DATA',
   EGG: 'CAPTION: [REDACTED]',
 }
-// Persistent state — survives navigations
+// Session state for the homepage caption bar. We intentionally reset it
+// whenever index DOM is entered so `/` always starts in SUBTITLE: ON.
 const captionState = { modeIndex: 0, transitioning: false }
+
+function resetCaptionState() {
+  captionState.modeIndex = 0
+  captionState.transitioning = false
+}
 
 function applyMode(mode) {
   document.querySelectorAll('.subtitle-mode').forEach((p) => {
@@ -46,8 +52,9 @@ function applyMode(mode) {
   if (meta) meta.textContent = CAPTIONS[mode]
 }
 
-function syncCaptionUI() {
+function syncCaptionUI({ reset = false } = {}) {
   if (!document.getElementById('lt-subtitle-toggle')) return
+  if (reset) resetCaptionState()
   applyMode(MODES[captionState.modeIndex])
 }
 
@@ -102,7 +109,7 @@ function scrambleReveal(duration, onDone) {
 
 export function initCaptionBar() {
   // Sync UI state immediately (handles hard-refresh on index)
-  syncCaptionUI()
+  syncCaptionUI({ reset: true })
 
   // Bind listeners only once for the whole browser session
   if (window.__captionBound) return
@@ -301,8 +308,8 @@ export function setupClientNavigation() {
     initNavScroll()
     // Re-bind achievements HUD/path interactions every swap (DOM is fresh too)
     initAchievementsInteractions()
-    // Re-apply caption bar UI state whenever index DOM is swapped in
-    syncCaptionUI()
+    // Reset the index subtitle state whenever homepage DOM is swapped in
+    syncCaptionUI({ reset: true })
     // Restart correct cycling animation for the new page
     initRoleCycling()
     initTitleCycling()
