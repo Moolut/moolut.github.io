@@ -146,7 +146,45 @@ export function gotoPage(url) {
   navigate(url)
 }
 
-const htmlClassToPersist = ['webp', 'avif']
+const HEAD_PERSIST_ATTR = 'data-astro-transition-persist'
+
+function getMatchingHeadElement(newEl) {
+  const persistId = newEl.getAttribute(HEAD_PERSIST_ATTR)
+  if (persistId) {
+    return document.head.querySelector(`[${HEAD_PERSIST_ATTR}="${persistId}"]`)
+  }
+
+  if (newEl.matches('link[rel=stylesheet]')) {
+    const href = newEl.getAttribute('href')
+    if (!href) return null
+    return document.head.querySelector(`link[rel=stylesheet][href="${href}"]`)
+  }
+
+  return null
+}
+
+function swapHeadElementsInOrder(newDoc) {
+  const nextHeadChildren = []
+  const reusedChildren = new Set()
+
+  for (const newChild of Array.from(newDoc.head.children)) {
+    const existingChild = getMatchingHeadElement(newChild)
+    if (existingChild) {
+      reusedChildren.add(existingChild)
+      nextHeadChildren.push(existingChild)
+    } else {
+      nextHeadChildren.push(newChild)
+    }
+  }
+
+  for (const currentChild of Array.from(document.head.children)) {
+    if (!reusedChildren.has(currentChild)) {
+      currentChild.remove()
+    }
+  }
+
+  document.head.append(...nextHeadChildren)
+}
 
 // ─── Role cycling (index page) ──────────────────────────────────────────
 const roles = [
@@ -237,8 +275,8 @@ export function setupClientNavigation() {
       // no need for swapping html attributes
       // swapFunctions.swapRootAttributes(newDoc)
 
-      // essential for page-specific styles
-      swapFunctions.swapHeadElements(newDoc)
+      // Keep the incoming head order stable while reusing identical stylesheets.
+      swapHeadElementsInOrder(newDoc)
 
       const restoreFocus = swapFunctions.saveFocus()
 
