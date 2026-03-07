@@ -3,15 +3,437 @@ import TVLayout from '../layouts/TVLayout.astro'
 ---
 
 <TVLayout title="not found" description="404 Error — this page was not found">
-  <article class="container">
-    <h1>404</h1>
-    <p>Sorry, the page you are looking for does not exist.</p>
+  <article class="ns-root" aria-label="404 No Signal screen">
+
+    <!-- ── Hero ── -->
+    <section class="ns-hero" aria-labelledby="ns-heading">
+      <div class="ns-badges" aria-hidden="true">
+        <span class="ns-badge">CH 404</span>
+        <span class="ns-badge --blink"><span class="ns-dot"></span><span>OFF AIR</span></span>
+      </div>
+      <h1 class="ns-title" id="ns-heading">NO SIGNAL</h1>
+    </section>
+
+    <!-- ── Random message ── -->
+    <p class="ns-message" id="ns-message" aria-live="polite">
+      <span class="ns-message-prefix">TX:</span>
+      <span class="ns-message-text" id="ns-message-text"></span>
+    </p>
+
+    <!-- ── CTAs ── -->
+    <nav class="ns-ctas" aria-label="Page navigation">
+      <a class="ns-cta --primary" href="/">
+        <span class="ns-cta-icon" aria-hidden="true">&#x25B6;</span>
+        <span>OPEN HOME</span>
+      </a>
+      <button class="ns-cta --secondary" id="ns-go-back" type="button">
+        <span class="ns-cta-icon" aria-hidden="true">&#x2190;</span>
+        <span>GO BACK</span>
+      </button>
+    </nav>
+
   </article>
 </TVLayout>
 
 <style>
-  article {
+  /* ── Root ── */
+  .ns-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 58vh;
+    padding: 0.1rem 0.75rem 1.75rem;
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  /* ── Hero ── */
+  .ns-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    width: 100%;
+    max-width: 600px;
     text-align: center;
-    margin: auto;
+  }
+
+  .ns-badges {
+    display: flex;
+    align-items: center;
+    gap: 1.2em;
+    font-size: 0.55em;
+    letter-spacing: 0.18em;
+  }
+
+  .ns-badge {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .ns-badge.--blink {
+    gap: 0.42em;
+    color: var(--text-secondary);
+    opacity: 0.9;
+  }
+
+  .ns-badge.--blink > span:last-child {
+    display: inline-block;
+    line-height: 1;
+  }
+
+  .ns-dot {
+    box-sizing: border-box;
+    width: 0.68em;
+    height: 0.68em;
+    flex: 0 0 0.68em;
+    align-self: center;
+    border-radius: 50%;
+    background: #ff5b57;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    transform: translateY(0.02em);
+    box-shadow:
+      0 0 0.22rem rgba(255, 146, 146, 0.95),
+      0 0 0.65rem rgba(255, 59, 48, 0.72),
+      0 0 1rem rgba(183, 2, 2, 0.48);
+    animation: ns-status-blink 3.2s ease-in-out infinite;
+  }
+
+  .ns-title {
+    font-size: clamp(1.6rem, 7vw, 3.8rem);
+    color: var(--text-secondary);
+    line-height: 1;
+    letter-spacing: 0.14em;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  /* ── Random message ── */
+  .ns-message {
+    width: 100%;
+    max-width: 72ch;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.55em;
+    font-size: 0.62em;
+    line-height: 1.5;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: rgba(184, 184, 184, 0.82);
+    margin: 0;
+    padding: 0 0.5em;
+    text-transform: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ns-message-prefix {
+    color: rgba(255, 255, 255, 0.56);
+    letter-spacing: 0.18em;
+    flex: 0 0 auto;
+  }
+
+  .ns-message-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── CTAs ── */
+  .ns-ctas {
+    display: flex;
+    gap: 0.4rem;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .ns-cta {
+    font-family: var(--font-primary);
+    font-size: 0.6em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    cursor: var(--cursor-pointer);
+    padding: 0.55em 1em;
+    border: 1px solid transparent;
+    background: none;
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.58em;
+    transition:
+      border-color 180ms ease,
+      color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .ns-cta-icon {
+    display: inline-block;
+    line-height: 1;
+    transform: translateY(0.03em);
+  }
+
+  .ns-cta.--primary {
+    color: #000;
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+    box-shadow: 0 0 0 rgba(2, 183, 182, 0);
+  }
+
+  .ns-cta.--primary:hover {
+    background: var(--text-secondary);
+    color: #000;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.28),
+      0 0 0.75rem rgba(2, 183, 182, 0.18);
+    transform: translateY(1px);
+  }
+
+  .ns-cta.--secondary {
+    color: rgba(184, 184, 184, 0.6);
+    border-color: rgba(184, 184, 184, 0.2);
+  }
+
+  .ns-cta.--secondary:hover {
+    color: var(--text-secondary);
+    border-color: rgba(255, 255, 255, 0.48);
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.12),
+      0 0 0.85rem rgba(2, 183, 182, 0.16);
+  }
+
+  .ns-cta:active {
+    transform: translateY(1px);
+  }
+
+  .ns-cta:focus-visible {
+    outline: 2px solid var(--text-secondary);
+    outline-offset: 2px;
+  }
+
+  @keyframes ns-status-blink {
+    0%, 42%, 100% {
+      opacity: 1;
+      box-shadow:
+        0 0 0.22rem rgba(255, 146, 146, 0.95),
+        0 0 0.65rem rgba(255, 59, 48, 0.72),
+        0 0 1rem rgba(183, 2, 2, 0.48);
+    }
+
+    48%, 56% {
+      opacity: 0.18;
+      box-shadow:
+        0 0 0.06rem rgba(255, 146, 146, 0.35),
+        0 0 0.18rem rgba(183, 2, 2, 0.25);
+    }
+
+    52% {
+      opacity: 0.46;
+      box-shadow:
+        0 0 0.1rem rgba(255, 146, 146, 0.5),
+        0 0 0.28rem rgba(255, 59, 48, 0.35);
+    }
+  }
+
+  :global(.header) {
+    min-height: 220px;
+    height: 34vh;
+    margin-bottom: 1.2rem;
+  }
+
+  :global(.footer) {
+    margin-top: 26px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ns-dot {
+      animation: none;
+      opacity: 1;
+    }
+
+    .ns-cta {
+      transition: none;
+    }
+
+    .ns-cta:hover,
+    .ns-cta:active {
+      transform: none;
+    }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .ns-root {
+      gap: 0.4rem;
+      min-height: 56vh;
+      padding: 0.05rem 0.55rem 1.45rem;
+    }
+
+    .ns-hero {
+      max-width: 32rem;
+      gap: 0.28rem;
+    }
+
+    .ns-badges {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75em 1.1em;
+      font-size: 0.5em;
+    }
+
+    .ns-title {
+      font-size: clamp(1.45rem, 9vw, 2.9rem);
+      letter-spacing: 0.11em;
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    .ns-message {
+      max-width: 38ch;
+      font-size: 0.58em;
+      line-height: 1.45;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      text-wrap: balance;
+    }
+
+    .ns-ctas {
+      max-width: 25rem;
+      gap: 0.35rem;
+      margin-inline: auto;
+    }
+
+    .ns-cta {
+      min-height: 2.25rem;
+      font-size: 0.54em;
+      gap: 0.48em;
+      padding: 0.52em 0.8em;
+    }
+
+    .ns-cta-icon {
+      transform: translateY(0.02em);
+    }
+
+    :global(.header) {
+      min-height: 180px;
+      height: 30vh;
+      margin-bottom: 1rem;
+    }
+
+    :global(.footer) {
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .ns-root {
+      gap: 0.38rem;
+      min-height: 53vh;
+      padding: 0 0.25rem 1.15rem;
+    }
+
+    .ns-badges {
+      gap: 0.55em 0.9em;
+      font-size: 0.47em;
+      letter-spacing: 0.14em;
+    }
+
+    .ns-title {
+      font-size: clamp(1.35rem, 11vw, 2.25rem);
+      letter-spacing: 0.09em;
+    }
+
+    .ns-message {
+      max-width: 30ch;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.18em 0.45em;
+      font-size: 0.54em;
+      line-height: 1.4;
+      padding: 0 0.25em;
+    }
+
+    .ns-message-prefix {
+      letter-spacing: 0.14em;
+    }
+
+    .ns-ctas {
+      flex-direction: column;
+      gap: 0.3rem;
+      max-width: 18rem;
+      margin-inline: auto;
+    }
+
+    .ns-cta {
+      width: 100%;
+      min-height: 2rem;
+      font-size: 0.5em;
+      gap: 0.4em;
+      padding: 0.48em 0.72em;
+    }
+
+    :global(.header) {
+      min-height: 150px;
+      height: 26vh;
+      margin-bottom: 0.85rem;
+    }
+
+    :global(.footer) {
+      margin-top: 18px;
+    }
   }
 </style>
+
+<script>
+  const MESSAGES = [
+    'We found your request. Not the page.',
+    'This channel is broadcasting static. Try another frequency.',
+    '404: The void is real. But your projects are not.',
+    'Signal received. Page not found.',
+    'Wrong frequency. Same universe.',
+    'The route exists in theory. Not on this server.',
+    'All carriers lost. Initiating existential fallback.',
+    'Packet delivered. Destination: nowhere.',
+    'This page has been off the air since forever.',
+    'Transmission interrupted. Reality status: unknown.',
+  ]
+
+  const msg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)]
+  const messageTextEl = document.getElementById('ns-message-text')
+  if (messageTextEl) messageTextEl.textContent = msg
+
+  const goBackBtn = document.getElementById('ns-go-back')
+  goBackBtn?.addEventListener('click', () => history.back())
+
+  document.addEventListener('keydown', (e) => {
+    const active = document.activeElement
+    if (
+      active &&
+      (active.tagName === 'INPUT' ||
+        active.tagName === 'TEXTAREA' ||
+        active.isContentEditable)
+    ) return
+
+    if (e.key === 'Enter' && (active === document.body || active == null)) {
+      e.preventDefault()
+      document.querySelector('.ns-cta.--primary')?.click()
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      history.back()
+    }
+  })
+</script>
