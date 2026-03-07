@@ -299,6 +299,8 @@ export function setupClientNavigation() {
 
     // Re-bind whoami nav scroll every swap (nav is fresh DOM after each transition)
     initNavScroll()
+    // Re-bind achievements HUD/path interactions every swap (DOM is fresh too)
+    initAchievementsInteractions()
     // Re-apply caption bar UI state whenever index DOM is swapped in
     syncCaptionUI()
     // Restart correct cycling animation for the new page
@@ -342,5 +344,47 @@ export function initNavScroll() {
       scrollRoot.scrollTop + (targetRect.top - rootRect.top) - navH
 
     scrollRoot.scrollTo({ top: Math.max(0, offsetTop), behavior: 'smooth' })
+  })
+}
+
+// ─── Achievements HUD navigation + touch panels ───────────────────────────
+// Lives here for the same reason as whoami nav: page-level scripts are not
+// reliable during SPA swaps when only the content container is replaced.
+export function initAchievementsInteractions() {
+  const strip = document.querySelector('.hud-strip')
+  if (strip && !strip._hudScrollBound) {
+    strip._hudScrollBound = true
+    strip.addEventListener('click', (e) => {
+      const link = e.target?.closest?.('.hud-link')
+      if (!link) return
+
+      const scrollRoot = document.querySelector('.tv-content')
+      if (!scrollRoot) return
+
+      const targetId = link.dataset.target
+      if (!targetId) return
+
+      const target = document.querySelector(targetId)
+      if (!target) return
+
+      const hudH = strip.offsetHeight
+      const rootRect = scrollRoot.getBoundingClientRect()
+      const targetRect = target.getBoundingClientRect()
+      const offsetTop =
+        scrollRoot.scrollTop + (targetRect.top - rootRect.top) - hudH - 16
+
+      scrollRoot.scrollTo({ top: Math.max(0, offsetTop), behavior: 'smooth' })
+    })
+  }
+
+  document.querySelectorAll('.path-row').forEach((row) => {
+    if (row._pathTouchBound) return
+    row._pathTouchBound = true
+
+    row.addEventListener('click', () => {
+      if (!window.matchMedia('(hover: hover)').matches) {
+        row.classList.toggle('is-open')
+      }
+    })
   })
 }

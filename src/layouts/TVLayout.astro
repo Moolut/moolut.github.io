@@ -24,6 +24,7 @@ const { title, description }: Props = Astro.props
   import {
     setupClientNavigation,
     initNavScroll,
+    initAchievementsInteractions,
     initCaptionBar,
     initRoleCycling,
     initTitleCycling,
@@ -33,6 +34,7 @@ const { title, description }: Props = Astro.props
   setupClientNavigation()
   // Hard-refresh: start whichever animations belong to the current page
   initNavScroll()
+  initAchievementsInteractions()
   initCaptionBar()
   initRoleCycling()
   initTitleCycling()
