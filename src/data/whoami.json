@@ -182,7 +182,6 @@
           "Nessus"
         ],
         "Defensive Tooling": [
-          "Wireshark",
           "Elastic (SIEM / Elastic Security)",
           "Splunk",
           "YARA",
